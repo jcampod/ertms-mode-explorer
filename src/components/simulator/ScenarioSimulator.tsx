@@ -3,7 +3,6 @@ import { ArrowLeft } from 'lucide-react';
 import { useSimulator } from '../../hooks/useSimulator';
 import { useTheme } from '../../hooks/useTheme';
 import ScenarioSelector from './ScenarioSelector';
-import CurrentStateDisplay from './CurrentStateDisplay';
 import SituationCard from './SituationCard';
 import QuizTransitionDiagram from './QuizTransitionDiagram';
 import FeedbackPanel from './FeedbackPanel';
