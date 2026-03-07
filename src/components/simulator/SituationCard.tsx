@@ -7,9 +7,10 @@ import { useTheme } from '../../hooks/useTheme';
 interface SituationCardProps {
   step: ScenarioStep;
   scenarioTitle: string;
+  compact?: boolean;
 }
 
-export default function SituationCard({ step, scenarioTitle }: SituationCardProps) {
+export default function SituationCard({ step, scenarioTitle, compact }: SituationCardProps) {
   const [showHint, setShowHint] = useState(false);
   const { theme } = useTheme();
   const dk = theme === 'dark';
@@ -27,7 +28,7 @@ export default function SituationCard({ step, scenarioTitle }: SituationCardProp
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3 }}
-      className={`rounded-xl ${dk ? 'bg-slate-900/80' : 'bg-white/80'} border ${dk ? 'border-slate-800' : 'border-slate-200'} p-4 space-y-3`}
+      className={`rounded-xl ${dk ? 'bg-slate-900/80' : 'bg-white/80'} border ${dk ? 'border-slate-800' : 'border-slate-200'} ${compact ? 'p-3 space-y-1.5' : 'p-4 space-y-3'} ${compact ? 'max-h-[180px] overflow-y-auto' : ''}`}
     >
       {/* Scenario title */}
       <p className={`text-[10px] ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider font-medium`}>
@@ -36,15 +37,17 @@ export default function SituationCard({ step, scenarioTitle }: SituationCardProp
 
       {/* Situation label */}
       <div>
-        <p className={`text-[10px] ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider font-medium mb-1.5`}>
-          Situation
-        </p>
-        <p className={`text-sm ${dk ? 'text-slate-300' : 'text-slate-600'} leading-relaxed`}>{step.situation}</p>
+        {!compact && (
+          <p className={`text-[10px] ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider font-medium mb-1.5`}>
+            Situation
+          </p>
+        )}
+        <p className={`${compact ? 'text-xs' : 'text-sm'} ${dk ? 'text-slate-300' : 'text-slate-600'} leading-relaxed ${compact ? 'line-clamp-2' : ''}`}>{step.situation}</p>
       </div>
 
       {/* Question */}
-      <div className={`pt-2 border-t ${dk ? 'border-slate-800' : 'border-slate-200'}`}>
-        <p className="text-sm font-semibold text-blue-300 leading-relaxed">{step.question}</p>
+      <div className={`${compact ? 'pt-1.5' : 'pt-2'} border-t ${dk ? 'border-slate-800' : 'border-slate-200'}`}>
+        <p className={`${compact ? 'text-xs' : 'text-sm'} font-semibold ${dk ? 'text-blue-300' : 'text-blue-600'} leading-relaxed ${compact ? 'line-clamp-2' : ''}`}>{step.question}</p>
       </div>
 
       {/* Hint */}

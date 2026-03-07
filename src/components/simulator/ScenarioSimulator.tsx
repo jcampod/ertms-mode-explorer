@@ -5,7 +5,7 @@ import { useTheme } from '../../hooks/useTheme';
 import ScenarioSelector from './ScenarioSelector';
 import CurrentStateDisplay from './CurrentStateDisplay';
 import SituationCard from './SituationCard';
-import TransitionChoice from './TransitionChoice';
+import QuizTransitionDiagram from './QuizTransitionDiagram';
 import FeedbackPanel from './FeedbackPanel';
 import ProgressTracker from './ProgressTracker';
 import FreeExplorer from './FreeExplorer';
@@ -119,51 +119,37 @@ export default function ScenarioSimulator() {
         />
       </div>
 
-      {/* Main content */}
-      <div className="flex-1 overflow-y-auto p-4 md:p-6">
-        <div className="max-w-3xl mx-auto space-y-6">
-          {/* Current state display */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentStep.currentMode}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-            >
-              <CurrentStateDisplay
-                modeId={currentStep.currentMode}
-                isTransitioning={!!feedback?.show}
-              />
-            </motion.div>
-          </AnimatePresence>
+      {/* Graphical transition diagram */}
+      <div className="flex-1 min-h-0 px-4 pt-4 pb-2">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStep.id}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.25 }}
+            className="w-full h-full"
+          >
+            <QuizTransitionDiagram
+              currentMode={currentStep.currentMode}
+              options={shuffledOptions}
+              selectedAnswer={selectedAnswer}
+              feedback={feedback}
+              correctAnswer={currentStep.correctAnswer}
+              onSelectAnswer={sim.selectAnswer}
+              disabled={!!feedback?.show}
+            />
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
-          {/* Situation card */}
-          <SituationCard step={currentStep} scenarioTitle={activeScenario.title} />
-
-          {/* Transition choices */}
-          <div className="space-y-2">
-            <p className={`text-xs font-medium ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider`}>
-              Choose the next mode
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {shuffledOptions.map((modeId) => {
-                const isCorrectAnswer = modeId === currentStep.correctAnswer;
-                const isSelected = modeId === selectedAnswer;
-
-                return (
-                  <TransitionChoice
-                    key={modeId}
-                    modeId={modeId}
-                    onClick={sim.selectAnswer}
-                    disabled={!!feedback?.show}
-                    isCorrect={feedback?.show ? isCorrectAnswer : undefined}
-                    isSelected={isSelected}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        </div>
+      {/* Situation/Question panel (compact) */}
+      <div className="shrink-0 px-4 pb-2">
+        <SituationCard
+          step={currentStep}
+          scenarioTitle={activeScenario.title}
+          compact
+        />
       </div>
 
       {/* Feedback panel */}
