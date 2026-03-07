@@ -3,9 +3,10 @@ import TopNav from './components/layout/TopNav';
 import TabBar from './components/layout/TabBar';
 import StateDiagram from './components/diagram/StateDiagram';
 import ScenarioSimulator from './components/simulator/ScenarioSimulator';
+import ATOOverview from './components/ato/ATOOverview';
 import { ThemeContext, useThemeProvider } from './hooks/useTheme';
 
-type TabId = 'diagram' | 'simulator';
+type TabId = 'diagram' | 'simulator' | 'ato';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('diagram');
@@ -19,7 +20,9 @@ export default function App() {
         <TopNav />
         <TabBar activeTab={activeTab} onTabChange={setActiveTab} />
         <main className="flex-1 overflow-hidden">
-          {activeTab === 'diagram' ? <StateDiagram /> : <ScenarioSimulator />}
+          {activeTab === 'diagram' && <StateDiagram />}
+          {activeTab === 'simulator' && <ScenarioSimulator />}
+          {activeTab === 'ato' && <ATOOverview />}
         </main>
       </div>
     </ThemeContext.Provider>

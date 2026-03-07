@@ -9,7 +9,7 @@ export type ModeCategory =
 export type ModeId =
   | 'NP' | 'SB' | 'SH' | 'FS' | 'LS' | 'OS'
   | 'SR' | 'UN' | 'SL' | 'TR' | 'PT' | 'SF'
-  | 'IS' | 'NL' | 'RV' | 'SN';
+  | 'IS' | 'NL' | 'RV' | 'SN' | 'AD';
 
 export type TriggerType = 'driver' | 'trackside' | 'system' | 'failure';
 

@@ -14,6 +14,7 @@ export const nodePositions: NodePosition[] = [
   { modeId: 'FS', x: 560, y: 140, group: 'operational' },
   { modeId: 'LS', x: 740, y: 140, group: 'operational' },
   { modeId: 'OS', x: 900, y: 140, group: 'operational' },
+  { modeId: 'AD', x: 1060, y: 140, group: 'operational' },
 
   // Center-mid - Operational (secondary / fallback modes)
   { modeId: 'SR', x: 560, y: 300, group: 'operational' },

@@ -941,4 +941,69 @@ export const transitions: Transition[] = [
     isCommon: false,
     triggerType: 'driver',
   },
+
+  // ==========================================
+  // AD (Automatic Driving) — Baseline 4 / ATO
+  // ==========================================
+  {
+    id: 'FS-AD',
+    from: 'FS',
+    to: 'AD',
+    conditions: [
+      { text: 'ATO on-board is in Ready for Engagement (RE) state', isRequired: true },
+      { text: 'Driver confirms ATO engagement via DMI (GoA 2)', isRequired: true },
+      { text: 'Valid Journey Profile received from ATO trackside', isRequired: true },
+      { text: 'Train at standstill or within engagement speed window', isRequired: true },
+    ],
+    description: 'ATO engagement — automatic driving begins',
+    detailedDescription:
+      'When all ATO engagement conditions are met and the driver confirms engagement on the ATO DMI, ETCS transitions from Full Supervision to Automatic Driving. The ATO on-board takes control of traction and braking while ETCS continues full safety supervision. The Movement Authority, speed profile, and braking curves remain enforced. This transition is defined in Subset-125 (ATO SRS) and the Subset-130 ATO-OB/ETCS-OB interface.',
+    isAutomatic: false,
+    isCommon: true,
+    triggerType: 'driver',
+  },
+  {
+    id: 'AD-FS',
+    from: 'AD',
+    to: 'FS',
+    conditions: [
+      { text: 'Driver disengages ATO via DMI or traction/brake override, or', isRequired: false },
+      { text: 'End of Journey Profile reached, or', isRequired: false },
+      { text: 'ATO completes controlled disengagement', isRequired: false },
+    ],
+    description: 'ATO disengagement — return to manual driving under FS',
+    detailedDescription:
+      'When the driver takes manual control (by pressing the disengage button or overriding traction/brake controls) or when the ATO completes its journey, the system transitions from Automatic Driving back to Full Supervision. The driver resumes manual control with continuous ETCS speed supervision. This is the normal, controlled end of ATO operation.',
+    isAutomatic: false,
+    isCommon: true,
+    triggerType: 'driver',
+  },
+  {
+    id: 'AD-TR',
+    from: 'AD',
+    to: 'TR',
+    conditions: [
+      { text: 'Train passes End of Authority (EOA) or ATO violates safety envelope', isRequired: true },
+    ],
+    description: 'Safety trip during automatic driving',
+    detailedDescription:
+      'If the ATO system or an external event causes the train to approach or exceed the End of Authority, ETCS triggers an emergency trip regardless of ATO status. The emergency brake is applied and ATO is immediately disengaged. The system enters Trip mode. Recovery follows the standard TR→PT→SR→FS sequence.',
+    isAutomatic: true,
+    isCommon: false,
+    triggerType: 'system',
+  },
+  {
+    id: 'AD-SH',
+    from: 'AD',
+    to: 'SH',
+    conditions: [
+      { text: 'Shunting request acknowledged during ATO operation', isRequired: true },
+    ],
+    description: 'Transition to shunting from automatic driving',
+    detailedDescription:
+      'In certain operational scenarios, a transition from Automatic Driving to Shunting may be required (e.g., approaching a yard). ATO is disengaged and ETCS transitions to Shunting mode with its reduced supervision.',
+    isAutomatic: false,
+    isCommon: false,
+    triggerType: 'driver',
+  },
 ];

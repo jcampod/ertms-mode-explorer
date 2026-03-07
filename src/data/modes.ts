@@ -385,4 +385,28 @@ export const modes: ETCSMode[] = [
       'Not for regular bidirectional running',
     ],
   },
+  {
+    id: 'AD',
+    name: 'Automatic Driving',
+    abbreviation: 'AD',
+    category: 'operational',
+    description:
+      'ATO (Automatic Train Operation) is in control. The train drives itself — accelerating, braking, and stopping at stations automatically — while ETCS still watches over everything to ensure safety. Added in Baseline 4.',
+    detailedDescription:
+      'Automatic Driving is a new ETCS mode introduced in Baseline 4 (CCS TSI 2023) specifically for ATO over ETCS operation. It is entered from Full Supervision when the driver (GoA 2) or the system (GoA 3/4) engages ATO. In this mode, the ATO on-board system controls traction, braking, and coasting according to a Journey Profile received from the ATO trackside. ETCS continues to provide full safety supervision — the Movement Authority, speed profile, and braking curves remain enforced. If ATO commands would violate any ETCS constraint, the safety layer intervenes with service or emergency braking. The driver can disengage ATO at any time, returning to Full Supervision. If ETCS detects a safety-critical condition (e.g., approaching EOA), it overrides ATO automatically.',
+    speedLimit: 'Per static speed profile and MA (ATO optimises within ETCS envelope)',
+    driverResponsibility:
+      'GoA 2: Monitor ATO operation, handle doors and departure, can override at any time. GoA 3/4: Reduced or no driver role.',
+    realWorldContext:
+      'Currently being piloted on lines like Thameslink (UK) and various European metro systems. This mode enables energy-efficient, timetable-optimised driving while maintaining full ETCS safety protection. Expected to become standard for high-frequency urban and suburban services.',
+    etcsLevel: ['2', '3'],
+    subsetReference: 'Subset-026, Section 4.4.18 (Baseline 4); Subset-125',
+    keyCharacteristics: [
+      'ATO controls traction, braking, and coasting automatically',
+      'ETCS maintains full safety supervision (MA, speed, braking curves)',
+      'Journey Profile from ATO trackside guides speed optimisation',
+      'Driver can disengage ATO at any time (returns to FS)',
+      'Introduced in ETCS Baseline 4 / CCS TSI 2023',
+    ],
+  },
 ];

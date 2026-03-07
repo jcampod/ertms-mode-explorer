@@ -8,6 +8,8 @@ export const modeColors: Record<ModeId, { fill: string; stroke: string; glow: st
   SR: { fill: '#1e1b4b', stroke: '#818cf8', glow: '#818cf8', text: '#c7d2fe' },
   UN: { fill: '#1c3d5a', stroke: '#67e8f9', glow: '#67e8f9', text: '#a5f3fc' },
   SN: { fill: '#2e1065', stroke: '#a78bfa', glow: '#a78bfa', text: '#ddd6fe' },
+  // Automatic (deep blue — ATO engaged)
+  AD: { fill: '#172554', stroke: '#2563eb', glow: '#2563eb', text: '#93c5fd' },
   // Supervised / special (teals/greens)
   SH: { fill: '#064e3b', stroke: '#34d399', glow: '#34d399', text: '#a7f3d0' },
   NL: { fill: '#065f46', stroke: '#6ee7b7', glow: '#6ee7b7', text: '#a7f3d0' },

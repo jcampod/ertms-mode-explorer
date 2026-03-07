@@ -1,14 +1,15 @@
-import { GitBranch, Gamepad2 } from 'lucide-react';
+import { GitBranch, Gamepad2, Bot } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 
 interface TabBarProps {
-  activeTab: 'diagram' | 'simulator';
-  onTabChange: (tab: 'diagram' | 'simulator') => void;
+  activeTab: 'diagram' | 'simulator' | 'ato';
+  onTabChange: (tab: 'diagram' | 'simulator' | 'ato') => void;
 }
 
 const tabs = [
   { id: 'diagram' as const, label: 'State Diagram', icon: GitBranch },
   { id: 'simulator' as const, label: 'Scenario Simulator', icon: Gamepad2 },
+  { id: 'ato' as const, label: 'ATO Overview', icon: Bot },
 ];
 
 export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
