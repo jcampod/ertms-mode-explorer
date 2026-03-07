@@ -3,6 +3,7 @@ import { Check, X, ChevronRight } from 'lucide-react';
 import type { ModeId } from '../../data/types';
 import { modes } from '../../data/modes';
 import { modeColors } from '../../utils/colors';
+import { useTheme } from '../../hooks/useTheme';
 
 interface FeedbackPanelProps {
   isCorrect: boolean;
@@ -17,6 +18,9 @@ export default function FeedbackPanel({
   correctMode,
   onContinue,
 }: FeedbackPanelProps) {
+  const { theme } = useTheme();
+  const dk = theme === 'dark';
+
   const mode = modes.find((m) => m.id === correctMode);
   const colors = modeColors[correctMode];
 
@@ -26,7 +30,7 @@ export default function FeedbackPanel({
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: '100%', opacity: 0 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="border-t border-slate-800 bg-slate-950/95 backdrop-blur-sm p-4 shrink-0"
+      className={`border-t ${dk ? 'border-slate-800' : 'border-slate-200'} ${dk ? 'bg-slate-950/95' : 'bg-white/95'} backdrop-blur-sm p-4 shrink-0`}
     >
       <div className="max-w-3xl mx-auto">
         {/* Header */}
@@ -53,7 +57,7 @@ export default function FeedbackPanel({
               {isCorrect ? 'Correct!' : 'Not quite...'}
             </p>
             {!isCorrect && mode && (
-              <p className="text-xs text-slate-400">
+              <p className={`text-xs ${dk ? 'text-slate-400' : 'text-slate-500'}`}>
                 The correct answer is{' '}
                 <span className="font-semibold" style={{ color: colors.text }}>
                   {mode.abbreviation} ({mode.name})
@@ -64,7 +68,7 @@ export default function FeedbackPanel({
         </div>
 
         {/* Explanation */}
-        <p className="text-xs text-slate-400 leading-relaxed mb-4">{explanation}</p>
+        <p className={`text-xs ${dk ? 'text-slate-400' : 'text-slate-500'} leading-relaxed mb-4`}>{explanation}</p>
 
         {/* Continue button */}
         <button

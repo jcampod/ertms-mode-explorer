@@ -5,6 +5,7 @@ import { modes } from '../../data/modes';
 import { transitions } from '../../data/transitions';
 import { modeColors, categoryColors } from '../../utils/colors';
 import CurrentStateDisplay from './CurrentStateDisplay';
+import { useTheme } from '../../hooks/useTheme';
 
 interface FreeExplorerProps {
   currentMode: ModeId;
@@ -23,6 +24,9 @@ export default function FreeExplorer({
   onReset,
   onExit,
 }: FreeExplorerProps) {
+  const { theme } = useTheme();
+  const dk = theme === 'dark';
+
   const mode = modes.find((m) => m.id === currentMode);
   if (!mode) return null;
 
@@ -66,10 +70,10 @@ export default function FreeExplorer({
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800 shrink-0">
+      <div className={`flex items-center justify-between px-4 py-3 border-b ${dk ? 'border-slate-800' : 'border-slate-200'} shrink-0`}>
         <button
           onClick={onExit}
-          className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-slate-200 transition-colors"
+          className={`flex items-center gap-1.5 text-sm ${dk ? 'text-slate-400' : 'text-slate-500'} ${dk ? 'hover:text-slate-200' : 'hover:text-slate-800'} transition-colors`}
         >
           <X className="w-4 h-4" />
           Exit
@@ -79,7 +83,7 @@ export default function FreeExplorer({
           {history.length > 0 && (
             <button
               onClick={onBack}
-              className="flex items-center gap-1 text-xs text-slate-400 hover:text-slate-200 transition-colors px-2 py-1 rounded bg-slate-800"
+              className={`flex items-center gap-1 text-xs ${dk ? 'text-slate-400' : 'text-slate-500'} ${dk ? 'hover:text-slate-200' : 'hover:text-slate-800'} transition-colors px-2 py-1 rounded ${dk ? 'bg-slate-800' : 'bg-slate-100'}`}
             >
               <ArrowLeft className="w-3 h-3" />
               Back
@@ -87,7 +91,7 @@ export default function FreeExplorer({
           )}
           <button
             onClick={onReset}
-            className="flex items-center gap-1 text-xs text-slate-400 hover:text-slate-200 transition-colors px-2 py-1 rounded bg-slate-800"
+            className={`flex items-center gap-1 text-xs ${dk ? 'text-slate-400' : 'text-slate-500'} ${dk ? 'hover:text-slate-200' : 'hover:text-slate-800'} transition-colors px-2 py-1 rounded ${dk ? 'bg-slate-800' : 'bg-slate-100'}`}
           >
             <RotateCcw className="w-3 h-3" />
             Reset
@@ -97,7 +101,7 @@ export default function FreeExplorer({
 
       {/* Breadcrumb trail */}
       {history.length > 0 && (
-        <div className="px-4 py-2 border-b border-slate-800/50 flex items-center gap-1 overflow-x-auto shrink-0">
+        <div className={`px-4 py-2 border-b ${dk ? 'border-slate-800/50' : 'border-slate-200/50'} flex items-center gap-1 overflow-x-auto shrink-0`}>
           {history.map((modeId, i) => {
             const histMode = modes.find((m) => m.id === modeId);
             const histColors = modeColors[modeId];
@@ -111,12 +115,12 @@ export default function FreeExplorer({
                       onBack();
                     }
                   }}
-                  className="text-[10px] font-mono font-medium px-1.5 py-0.5 rounded hover:bg-slate-800 transition-colors"
+                  className={`text-[10px] font-mono font-medium px-1.5 py-0.5 rounded ${dk ? 'hover:bg-slate-800' : 'hover:bg-slate-100'} transition-colors`}
                   style={{ color: histColors.text }}
                 >
                   {histMode?.abbreviation ?? modeId}
                 </button>
-                <ChevronRight className="w-3 h-3 text-slate-600" />
+                <ChevronRight className={`w-3 h-3 ${dk ? 'text-slate-600' : 'text-slate-400'}`} />
               </span>
             );
           })}
@@ -149,20 +153,20 @@ export default function FreeExplorer({
             key={`desc-${currentMode}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="rounded-xl bg-slate-900/80 border border-slate-800 p-4 space-y-3"
+            className={`rounded-xl ${dk ? 'bg-slate-900/80' : 'bg-white/80'} border ${dk ? 'border-slate-800' : 'border-slate-200'} p-4 space-y-3`}
           >
-            <p className="text-sm text-slate-300 leading-relaxed">{mode.description}</p>
+            <p className={`text-sm ${dk ? 'text-slate-300' : 'text-slate-600'} leading-relaxed`}>{mode.description}</p>
 
             {/* Key characteristics */}
             <div>
-              <p className="text-[10px] text-slate-500 uppercase tracking-wider font-medium mb-1.5">
+              <p className={`text-[10px] ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider font-medium mb-1.5`}>
                 Key Characteristics
               </p>
               <ul className="space-y-1">
                 {mode.keyCharacteristics.map((char, i) => (
                   <li
                     key={i}
-                    className="text-xs text-slate-400 flex items-start gap-2"
+                    className={`text-xs ${dk ? 'text-slate-400' : 'text-slate-500'} flex items-start gap-2`}
                   >
                     <span className="mt-1.5 w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: catColor }} />
                     {char}
@@ -172,22 +176,22 @@ export default function FreeExplorer({
             </div>
 
             {/* Driver responsibility */}
-            <div className="pt-2 border-t border-slate-800">
-              <p className="text-[10px] text-slate-500 uppercase tracking-wider font-medium mb-1">
+            <div className={`pt-2 border-t ${dk ? 'border-slate-800' : 'border-slate-200'}`}>
+              <p className={`text-[10px] ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider font-medium mb-1`}>
                 Driver Responsibility
               </p>
-              <p className="text-xs text-slate-400">{mode.driverResponsibility}</p>
+              <p className={`text-xs ${dk ? 'text-slate-400' : 'text-slate-500'}`}>{mode.driverResponsibility}</p>
             </div>
           </motion.div>
 
           {/* Available transitions */}
           <div>
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+            <p className={`text-xs font-medium ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider mb-2`}>
               Available Transitions ({availableTransitions.length})
             </p>
 
             {availableTransitions.length === 0 ? (
-              <p className="text-xs text-slate-500 italic">
+              <p className={`text-xs ${dk ? 'text-slate-500' : 'text-slate-400'} italic`}>
                 No outgoing transitions from this mode. Use Back or Reset to navigate.
               </p>
             ) : (
@@ -203,7 +207,7 @@ export default function FreeExplorer({
                       whileHover={{ scale: 1.01 }}
                       whileTap={{ scale: 0.99 }}
                       onClick={() => onNavigate(t.modeId)}
-                      className="w-full text-left p-3 rounded-lg border border-slate-800 hover:border-slate-600 bg-slate-900/50 hover:bg-slate-900 transition-all duration-200 group"
+                      className={`w-full text-left p-3 rounded-lg border ${dk ? 'border-slate-800' : 'border-slate-200'} ${dk ? 'hover:border-slate-600' : 'hover:border-slate-400'} ${dk ? 'bg-slate-900/50' : 'bg-white/50'} ${dk ? 'hover:bg-slate-900' : 'hover:bg-white'} transition-all duration-200 group`}
                     >
                       <div className="flex items-center justify-between mb-1.5">
                         <div className="flex items-center gap-2">
@@ -223,21 +227,21 @@ export default function FreeExplorer({
                             </span>
                           </div>
                           <div>
-                            <p className="text-sm font-medium text-slate-200">
+                            <p className={`text-sm font-medium ${dk ? 'text-slate-200' : 'text-slate-800'}`}>
                               {targetMode.name}
                             </p>
-                            <p className="text-[10px] text-slate-500">{t.description}</p>
+                            <p className={`text-[10px] ${dk ? 'text-slate-500' : 'text-slate-400'}`}>{t.description}</p>
                           </div>
                         </div>
-                        <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-slate-400 transition-colors shrink-0" />
+                        <ArrowRight className={`w-4 h-4 ${dk ? 'text-slate-600' : 'text-slate-400'} ${dk ? 'group-hover:text-slate-400' : 'group-hover:text-slate-600'} transition-colors shrink-0`} />
                       </div>
 
                       {/* Conditions */}
                       {t.conditions.length > 0 && (
                         <div className="ml-9 mt-1 space-y-0.5">
                           {t.conditions.map((cond, i) => (
-                            <p key={i} className="text-[10px] text-slate-500 flex items-start gap-1.5">
-                              <span className="text-slate-600 mt-px">&#8226;</span>
+                            <p key={i} className={`text-[10px] ${dk ? 'text-slate-500' : 'text-slate-400'} flex items-start gap-1.5`}>
+                              <span className={`${dk ? 'text-slate-600' : 'text-slate-400'} mt-px`}>&#8226;</span>
                               {cond}
                             </p>
                           ))}

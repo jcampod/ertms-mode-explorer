@@ -29,6 +29,7 @@
   body {
     background-color: oklch(14% 0.02 250);
     color: oklch(85% 0.03 250);
+    transition: background-color 0.2s, color 0.2s;
   }
 }
 

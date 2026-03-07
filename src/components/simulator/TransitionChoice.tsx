@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import type { ModeId } from '../../data/types';
 import { modes } from '../../data/modes';
 import { modeColors } from '../../utils/colors';
+import { useTheme } from '../../hooks/useTheme';
 
 interface TransitionChoiceProps {
   modeId: ModeId;
@@ -18,6 +19,9 @@ export default function TransitionChoice({
   isCorrect,
   isSelected,
 }: TransitionChoiceProps) {
+  const { theme } = useTheme();
+  const dk = theme === 'dark';
+
   const mode = modes.find((m) => m.id === modeId);
   if (!mode) return null;
 
@@ -70,9 +74,9 @@ export default function TransitionChoice({
 
       {/* Mode name */}
       <div className="min-w-0">
-        <p className="text-sm font-medium text-slate-200 truncate">{mode.name}</p>
+        <p className={`text-sm font-medium ${dk ? 'text-slate-200' : 'text-slate-800'} truncate`}>{mode.name}</p>
         {mode.speedLimit && (
-          <p className="text-[10px] text-slate-500 truncate">{mode.speedLimit}</p>
+          <p className={`text-[10px] ${dk ? 'text-slate-500' : 'text-slate-400'} truncate`}>{mode.speedLimit}</p>
         )}
       </div>
 

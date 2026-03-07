@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Zap } from 'lucide-react';
+import { useTheme } from '../../hooks/useTheme';
 
 interface ProgressTrackerProps {
   currentStep: number;
@@ -12,6 +13,9 @@ export default function ProgressTracker({
   totalSteps,
   score,
 }: ProgressTrackerProps) {
+  const { theme } = useTheme();
+  const dk = theme === 'dark';
+
   return (
     <div className="flex items-center gap-4">
       {/* Step dots */}
@@ -30,7 +34,7 @@ export default function ProgressTracker({
                   ? '#3b82f6'
                   : isActive
                     ? '#60a5fa'
-                    : '#334155',
+                    : dk ? '#334155' : '#cbd5e1',
               }}
               className="w-2 h-2 rounded-full"
               style={{
@@ -43,7 +47,7 @@ export default function ProgressTracker({
 
       {/* Score */}
       {score.total > 0 && (
-        <span className="text-xs text-slate-400">
+        <span className={`text-xs ${dk ? 'text-slate-400' : 'text-slate-500'}`}>
           <span className="text-blue-400 font-medium">{score.correct}</span>/{score.total}
         </span>
       )}

@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import type { ModeId } from '../../data/types';
 import { modes } from '../../data/modes';
 import { modeColors, categoryColors, categoryLabels } from '../../utils/colors';
+import { useTheme } from '../../hooks/useTheme';
 
 interface CurrentStateDisplayProps {
   modeId: ModeId;
@@ -12,6 +13,9 @@ export default function CurrentStateDisplay({
   modeId,
   isTransitioning = false,
 }: CurrentStateDisplayProps) {
+  const { theme } = useTheme();
+  const dk = theme === 'dark';
+
   const mode = modes.find((m) => m.id === modeId);
   if (!mode) return null;
 
@@ -67,7 +71,7 @@ export default function CurrentStateDisplay({
         transition={{ delay: 0.1 }}
         className="text-center"
       >
-        <h3 className="text-lg font-semibold text-slate-100">{mode.name}</h3>
+        <h3 className={`text-lg font-semibold ${dk ? 'text-slate-100' : 'text-slate-900'}`}>{mode.name}</h3>
 
         {/* Category badge */}
         <span
@@ -83,7 +87,7 @@ export default function CurrentStateDisplay({
 
         {/* Speed limit */}
         {mode.speedLimit && (
-          <p className="mt-1.5 text-xs text-slate-500">{mode.speedLimit}</p>
+          <p className={`mt-1.5 text-xs ${dk ? 'text-slate-500' : 'text-slate-400'}`}>{mode.speedLimit}</p>
         )}
       </motion.div>
     </div>

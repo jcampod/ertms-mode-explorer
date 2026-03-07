@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import type { ETCSMode, ModeId, NodePosition } from '../../data/types';
 import { modeColors } from '../../utils/colors';
+import { useTheme } from '../../hooks/useTheme';
 
 type NodeState = 'idle' | 'hovered' | 'dimmed' | 'selected' | 'connected';
 
@@ -15,6 +16,7 @@ interface ModeNodeProps {
 
 const ModeNode = ({ mode, position, state, onHoverStart, onHoverEnd, onClick }: ModeNodeProps) => {
   const colors = modeColors[mode.id];
+  const { theme } = useTheme();
 
   const getOpacity = () => {
     switch (state) {
@@ -101,7 +103,7 @@ const ModeNode = ({ mode, position, state, onHoverStart, onHoverEnd, onClick }: 
         x={position.x}
         y={position.y + 56}
         textAnchor="middle"
-        fill="#94a3b8"
+        fill={theme === 'dark' ? '#94a3b8' : '#475569'}
         fontSize="11"
         style={{ pointerEvents: 'none', userSelect: 'none' }}
       >

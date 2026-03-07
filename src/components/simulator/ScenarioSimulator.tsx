@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowLeft } from 'lucide-react';
 import { useSimulator } from '../../hooks/useSimulator';
+import { useTheme } from '../../hooks/useTheme';
 import ScenarioSelector from './ScenarioSelector';
 import CurrentStateDisplay from './CurrentStateDisplay';
 import SituationCard from './SituationCard';
@@ -11,6 +12,8 @@ import FreeExplorer from './FreeExplorer';
 
 export default function ScenarioSimulator() {
   const sim = useSimulator();
+  const { theme } = useTheme();
+  const dk = theme === 'dark';
 
   // Select mode — show scenario picker
   if (sim.view === 'select') {
@@ -59,12 +62,12 @@ export default function ScenarioSimulator() {
           <div className="text-6xl mb-4">
             {percentage === 100 ? '★' : percentage >= 60 ? '◆' : '●'}
           </div>
-          <h2 className="text-2xl font-bold text-slate-100 mb-2">Scenario Complete!</h2>
-          <p className="text-slate-400 mb-1">{activeScenario.title}</p>
+          <h2 className={`text-2xl font-bold ${dk ? 'text-slate-100' : 'text-slate-900'} mb-2`}>Scenario Complete!</h2>
+          <p className={`${dk ? 'text-slate-400' : 'text-slate-500'} mb-1`}>{activeScenario.title}</p>
           <p className="text-3xl font-bold text-blue-400 mb-1">
             {score.correct}/{score.total}
           </p>
-          <p className="text-sm text-slate-500">
+          <p className={`text-sm ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
             {percentage}% correct
             {score.streak > 1 && ` — Best streak: ${score.streak}`}
           </p>
@@ -73,7 +76,7 @@ export default function ScenarioSimulator() {
         <div className="flex gap-3 mt-4">
           <button
             onClick={() => sim.startScenario(activeScenario)}
-            className="px-5 py-2.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors text-sm font-medium border border-slate-700"
+            className={`px-5 py-2.5 rounded-lg ${dk ? 'bg-slate-800' : 'bg-slate-100'} ${dk ? 'text-slate-300' : 'text-slate-600'} ${dk ? 'hover:bg-slate-700' : 'hover:bg-slate-200'} transition-colors text-sm font-medium border ${dk ? 'border-slate-700' : 'border-slate-200'}`}
           >
             Try Again
           </button>
@@ -101,10 +104,10 @@ export default function ScenarioSimulator() {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header bar */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800 shrink-0">
+      <div className={`flex items-center justify-between px-4 py-3 border-b ${dk ? 'border-slate-800' : 'border-slate-200'} shrink-0`}>
         <button
           onClick={sim.reset}
-          className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-slate-200 transition-colors"
+          className={`flex items-center gap-1.5 text-sm ${dk ? 'text-slate-400' : 'text-slate-500'} ${dk ? 'hover:text-slate-200' : 'hover:text-slate-800'} transition-colors`}
         >
           <ArrowLeft className="w-4 h-4" />
           Exit
@@ -139,7 +142,7 @@ export default function ScenarioSimulator() {
 
           {/* Transition choices */}
           <div className="space-y-2">
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+            <p className={`text-xs font-medium ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider`}>
               Choose the next mode
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">

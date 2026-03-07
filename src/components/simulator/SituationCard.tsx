@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Lightbulb } from 'lucide-react';
 import type { ScenarioStep } from '../../data/types';
+import { useTheme } from '../../hooks/useTheme';
 
 interface SituationCardProps {
   step: ScenarioStep;
@@ -10,6 +11,8 @@ interface SituationCardProps {
 
 export default function SituationCard({ step, scenarioTitle }: SituationCardProps) {
   const [showHint, setShowHint] = useState(false);
+  const { theme } = useTheme();
+  const dk = theme === 'dark';
 
   // Reset hint visibility when step changes
   const [prevStepId, setPrevStepId] = useState(step.id);
@@ -24,23 +27,23 @@ export default function SituationCard({ step, scenarioTitle }: SituationCardProp
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.3 }}
-      className="rounded-xl bg-slate-900/80 border border-slate-800 p-4 space-y-3"
+      className={`rounded-xl ${dk ? 'bg-slate-900/80' : 'bg-white/80'} border ${dk ? 'border-slate-800' : 'border-slate-200'} p-4 space-y-3`}
     >
       {/* Scenario title */}
-      <p className="text-[10px] text-slate-500 uppercase tracking-wider font-medium">
+      <p className={`text-[10px] ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider font-medium`}>
         {scenarioTitle}
       </p>
 
       {/* Situation label */}
       <div>
-        <p className="text-[10px] text-slate-500 uppercase tracking-wider font-medium mb-1.5">
+        <p className={`text-[10px] ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider font-medium mb-1.5`}>
           Situation
         </p>
-        <p className="text-sm text-slate-300 leading-relaxed">{step.situation}</p>
+        <p className={`text-sm ${dk ? 'text-slate-300' : 'text-slate-600'} leading-relaxed`}>{step.situation}</p>
       </div>
 
       {/* Question */}
-      <div className="pt-2 border-t border-slate-800">
+      <div className={`pt-2 border-t ${dk ? 'border-slate-800' : 'border-slate-200'}`}>
         <p className="text-sm font-semibold text-blue-300 leading-relaxed">{step.question}</p>
       </div>
 

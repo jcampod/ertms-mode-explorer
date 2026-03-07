@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import type { Transition } from '../../data/types';
 import { calculateEdgePath } from '../../utils/edge-routing';
+import { useTheme } from '../../hooks/useTheme';
 
 type EdgeState = 'idle' | 'highlighted' | 'dimmed' | 'hovered';
 type EdgeDirection = 'none' | 'outgoing' | 'incoming';
@@ -14,6 +15,7 @@ interface TransitionEdgeProps {
   offset: number;
   onHoverStart: (id: string) => void;
   onHoverEnd: () => void;
+  onClick: (id: string) => void;
 }
 
 const TransitionEdge = ({
@@ -25,19 +27,23 @@ const TransitionEdge = ({
   offset,
   onHoverStart,
   onHoverEnd,
+  onClick,
 }: TransitionEdgeProps) => {
+  const { theme } = useTheme();
   const path = calculateEdgePath(fromPos, toPos, 0.2, offset);
   if (!path) return null;
 
+  const idleColor = theme === 'dark' ? '#475569' : '#94a3b8';
+
   const getStrokeColor = () => {
-    if (state === 'dimmed') return '#475569'; // slate-600
+    if (state === 'dimmed') return idleColor;
 
     if (state === 'highlighted' || state === 'hovered') {
       if (direction === 'incoming') return '#34d399'; // emerald-400
       return '#60a5fa'; // blue-400 (outgoing or none)
     }
 
-    return '#475569'; // slate-600
+    return idleColor;
   };
 
   const getStrokeWidth = () => {
@@ -61,7 +67,7 @@ const TransitionEdge = ({
       if (direction === 'incoming') return 'url(#arrowhead-incoming)';
       return 'url(#arrowhead-active)';
     }
-    return 'url(#arrowhead)';
+    return theme === 'dark' ? 'url(#arrowhead)' : 'url(#arrowhead-light)';
   };
 
   const markerEnd = getMarkerEnd();
@@ -82,6 +88,7 @@ const TransitionEdge = ({
         style={{ cursor: 'pointer' }}
         onMouseEnter={() => onHoverStart(transition.id)}
         onMouseLeave={onHoverEnd}
+        onClick={(e) => { e.stopPropagation(); onClick(transition.id); }}
       />
 
       {/* Visible path */}

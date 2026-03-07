@@ -22,6 +22,7 @@ export function useDiagramState() {
   );
   const [showCommonOnly, setShowCommonOnly] = useState(false);
   const [directionFilter, setDirectionFilter] = useState<DirectionFilter>('outgoing');
+  const [selectedEdge, setSelectedEdge] = useState<string | null>(null);
 
   const connectedModes = useMemo<Set<ModeId> | null>(() => {
     if (!hoveredNode) return null;
@@ -77,6 +78,7 @@ export function useDiagramState() {
 
   const handleSelectNode = useCallback((id: ModeId) => {
     setSelectedNode((prev) => (prev === id ? null : id));
+    setSelectedEdge(null); // clear edge selection when node selected
   }, []);
 
   const handleHoverEdge = useCallback((id: string) => {
@@ -87,8 +89,14 @@ export function useDiagramState() {
     setHoveredEdge(null);
   }, []);
 
+  const handleSelectEdge = useCallback((id: string) => {
+    setSelectedEdge((prev) => (prev === id ? null : id));
+    setSelectedNode(null); // clear node selection when edge selected
+  }, []);
+
   const clearSelection = useCallback(() => {
     setSelectedNode(null);
+    setSelectedEdge(null);
   }, []);
 
   const setDirection = useCallback((dir: DirectionFilter) => {
@@ -102,11 +110,13 @@ export function useDiagramState() {
     activeFilters,
     showCommonOnly,
     directionFilter,
+    selectedEdge,
     connectedModes,
     connectedEdges,
     toggleFilter,
     toggleCommonOnly,
     setDirection,
+    handleSelectEdge,
     handleHoverNode,
     handleHoverNodeEnd,
     handleSelectNode,

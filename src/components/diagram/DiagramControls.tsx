@@ -1,4 +1,5 @@
 import { Plus, Minus, Maximize2 } from 'lucide-react';
+import { useTheme } from '../../hooks/useTheme';
 
 interface DiagramControlsProps {
   onZoomIn: () => void;
@@ -11,20 +12,34 @@ const DiagramControls = ({
   onZoomOut,
   onResetView,
 }: DiagramControlsProps) => {
+  const { theme } = useTheme();
+
   return (
     <div className="absolute top-3 left-3 z-20 flex flex-col gap-2">
       {/* Zoom controls */}
-      <div className="flex flex-col gap-1 rounded-lg bg-slate-900/80 p-1.5 backdrop-blur-sm border border-slate-700/50">
+      <div className={`flex flex-col gap-1 rounded-lg p-1.5 backdrop-blur-sm border ${
+        theme === 'dark'
+          ? 'bg-slate-900/80 border-slate-700/50'
+          : 'bg-white/90 border-slate-300/60 shadow-sm'
+      }`}>
         <button
           onClick={onZoomIn}
-          className="flex h-7 w-7 items-center justify-center rounded text-slate-400 hover:bg-slate-700/60 hover:text-slate-200 transition-colors"
+          className={`flex h-7 w-7 items-center justify-center rounded transition-colors ${
+            theme === 'dark'
+              ? 'text-slate-400 hover:bg-slate-700/60 hover:text-slate-200'
+              : 'text-slate-500 hover:bg-slate-200/80 hover:text-slate-700'
+          }`}
           title="Zoom in"
         >
           <Plus size={14} />
         </button>
         <button
           onClick={onZoomOut}
-          className="flex h-7 w-7 items-center justify-center rounded text-slate-400 hover:bg-slate-700/60 hover:text-slate-200 transition-colors"
+          className={`flex h-7 w-7 items-center justify-center rounded transition-colors ${
+            theme === 'dark'
+              ? 'text-slate-400 hover:bg-slate-700/60 hover:text-slate-200'
+              : 'text-slate-500 hover:bg-slate-200/80 hover:text-slate-700'
+          }`}
           title="Zoom out"
         >
           <Minus size={14} />
@@ -32,7 +47,11 @@ const DiagramControls = ({
         <div className="h-px bg-slate-700/50" />
         <button
           onClick={onResetView}
-          className="flex h-7 w-7 items-center justify-center rounded text-slate-400 hover:bg-slate-700/60 hover:text-slate-200 transition-colors"
+          className={`flex h-7 w-7 items-center justify-center rounded transition-colors ${
+            theme === 'dark'
+              ? 'text-slate-400 hover:bg-slate-700/60 hover:text-slate-200'
+              : 'text-slate-500 hover:bg-slate-200/80 hover:text-slate-700'
+          }`}
           title="Reset view"
         >
           <Maximize2 size={14} />

@@ -1,6 +1,7 @@
 import { useRef, useMemo, useCallback, useEffect } from 'react';
 import { useDiagramState } from '../../hooks/useDiagramState';
 import { usePanZoom } from '../../hooks/usePanZoom';
+import { useTheme } from '../../hooks/useTheme';
 import { modes } from '../../data/modes';
 import { transitions } from '../../data/transitions';
 import { nodePositions } from '../../data/layout';
@@ -24,11 +25,13 @@ const StateDiagram = () => {
     activeFilters,
     showCommonOnly,
     directionFilter,
+    selectedEdge,
     connectedModes,
     connectedEdges,
     toggleFilter,
     toggleCommonOnly,
     setDirection,
+    handleSelectEdge,
     handleHoverNode,
     handleHoverNodeEnd,
     handleSelectNode,
@@ -47,6 +50,8 @@ const StateDiagram = () => {
     zoomIn,
     zoomOut,
   } = usePanZoom();
+
+  const { theme } = useTheme();
 
   // Build a position lookup map
   const positionMap = useMemo(() => {
@@ -87,6 +92,12 @@ const StateDiagram = () => {
     if (!selectedNode) return null;
     return modes.find((m) => m.id === selectedNode) ?? null;
   }, [selectedNode]);
+
+  // Get the selected transition object
+  const selectedTransition = useMemo(() => {
+    if (!selectedEdge) return null;
+    return transitions.find((t) => t.id === selectedEdge) ?? null;
+  }, [selectedEdge]);
 
 
   // Determine node state
@@ -145,7 +156,7 @@ const StateDiagram = () => {
   );
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-slate-950">
+    <div className={`relative w-full h-full overflow-hidden ${theme === 'dark' ? 'bg-slate-950' : 'bg-slate-100'}`}>
       {/* SVG Diagram */}
       <svg
         ref={svgRef}
@@ -182,6 +193,19 @@ const StateDiagram = () => {
             markerUnits="userSpaceOnUse"
           >
             <path d="M 0 0 L 10 4 L 0 8 L 2 4 Z" fill="#60a5fa" />
+          </marker>
+
+          {/* Arrowhead marker - normal (light theme) */}
+          <marker
+            id="arrowhead-light"
+            markerWidth="10"
+            markerHeight="8"
+            refX="9"
+            refY="4"
+            orient="auto"
+            markerUnits="userSpaceOnUse"
+          >
+            <path d="M 0 0 L 10 4 L 0 8 L 2 4 Z" fill="#94a3b8" />
           </marker>
 
           {/* Arrowhead marker - incoming (emerald) */}
@@ -234,6 +258,7 @@ const StateDiagram = () => {
                 offset={offset}
                 onHoverStart={handleHoverEdge}
                 onHoverEnd={handleHoverEdgeEnd}
+                onClick={handleSelectEdge}
               />
             );
           })}
@@ -297,6 +322,7 @@ const StateDiagram = () => {
       {/* Detail panel */}
       <DetailPanel
         mode={selectedMode}
+        transition={selectedTransition}
         onClose={clearSelection}
         onNavigate={handleNavigate}
       />
