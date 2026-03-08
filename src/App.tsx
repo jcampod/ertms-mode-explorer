@@ -4,10 +4,11 @@ import TabBar from './components/layout/TabBar';
 import StateDiagram from './components/diagram/StateDiagram';
 import ScenarioSimulator from './components/simulator/ScenarioSimulator';
 import ATOOverview from './components/ato/ATOOverview';
+import JourneyProfileView from './components/journey/JourneyProfileView';
 import { ThemeContext, useThemeProvider } from './hooks/useTheme';
 import { LanguageContext, useLanguageProvider } from './i18n/index';
 
-type TabId = 'diagram' | 'simulator' | 'ato';
+type TabId = 'diagram' | 'simulator' | 'ato' | 'journey';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('diagram');
@@ -26,6 +27,7 @@ export default function App() {
             {activeTab === 'diagram' && <StateDiagram />}
             {activeTab === 'simulator' && <ScenarioSimulator />}
             {activeTab === 'ato' && <ATOOverview />}
+            {activeTab === 'journey' && <JourneyProfileView />}
           </main>
         </div>
       </LanguageContext.Provider>

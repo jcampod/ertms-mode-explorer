@@ -1,6 +1,6 @@
 import type { UITranslations } from '../types';
 
-export const esUI: UITranslations = {
+export const esUI: Partial<UITranslations> = {
   // TopNav
   appTitle: 'Explorador de Modos ERTMS',
   appSubtitle: 'Modos operativos ETCS — Subset-026',
@@ -148,4 +148,42 @@ export const esUI: UITranslations = {
   // Tooltips
   tooltipSpeed: 'Velocidad',
   tooltipClickForDetails: 'Clic para más detalles',
+  // Journey Profile tab
+  tabJourneyProfile: 'Perfil de viaje',
+  jpTitle: 'Visualizador del perfil de viaje ATO',
+  jpSubtitle: 'Gráfico interactivo velocidad\u2013distancia que muestra la conducción automática ATO bajo supervisión ETCS',
+  jpDistance: 'Distancia (km)',
+  jpSpeed: 'Velocidad (km/h)',
+  jpTime: 'Tiempo',
+  jpLayerEtcsCeiling: 'Techo ETCS',
+  jpLayerAtoTarget: 'Objetivo ATO',
+  jpLayerPhaseColors: 'Colores de fase',
+  jpLayerGradients: 'Gradientes',
+  jpLayerRestrictions: 'Restricciones',
+  jpPlay: 'Reproducir',
+  jpPause: 'Pausar',
+  jpReset: 'Reiniciar',
+  jpSpeed1x: '10\u00D7',
+  jpSpeed2x: '25\u00D7',
+  jpSpeed4x: '50\u00D7',
+  jpSegmentProfiles: 'Perfiles de tramo',
+  jpSegmentDetails: 'Detalles del tramo',
+  jpLineSpeed: 'Velocidad de línea',
+  jpGradient: 'Gradiente',
+  jpRestriction: 'Restricción',
+  jpTemporary: 'Temporal',
+  jpPermanent: 'Permanente',
+  jpStatistics: 'Estadísticas del viaje',
+  jpTotalDistance: 'Distancia total',
+  jpJourneyTime: 'Tiempo de viaje',
+  jpNumberOfStops: 'Paradas',
+  jpEnergySaving: 'Ahorro energético',
+  jpUphill: 'Subida',
+  jpDownhill: 'Bajada',
+  jpFlat: 'Llano',
+  jpLayers: 'Capas',
+  jpPhase: 'Fase',
+  jpCurrentPhase: 'Fase actual',
+  jpEtcsCeiling: 'Techo ETCS',
+  jpAtoTarget: 'Objetivo ATO',
 };

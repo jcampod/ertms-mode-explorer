@@ -1,6 +1,6 @@
 import type { UITranslations } from '../types';
 
-export const itUI: UITranslations = {
+export const itUI: Partial<UITranslations> = {
   // TopNav
   appTitle: 'Esploratore Modi ERTMS',
   appSubtitle: 'Modi operativi ETCS — Subset-026',
@@ -146,6 +146,44 @@ export const itUI: UITranslations = {
   // References
   referencesTitle: 'Riferimenti \u2014 Specifiche chiave ATO (CCS TSI 2023)',
   // Tooltips
-  tooltipSpeed: 'Velocità',
+  tooltipSpeed: 'Velocit\u00E0',
   tooltipClickForDetails: 'Clicca per i dettagli',
+  // Journey Profile tab
+  tabJourneyProfile: 'Profilo di viaggio',
+  jpTitle: 'Visualizzatore profilo di viaggio ATO',
+  jpSubtitle: 'Grafico interattivo velocit\u00E0\u2013distanza che mostra la guida automatica ATO sotto supervisione ETCS',
+  jpDistance: 'Distanza (km)',
+  jpSpeed: 'Velocit\u00E0 (km/h)',
+  jpTime: 'Tempo',
+  jpLayerEtcsCeiling: 'Limite ETCS',
+  jpLayerAtoTarget: 'Obiettivo ATO',
+  jpLayerPhaseColors: 'Colori di fase',
+  jpLayerGradients: 'Pendenze',
+  jpLayerRestrictions: 'Restrizioni',
+  jpPlay: 'Avvia',
+  jpPause: 'Pausa',
+  jpReset: 'Ripristina',
+  jpSpeed1x: '10\u00D7',
+  jpSpeed2x: '25\u00D7',
+  jpSpeed4x: '50\u00D7',
+  jpSegmentProfiles: 'Profili di tratta',
+  jpSegmentDetails: 'Dettagli della tratta',
+  jpLineSpeed: 'Velocit\u00E0 di linea',
+  jpGradient: 'Pendenza',
+  jpRestriction: 'Restrizione',
+  jpTemporary: 'Temporanea',
+  jpPermanent: 'Permanente',
+  jpStatistics: 'Statistiche del viaggio',
+  jpTotalDistance: 'Distanza totale',
+  jpJourneyTime: 'Tempo di percorrenza',
+  jpNumberOfStops: 'Fermate',
+  jpEnergySaving: 'Risparmio energetico',
+  jpUphill: 'Salita',
+  jpDownhill: 'Discesa',
+  jpFlat: 'Piano',
+  jpLayers: 'Livelli',
+  jpPhase: 'Fase',
+  jpCurrentPhase: 'Fase attuale',
+  jpEtcsCeiling: 'Limite ETCS',
+  jpAtoTarget: 'Obiettivo ATO',
 };

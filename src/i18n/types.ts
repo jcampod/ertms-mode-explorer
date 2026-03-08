@@ -163,6 +163,44 @@ export interface UITranslations {
   // Tooltips
   tooltipSpeed: string;
   tooltipClickForDetails: string;
+  // Journey Profile tab
+  tabJourneyProfile: string;
+  jpTitle: string;
+  jpSubtitle: string;
+  jpDistance: string;
+  jpSpeed: string;
+  jpTime: string;
+  jpLayerEtcsCeiling: string;
+  jpLayerAtoTarget: string;
+  jpLayerPhaseColors: string;
+  jpLayerGradients: string;
+  jpLayerRestrictions: string;
+  jpPlay: string;
+  jpPause: string;
+  jpReset: string;
+  jpSpeed1x: string;
+  jpSpeed2x: string;
+  jpSpeed4x: string;
+  jpSegmentProfiles: string;
+  jpSegmentDetails: string;
+  jpLineSpeed: string;
+  jpGradient: string;
+  jpRestriction: string;
+  jpTemporary: string;
+  jpPermanent: string;
+  jpStatistics: string;
+  jpTotalDistance: string;
+  jpJourneyTime: string;
+  jpNumberOfStops: string;
+  jpEnergySaving: string;
+  jpUphill: string;
+  jpDownhill: string;
+  jpFlat: string;
+  jpLayers: string;
+  jpPhase: string;
+  jpCurrentPhase: string;
+  jpEtcsCeiling: string;
+  jpAtoTarget: string;
 }
 
 // Data translation interfaces - keyed by stable IDs
@@ -221,12 +259,20 @@ export interface GoATranslation {
   specStatus: string;
 }
 
+export interface JourneyProfileTranslation {
+  journeyName: string;
+  journeyDescription: string;
+  stations: Record<string, { name: string }>;
+  restrictions: Record<string, { reason: string }>;
+}
+
 export interface LanguageTranslations {
-  ui: UITranslations;
+  ui: Partial<UITranslations>;
   modes: Record<string, ModeTranslation>;
   transitions: Record<string, TransitionTranslation>;
   scenarios: Record<string, ScenarioTranslation>;
   atoStates: Record<string, ATOStateTranslation>;
   atoTransitions: Record<string, ATOTransitionTranslation>;
   goaLevels: Record<number, GoATranslation>;
+  journeyProfile?: JourneyProfileTranslation;
 }

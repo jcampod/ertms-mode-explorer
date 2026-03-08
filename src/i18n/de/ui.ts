@@ -1,6 +1,6 @@
 import type { UITranslations } from '../types';
 
-export const deUI: UITranslations = {
+export const deUI: Partial<UITranslations> = {
   // TopNav
   appTitle: 'ERTMS Mode Explorer',
   appSubtitle: 'ETCS-Betriebsarten \u2014 Subset-026',
@@ -148,4 +148,42 @@ export const deUI: UITranslations = {
   // Tooltips
   tooltipSpeed: 'Geschwindigkeit',
   tooltipClickForDetails: 'Klicken für Details',
+  // Journey Profile tab
+  tabJourneyProfile: 'Fahrprofil',
+  jpTitle: 'ATO-Fahrprofil-Visualisierung',
+  jpSubtitle: 'Interaktives Geschwindigkeits\u2013Weg-Diagramm mit automatischem ATO-Fahren unter ETCS-\u00DCberwachung',
+  jpDistance: 'Entfernung (km)',
+  jpSpeed: 'Geschwindigkeit (km/h)',
+  jpTime: 'Zeit',
+  jpLayerEtcsCeiling: 'ETCS-Obergrenze',
+  jpLayerAtoTarget: 'ATO-Ziel',
+  jpLayerPhaseColors: 'Phasenfarben',
+  jpLayerGradients: 'Neigungen',
+  jpLayerRestrictions: 'Einschr\u00E4nkungen',
+  jpPlay: 'Abspielen',
+  jpPause: 'Pause',
+  jpReset: 'Zur\u00FCcksetzen',
+  jpSpeed1x: '10\u00D7',
+  jpSpeed2x: '25\u00D7',
+  jpSpeed4x: '50\u00D7',
+  jpSegmentProfiles: 'Streckenabschnitte',
+  jpSegmentDetails: 'Abschnittsdetails',
+  jpLineSpeed: 'Streckengeschwindigkeit',
+  jpGradient: 'Neigung',
+  jpRestriction: 'Einschr\u00E4nkung',
+  jpTemporary: 'Vor\u00FCbergehend',
+  jpPermanent: 'Dauerhaft',
+  jpStatistics: 'Fahrtstatistiken',
+  jpTotalDistance: 'Gesamtstrecke',
+  jpJourneyTime: 'Fahrzeit',
+  jpNumberOfStops: 'Halte',
+  jpEnergySaving: 'Energieeinsparung',
+  jpUphill: 'Bergauf',
+  jpDownhill: 'Bergab',
+  jpFlat: 'Eben',
+  jpLayers: 'Ebenen',
+  jpPhase: 'Phase',
+  jpCurrentPhase: 'Aktuelle Phase',
+  jpEtcsCeiling: 'ETCS-Obergrenze',
+  jpAtoTarget: 'ATO-Ziel',
 };
