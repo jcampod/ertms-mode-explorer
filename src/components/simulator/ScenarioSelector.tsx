@@ -4,6 +4,7 @@ import type { Scenario } from '../../data/types';
 import { useTheme } from '../../hooks/useTheme';
 import { useUI } from '../../i18n/useUI';
 import { useTranslatedScenarios } from '../../i18n/useTranslatedData';
+import { useErtmsLevel } from '../../hooks/useErtmsLevel';
 
 interface ScenarioSelectorProps {
   onSelectScenario: (scenario: Scenario) => void;
@@ -29,7 +30,11 @@ export default function ScenarioSelector({
   const { theme } = useTheme();
   const dk = theme === 'dark';
   const ui = useUI();
-  const scenarios = useTranslatedScenarios();
+  const { ertmsLevel } = useErtmsLevel();
+  const allScenarios = useTranslatedScenarios();
+  const scenarios = allScenarios.filter(s =>
+    !s.applicableLevels || s.applicableLevels.includes(ertmsLevel)
+  );
 
   const difficultyLabels = {
     beginner: ui.beginner,

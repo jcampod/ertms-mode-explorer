@@ -11,6 +11,7 @@ export const scenarios: Scenario[] = [
       'Follow a driver through the standard ETCS start-up sequence: powering on, entering data, receiving a movement authority, and handling an On Sight area during the journey.',
     difficulty: 'beginner',
     category: 'Normal Operations',
+    applicableLevels: ['1', '2'],
     steps: [
       {
         id: 'ns-1',
@@ -77,6 +78,7 @@ export const scenarios: Scenario[] = [
       'Experience the emergency trip procedure: what happens when a train passes its End of Authority, and the step-by-step recovery process involving the driver, signaller, and ETCS system.',
     difficulty: 'intermediate',
     category: 'Degraded Operations',
+    applicableLevels: ['1', '2'],
     steps: [
       {
         id: 'tr-1',
@@ -156,6 +158,7 @@ export const scenarios: Scenario[] = [
       'Learn how trains transition in and out of Shunting mode for yard operations such as coupling wagons and assembling trains before departing on a mainline journey.',
     difficulty: 'beginner',
     category: 'Yard Operations',
+    applicableLevels: ['0', '1', '2'],
     steps: [
       {
         id: 'sh-1',
@@ -209,6 +212,7 @@ export const scenarios: Scenario[] = [
       'Navigate a cross-border journey that crosses from ETCS territory into unfitted track, back to ETCS, and then into a national train protection system area.',
     difficulty: 'intermediate',
     category: 'Cross-Border Operations',
+    applicableLevels: ['0', '1', '2'],
     steps: [
       {
         id: 'ne-1',
@@ -275,6 +279,7 @@ export const scenarios: Scenario[] = [
       'Handle a safety-critical on-board failure: from the initial emergency response through isolation, operating under national rules, and the eventual system recovery.',
     difficulty: 'advanced',
     category: 'Failure & Recovery',
+    applicableLevels: ['1', '2'],
     steps: [
       {
         id: 'sf-1',
@@ -341,6 +346,7 @@ export const scenarios: Scenario[] = [
       'Understand how ETCS handles trains with multiple powered units: configuring a locomotive as non-leading, operating in a consist, then reconfiguring for solo operation.',
     difficulty: 'intermediate',
     category: 'Special Operations',
+    applicableLevels: ['0', '1', '2'],
     steps: [
       {
         id: 'mt-1',

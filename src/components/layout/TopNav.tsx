@@ -2,6 +2,7 @@ import { Train, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import { useUI } from '../../i18n/useUI';
 import LanguageSelector from './LanguageSelector';
+import LevelSelector from './LevelSelector';
 
 export default function TopNav() {
   const { theme, toggleTheme } = useTheme();
@@ -27,6 +28,7 @@ export default function TopNav() {
         }`}>
           {ui.appSubtitle}
         </span>
+        <LevelSelector />
         <LanguageSelector />
         <button
           onClick={toggleTheme}

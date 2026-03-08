@@ -186,4 +186,17 @@ export const esUI: Partial<UITranslations> = {
   jpCurrentPhase: 'Fase actual',
   jpEtcsCeiling: 'Techo ETCS',
   jpAtoTarget: 'Objetivo ATO',
+  // Level selector
+  levelSelectorTitle: 'Nivel ERTMS/ETCS',
+  level0Label: 'Nivel 0 — Sin ETCS',
+  level0Desc: 'Solo señalización nacional, sin supervisión a bordo',
+  level1Label: 'Nivel 1 — Eurobalizas',
+  level1Desc: 'Datos puntuales mediante balizas de vía',
+  level2Label: 'Nivel 2 — Radio (RBC)',
+  level2Desc: 'Supervisión continua por radio',
+  levelNotAvailable: 'No disponible en este nivel',
+  atoNotAvailableAtLevel: 'ATO no está disponible en el Nivel 0 de ETCS. Seleccione Nivel 1 o 2 para ver las funciones ATO.',
+  atoLimitedAtLevel1: 'En Nivel 1, ATO opera con datos puntuales de balizas. Funcionalidad limitada respecto al Nivel 2.',
+  jpNoEtcsAtLevel: 'Nivel 0: Sin supervisión ETCS. El techo ETCS y las curvas ATO no están disponibles.',
+  jpLimitedAtoAtLevel: 'Nivel 1: Techo ETCS escalonado mediante balizas. ATO opera con datos puntuales.',
 };

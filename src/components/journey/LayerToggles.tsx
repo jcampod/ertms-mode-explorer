@@ -6,9 +6,10 @@ interface LayerTogglesProps {
   dk: boolean;
   layers: VisualizerLayers;
   onToggle: (key: keyof VisualizerLayers) => void;
+  disabledKeys?: (keyof VisualizerLayers)[];
 }
 
-const LayerToggles = ({ dk, layers, onToggle }: LayerTogglesProps) => {
+const LayerToggles = ({ dk, layers, onToggle, disabledKeys = [] }: LayerTogglesProps) => {
   const ui = useUI();
 
   const items: { key: keyof VisualizerLayers; label: string; color: string }[] = [
@@ -46,13 +47,16 @@ const LayerToggles = ({ dk, layers, onToggle }: LayerTogglesProps) => {
       }`}>
         {ui.jpLayers}
       </span>
-      {items.map(item => (
+      {items.map(item => {
+        const isDisabled = disabledKeys.includes(item.key);
+        return (
         <button
           key={item.key}
-          onClick={() => onToggle(item.key)}
+          onClick={() => !isDisabled && onToggle(item.key)}
           className={`
             flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium
-            transition-all duration-150 cursor-pointer border
+            transition-all duration-150 border
+            ${isDisabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}
             ${layers[item.key]
               ? dk
                 ? 'border-slate-600 bg-slate-800/80 text-slate-200'
@@ -72,7 +76,8 @@ const LayerToggles = ({ dk, layers, onToggle }: LayerTogglesProps) => {
           />
           {item.label}
         </button>
-      ))}
+        );
+      })}
     </div>
   );
 };

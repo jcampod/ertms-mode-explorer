@@ -188,6 +188,19 @@ const EN_DEFAULTS: UITranslations = {
   jpCurrentPhase: 'Current Phase',
   jpEtcsCeiling: 'ETCS Ceiling',
   jpAtoTarget: 'ATO Target',
+  // ERTMS Level Selector
+  levelSelectorTitle: 'ERTMS Level',
+  level0Label: 'Level 0',
+  level0Desc: 'No ETCS \u2014 National signaling only',
+  level1Label: 'Level 1',
+  level1Desc: 'Eurobalises \u2014 Spot transmission',
+  level2Label: 'Level 2',
+  level2Desc: 'Radio Block Centre \u2014 Continuous',
+  levelNotAvailable: 'Not available at this level',
+  atoNotAvailableAtLevel: 'ATO is not available at ETCS Level 0. Select Level 1 or Level 2 to see ATO functionality.',
+  atoLimitedAtLevel1: 'At Level 1, ATO receives spot data via Eurobalises. Operation is possible but more constrained than Level 2.',
+  jpNoEtcsAtLevel: 'At Level 0, there is no ETCS supervision. Only basic national speed limits apply.',
+  jpLimitedAtoAtLevel: 'At Level 1, ETCS provides spot data via Eurobalises. The ceiling updates at discrete points.',
 };
 
 /**

@@ -3,6 +3,7 @@ import { useDiagramState } from '../../hooks/useDiagramState';
 import { usePanZoom } from '../../hooks/usePanZoom';
 import { useTheme } from '../../hooks/useTheme';
 import { useTranslatedModes, useTranslatedTransitions } from '../../i18n/useTranslatedData';
+import { useErtmsLevel } from '../../hooks/useErtmsLevel';
 import { nodePositions } from '../../data/layout';
 import { modeColors } from '../../utils/colors';
 import { needsBidirectionalOffset } from '../../utils/edge-routing';
@@ -51,6 +52,7 @@ const StateDiagram = () => {
   } = usePanZoom();
 
   const { theme } = useTheme();
+  const { ertmsLevel } = useErtmsLevel();
   const modes = useTranslatedModes();
   const transitions = useTranslatedTransitions();
 
@@ -63,10 +65,13 @@ const StateDiagram = () => {
     return map;
   }, []);
 
-  // Filter modes by active category filters
+  // Filter modes by active category filters and ERTMS level
   const filteredModes = useMemo(() => {
-    return modes.filter((m) => activeFilters.has(m.category));
-  }, [activeFilters, modes]);
+    return modes.filter((m) =>
+      activeFilters.has(m.category) &&
+      m.etcsLevel.includes(ertmsLevel)
+    );
+  }, [activeFilters, modes, ertmsLevel]);
 
   const filteredModeIds = useMemo(() => {
     return new Set(filteredModes.map((m) => m.id));
@@ -87,6 +92,9 @@ const StateDiagram = () => {
   const universalTransitions = useMemo(() => {
     return transitions.filter((t) => t.isUniversal);
   }, [transitions]);
+
+  // Clear selection when ERTMS level changes
+  useEffect(() => { clearSelection(); }, [ertmsLevel, clearSelection]);
 
   // Get the selected mode object
   const selectedMode = useMemo(() => {

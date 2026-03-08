@@ -1,5 +1,7 @@
+import { Signal } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import { useUI } from '../../i18n/useUI';
+import { useErtmsLevel } from '../../hooks/useErtmsLevel';
 import ATOStateDiagram from './ATOStateDiagram';
 import GoAComparison from './GoAComparison';
 import ETCSIntegration from './ETCSIntegration';
@@ -9,11 +11,34 @@ const ATOOverview = () => {
   const { theme } = useTheme();
   const dk = theme === 'dark';
   const ui = useUI();
+  const { ertmsLevel } = useErtmsLevel();
 
   const sectionHeader = `text-[10px] uppercase tracking-wider font-semibold mb-3 ${dk ? 'text-slate-500' : 'text-slate-400'}`;
 
+  if (ertmsLevel === '0') {
+    return (
+      <div className="h-full flex items-center justify-center p-8">
+        <div className="text-center max-w-md">
+          <Signal className={`w-12 h-12 mx-auto mb-4 ${dk ? 'text-slate-600' : 'text-slate-300'}`} />
+          <p className={`text-sm ${dk ? 'text-slate-400' : 'text-slate-500'}`}>
+            {ui.atoNotAvailableAtLevel}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="h-full overflow-y-auto">
+      {/* Level 1 info banner */}
+      {ertmsLevel === '1' && (
+        <div className={`mx-4 mt-3 px-3 py-2 rounded-lg text-xs ${
+          dk ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-amber-50 text-amber-700 border border-amber-200'
+        }`}>
+          {ui.atoLimitedAtLevel1}
+        </div>
+      )}
+
       {/* ATO State Diagram */}
       <div style={{ height: '520px', minHeight: '400px' }}>
         <ATOStateDiagram />

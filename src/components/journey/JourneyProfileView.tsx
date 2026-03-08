@@ -1,5 +1,7 @@
+import { useMemo } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 import { useUI } from '../../i18n/useUI';
+import { useErtmsLevel } from '../../hooks/useErtmsLevel';
 import { sampleJourneyProfile } from '../../data/journey-profile';
 import { useJourneyPlayback } from '../../hooks/useJourneyPlayback';
 import SpeedDistanceGraph from './SpeedDistanceGraph';
@@ -13,6 +15,7 @@ const JourneyProfileView = () => {
   const { theme } = useTheme();
   const dk = theme === 'dark';
   const ui = useUI();
+  const { ertmsLevel } = useErtmsLevel();
 
   const profile = sampleJourneyProfile;
   const {
@@ -28,6 +31,18 @@ const JourneyProfileView = () => {
     selectedSegmentId,
     setSelectedSegmentId,
   } = useJourneyPlayback(profile);
+
+  // Override layers based on ERTMS level
+  const effectiveLayers = useMemo(() => {
+    if (ertmsLevel === '0') {
+      return { ...layers, etcsCeiling: false, atoTarget: false, phaseColors: false };
+    }
+    return layers;
+  }, [layers, ertmsLevel]);
+
+  const disabledLayerKeys = ertmsLevel === '0'
+    ? (['etcsCeiling', 'atoTarget', 'phaseColors'] as const)
+    : ([] as const);
 
   const sectionHeader = `text-[10px] uppercase tracking-wider font-semibold mb-3 ${
     dk ? 'text-slate-500' : 'text-slate-400'
@@ -47,12 +62,21 @@ const JourneyProfileView = () => {
           </p>
         </div>
 
+        {/* Level info banner */}
+        {ertmsLevel !== '2' && (
+          <div className={`mb-2 px-3 py-2 rounded-lg text-xs ${
+            dk ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-amber-50 text-amber-700 border border-amber-200'
+          }`}>
+            {ertmsLevel === '0' ? ui.jpNoEtcsAtLevel : ui.jpLimitedAtoAtLevel}
+          </div>
+        )}
+
         {/* SVG Graph */}
         <div className={`rounded-xl border overflow-hidden ${dk ? 'border-slate-800' : 'border-slate-200'}`}>
           <SpeedDistanceGraph
             profile={profile}
             dk={dk}
-            layers={layers}
+            layers={effectiveLayers}
             currentDistanceKm={currentDistanceKm}
             onScrub={scrubTo}
             selectedSegmentId={selectedSegmentId}
@@ -76,7 +100,7 @@ const JourneyProfileView = () => {
 
         {/* Layer toggles */}
         <div className="mt-2">
-          <LayerToggles dk={dk} layers={layers} onToggle={toggleLayer} />
+          <LayerToggles dk={dk} layers={effectiveLayers} onToggle={toggleLayer} disabledKeys={[...disabledLayerKeys]} />
         </div>
       </div>
 

@@ -186,4 +186,17 @@ export const frUI: Partial<UITranslations> = {
   jpCurrentPhase: 'Phase actuelle',
   jpEtcsCeiling: 'Plafond ETCS',
   jpAtoTarget: 'Cible ATO',
+  // Level selector
+  levelSelectorTitle: 'Niveau ERTMS/ETCS',
+  level0Label: 'Niveau 0 — Sans ETCS',
+  level0Desc: 'Signalisation nationale uniquement, sans supervision embarquée',
+  level1Label: 'Niveau 1 — Eurobalises',
+  level1Desc: 'Données ponctuelles par balises au sol',
+  level2Label: 'Niveau 2 — Radio (RBC)',
+  level2Desc: 'Supervision continue par radio',
+  levelNotAvailable: 'Non disponible à ce niveau',
+  atoNotAvailableAtLevel: 'L\u2019ATO n\u2019est pas disponible au Niveau 0 de l\u2019ETCS. Sélectionnez le Niveau 1 ou 2 pour les fonctions ATO.',
+  atoLimitedAtLevel1: 'Au Niveau 1, l\u2019ATO fonctionne avec des données ponctuelles de balises. Fonctionnalité limitée par rapport au Niveau 2.',
+  jpNoEtcsAtLevel: 'Niveau 0 : Pas de supervision ETCS. Le plafond ETCS et les courbes ATO ne sont pas disponibles.',
+  jpLimitedAtoAtLevel: 'Niveau 1 : Plafond ETCS échelonné par balises. L\u2019ATO fonctionne avec des données ponctuelles.',
 };

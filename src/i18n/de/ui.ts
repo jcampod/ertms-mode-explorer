@@ -186,4 +186,17 @@ export const deUI: Partial<UITranslations> = {
   jpCurrentPhase: 'Aktuelle Phase',
   jpEtcsCeiling: 'ETCS-Obergrenze',
   jpAtoTarget: 'ATO-Ziel',
+  // Level selector
+  levelSelectorTitle: 'ERTMS/ETCS-Level',
+  level0Label: 'Level 0 — Kein ETCS',
+  level0Desc: 'Nur nationale Signaltechnik, keine Bordüberwachung',
+  level1Label: 'Level 1 — Eurobalisen',
+  level1Desc: 'Punktuelle Daten über Streckenbalisen',
+  level2Label: 'Level 2 — Funk (RBC)',
+  level2Desc: 'Kontinuierliche Funküberwachung',
+  levelNotAvailable: 'Auf diesem Level nicht verfügbar',
+  atoNotAvailableAtLevel: 'ATO ist auf ETCS Level 0 nicht verfügbar. Wählen Sie Level 1 oder 2 für ATO-Funktionen.',
+  atoLimitedAtLevel1: 'Auf Level 1 arbeitet ATO mit punktuellen Balisendaten. Eingeschränkte Funktionalität gegenüber Level 2.',
+  jpNoEtcsAtLevel: 'Level 0: Keine ETCS-Überwachung. ETCS-Obergrenze und ATO-Kurven sind nicht verfügbar.',
+  jpLimitedAtoAtLevel: 'Level 1: Gestufte ETCS-Obergrenze per Balisen. ATO arbeitet mit punktuellen Daten.',
 };

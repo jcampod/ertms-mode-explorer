@@ -60,6 +60,7 @@ export interface Scenario {
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   steps: ScenarioStep[];
   category: string;
+  applicableLevels?: ('0' | '1' | '2')[];
 }
 
 export interface ScenarioStep {

@@ -6,6 +6,7 @@ import CurrentStateDisplay from './CurrentStateDisplay';
 import { useTheme } from '../../hooks/useTheme';
 import { useUI } from '../../i18n/useUI';
 import { useTranslatedModes, useTranslatedTransitions } from '../../i18n/useTranslatedData';
+import { useErtmsLevel } from '../../hooks/useErtmsLevel';
 
 interface FreeExplorerProps {
   currentMode: ModeId;
@@ -27,6 +28,7 @@ export default function FreeExplorer({
   const { theme } = useTheme();
   const dk = theme === 'dark';
   const ui = useUI();
+  const { ertmsLevel } = useErtmsLevel();
   const modes = useTranslatedModes();
   const transitions = useTranslatedTransitions();
 
@@ -56,6 +58,7 @@ export default function FreeExplorer({
 
       const targetMode = modes.find((m) => m.id === targetId);
       if (!targetMode) continue;
+      if (!targetMode.etcsLevel.includes(ertmsLevel)) continue;
 
       result.push({
         modeId: targetId,

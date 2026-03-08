@@ -201,6 +201,19 @@ export interface UITranslations {
   jpCurrentPhase: string;
   jpEtcsCeiling: string;
   jpAtoTarget: string;
+  // ERTMS Level Selector
+  levelSelectorTitle: string;
+  level0Label: string;
+  level0Desc: string;
+  level1Label: string;
+  level1Desc: string;
+  level2Label: string;
+  level2Desc: string;
+  levelNotAvailable: string;
+  atoNotAvailableAtLevel: string;
+  atoLimitedAtLevel1: string;
+  jpNoEtcsAtLevel: string;
+  jpLimitedAtoAtLevel: string;
 }
 
 // Data translation interfaces - keyed by stable IDs

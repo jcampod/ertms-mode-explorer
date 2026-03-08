@@ -186,4 +186,17 @@ export const itUI: Partial<UITranslations> = {
   jpCurrentPhase: 'Fase attuale',
   jpEtcsCeiling: 'Limite ETCS',
   jpAtoTarget: 'Obiettivo ATO',
+  // Level selector
+  levelSelectorTitle: 'Livello ERTMS/ETCS',
+  level0Label: 'Livello 0 — Senza ETCS',
+  level0Desc: 'Solo segnalamento nazionale, nessuna supervisione di bordo',
+  level1Label: 'Livello 1 — Euroboe',
+  level1Desc: 'Dati puntuali tramite boe di linea',
+  level2Label: 'Livello 2 — Radio (RBC)',
+  level2Desc: 'Supervisione continua via radio',
+  levelNotAvailable: 'Non disponibile a questo livello',
+  atoNotAvailableAtLevel: 'L\u2019ATO non è disponibile al Livello 0 dell\u2019ETCS. Selezionare Livello 1 o 2 per le funzioni ATO.',
+  atoLimitedAtLevel1: 'Al Livello 1, l\u2019ATO opera con dati puntuali delle boe. Funzionalità limitata rispetto al Livello 2.',
+  jpNoEtcsAtLevel: 'Livello 0: Nessuna supervisione ETCS. Il limite ETCS e le curve ATO non sono disponibili.',
+  jpLimitedAtoAtLevel: 'Livello 1: Limite ETCS a gradini tramite boe. L\u2019ATO opera con dati puntuali.',
 };
