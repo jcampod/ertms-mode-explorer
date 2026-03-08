@@ -22,7 +22,7 @@ export default function TopNav() {
         </h1>
       </div>
       <div className="flex items-center gap-3">
-        <span className={`text-xs hidden sm:block ${
+        <span className={`text-xs hidden lg:block ${
           theme === 'dark' ? 'text-slate-500' : 'text-slate-400'
         }`}>
           {ui.appSubtitle}

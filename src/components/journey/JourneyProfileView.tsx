@@ -34,7 +34,7 @@ const JourneyProfileView = () => {
   }`;
 
   return (
-    <div className="h-full overflow-y-auto">
+    <div className="h-full overflow-y-auto overflow-x-hidden">
       {/* Graph + controls */}
       <div className="max-w-4xl mx-auto px-4 pt-3 pb-2">
         {/* Title */}
@@ -48,7 +48,7 @@ const JourneyProfileView = () => {
         </div>
 
         {/* SVG Graph */}
-        <div className={`rounded-xl border ${dk ? 'border-slate-800' : 'border-slate-200'}`}>
+        <div className={`rounded-xl border overflow-hidden ${dk ? 'border-slate-800' : 'border-slate-200'}`}>
           <SpeedDistanceGraph
             profile={profile}
             dk={dk}

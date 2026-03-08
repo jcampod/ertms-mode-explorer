@@ -155,8 +155,8 @@ const SpeedDistanceGraph = ({
       <svg
         ref={svgRef}
         viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
-        className="w-full cursor-crosshair"
-        style={{ maxHeight: '460px' }}
+        className="w-full cursor-crosshair max-h-[45vh]"
+        preserveAspectRatio="xMidYMid meet"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         onClick={handleClick}
