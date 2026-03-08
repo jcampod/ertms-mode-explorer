@@ -24,14 +24,14 @@ export const phaseIcons: Record<OperationalPhase, string> = {
 /* Line colors for the two main curves */
 export const lineColors = {
   dark: {
-    etcsCeiling: '#3b82f6',
-    etcsCeilingFill: 'rgba(59, 130, 246, 0.06)',
+    etcsCeiling: '#e11d48',        // rose-600 — distinct from phase blues
+    etcsCeilingFill: 'rgba(225, 29, 72, 0.06)',
     atoTarget: '#34d399',
     atoTargetGlow: 'rgba(52, 211, 153, 0.3)',
   },
   light: {
-    etcsCeiling: '#2563eb',
-    etcsCeilingFill: 'rgba(37, 99, 235, 0.04)',
+    etcsCeiling: '#be123c',        // rose-700
+    etcsCeilingFill: 'rgba(190, 18, 60, 0.04)',
     atoTarget: '#059669',
     atoTargetGlow: 'rgba(5, 150, 105, 0.2)',
   },
