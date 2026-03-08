@@ -28,6 +28,7 @@ interface SpeedDistanceGraphProps {
   layers: VisualizerLayers;
   currentDistanceKm: number;
   onScrub: (distanceKm: number) => void;
+  selectedSegmentId: string | null;
 }
 
 const SpeedDistanceGraph = ({
@@ -36,6 +37,7 @@ const SpeedDistanceGraph = ({
   layers,
   currentDistanceKm,
   onScrub,
+  selectedSegmentId,
 }: SpeedDistanceGraphProps) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const [tooltip, setTooltip] = useState<{
@@ -137,6 +139,17 @@ const SpeedDistanceGraph = ({
 
   const c = dk ? graphChrome.dark : graphChrome.light;
 
+  // Selected segment highlight bounds
+  const selectedSegBounds = useMemo(() => {
+    if (!selectedSegmentId) return null;
+    const seg = profile.segments.find(s => s.id === selectedSegmentId);
+    if (!seg) return null;
+    const from = profile.stations.find(s => s.id === seg.fromStationId);
+    const to = profile.stations.find(s => s.id === seg.toStationId);
+    if (!from || !to) return null;
+    return { x1: distToX(from.distanceKm), x2: distToX(to.distanceKm) };
+  }, [selectedSegmentId, profile.segments, profile.stations, distToX]);
+
   return (
     <div className="relative">
       <svg
@@ -150,6 +163,46 @@ const SpeedDistanceGraph = ({
       >
         {/* Background */}
         <rect x={GRAPH_LEFT} y={GRAPH_TOP} width={GRAPH_WIDTH} height={GRAPH_HEIGHT} fill={c.background} rx={4} />
+
+        {/* Selected segment highlight */}
+        {selectedSegBounds && (
+          <>
+            {/* Dim the non-selected areas */}
+            <rect
+              x={GRAPH_LEFT}
+              y={GRAPH_TOP}
+              width={selectedSegBounds.x1 - GRAPH_LEFT}
+              height={GRAPH_HEIGHT}
+              fill={dk ? 'rgba(0,0,0,0.35)' : 'rgba(0,0,0,0.08)'}
+              pointerEvents="none"
+            />
+            <rect
+              x={selectedSegBounds.x2}
+              y={GRAPH_TOP}
+              width={GRAPH_LEFT + GRAPH_WIDTH - selectedSegBounds.x2}
+              height={GRAPH_HEIGHT}
+              fill={dk ? 'rgba(0,0,0,0.35)' : 'rgba(0,0,0,0.08)'}
+              pointerEvents="none"
+            />
+            {/* Bright borders for selected range */}
+            <line
+              x1={selectedSegBounds.x1} y1={GRAPH_TOP}
+              x2={selectedSegBounds.x1} y2={GRAPH_TOP + GRAPH_HEIGHT}
+              stroke={dk ? '#94a3b8' : '#64748b'}
+              strokeWidth={1}
+              strokeDasharray="4 3"
+              pointerEvents="none"
+            />
+            <line
+              x1={selectedSegBounds.x2} y1={GRAPH_TOP}
+              x2={selectedSegBounds.x2} y2={GRAPH_TOP + GRAPH_HEIGHT}
+              stroke={dk ? '#94a3b8' : '#64748b'}
+              strokeWidth={1}
+              strokeDasharray="4 3"
+              pointerEvents="none"
+            />
+          </>
+        )}
 
         {/* Phase overlay (back) */}
         <PhaseOverlay

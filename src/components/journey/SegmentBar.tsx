@@ -1,3 +1,4 @@
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import type { JourneyProfile } from '../../data/journey-types';
 import { useUI } from '../../i18n/useUI';
 
@@ -66,11 +67,15 @@ const SegmentBar = ({ dk, profile, selectedSegmentId, onSelect, currentDistanceK
                   className="w-2 h-2 rounded-sm flex-shrink-0"
                   style={{ backgroundColor: color, opacity: isActive ? 1 : 0.5 }}
                 />
-                <span className={`text-[10px] font-semibold truncate ${
+                <span className={`text-[10px] font-semibold truncate flex-1 ${
                   dk ? 'text-slate-300' : 'text-slate-700'
                 }`}>
                   {fromStation.name} {'\u2192'} {toStation.name}
                 </span>
+                {isSelected
+                  ? <ChevronUp size={12} className={dk ? 'text-slate-400' : 'text-slate-500'} />
+                  : <ChevronDown size={12} className={dk ? 'text-slate-600' : 'text-slate-300'} />
+                }
               </div>
               <div className={`text-[9px] ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
                 {(toStation.distanceKm - fromStation.distanceKm).toFixed(1)} km

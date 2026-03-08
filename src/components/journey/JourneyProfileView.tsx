@@ -55,6 +55,7 @@ const JourneyProfileView = () => {
             layers={layers}
             currentDistanceKm={currentDistanceKm}
             onScrub={scrubTo}
+            selectedSegmentId={selectedSegmentId}
           />
         </div>
 
