@@ -103,7 +103,8 @@ const ModeNode = ({ mode, position, state, onHoverStart, onHoverEnd, onClick }: 
         x={position.x}
         y={position.y + 56}
         textAnchor="middle"
-        fill={theme === 'dark' ? '#94a3b8' : '#475569'}
+        fill={theme === 'dark' ? '#ffffff' : '#1e293b'}
+        fontWeight="bold"
         fontSize="11"
         style={{ pointerEvents: 'none', userSelect: 'none' }}
       >

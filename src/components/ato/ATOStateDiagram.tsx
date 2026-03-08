@@ -2,8 +2,7 @@ import { useRef, useMemo, useCallback, useEffect } from 'react';
 import { useATODiagramState } from '../../hooks/useATODiagramState';
 import { usePanZoom } from '../../hooks/usePanZoom';
 import { useTheme } from '../../hooks/useTheme';
-import { atoStates } from '../../data/ato-modes';
-import { atoTransitions } from '../../data/ato-transitions';
+import { useTranslatedATOStates, useTranslatedATOTransitions } from '../../i18n/useTranslatedData';
 import { atoNodePositions } from '../../data/ato-layout';
 import { needsBidirectionalOffset } from '../../utils/edge-routing';
 import GridBackground from '../diagram/GridBackground';
@@ -47,6 +46,8 @@ const ATOStateDiagram = () => {
   } = usePanZoom();
 
   const { theme } = useTheme();
+  const atoStates = useTranslatedATOStates();
+  const atoTransitions = useTranslatedATOTransitions();
 
   // Build a position lookup map
   const positionMap = useMemo(() => {
@@ -60,7 +61,7 @@ const ATOStateDiagram = () => {
   // Filter states by active category filters
   const filteredStates = useMemo(() => {
     return atoStates.filter((s) => activeFilters.has(s.category));
-  }, [activeFilters]);
+  }, [activeFilters, atoStates]);
 
   const filteredStateIds = useMemo(() => {
     return new Set(filteredStates.map((s) => s.id));
@@ -73,19 +74,19 @@ const ATOStateDiagram = () => {
       if (t.from === t.to) return filteredStateIds.has(t.from);
       return filteredStateIds.has(t.from) && filteredStateIds.has(t.to);
     });
-  }, [filteredStateIds]);
+  }, [filteredStateIds, atoTransitions]);
 
   // Get the selected state object
   const selectedState = useMemo(() => {
     if (!selectedNode) return null;
     return atoStates.find((s) => s.id === selectedNode) ?? null;
-  }, [selectedNode]);
+  }, [selectedNode, atoStates]);
 
   // Get the selected transition object
   const selectedTransition = useMemo(() => {
     if (!selectedEdge) return null;
     return atoTransitions.find((t) => t.id === selectedEdge) ?? null;
-  }, [selectedEdge]);
+  }, [selectedEdge, atoTransitions]);
 
   // Determine node state
   const getNodeState = useCallback(

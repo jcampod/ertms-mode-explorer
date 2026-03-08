@@ -1,10 +1,10 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { X, ArrowRight, CheckCircle, Circle, Zap, User, Radio, AlertTriangle } from 'lucide-react';
 import type { ETCSMode, ModeId, Transition } from '../../data/types';
-import { transitions } from '../../data/transitions';
-import { modes } from '../../data/modes';
-import { modeColors, categoryColors, categoryLabels } from '../../utils/colors';
+import { modeColors, categoryColors } from '../../utils/colors';
 import { useTheme } from '../../hooks/useTheme';
+import { useUI } from '../../i18n/useUI';
+import { useTranslatedModes, useTranslatedTransitions, useCategoryLabels } from '../../i18n/useTranslatedData';
 
 interface DetailPanelProps {
   mode: ETCSMode | null;
@@ -20,16 +20,20 @@ const triggerIcons = {
   failure: AlertTriangle,
 };
 
-const triggerLabels = {
-  driver: 'Driver-initiated',
-  trackside: 'Trackside command',
-  system: 'Automatic (system)',
-  failure: 'Failure detection',
-};
-
 const DetailPanel = ({ mode, transition, onClose, onNavigate }: DetailPanelProps) => {
   const isOpen = !!(mode || transition);
   const { theme } = useTheme();
+  const ui = useUI();
+  const modes = useTranslatedModes();
+  const transitions = useTranslatedTransitions();
+  const categoryLabels = useCategoryLabels();
+
+  const triggerLabels = {
+    driver: ui.triggerDriver,
+    trackside: ui.triggerTrackside,
+    system: ui.triggerSystem,
+    failure: ui.triggerFailure,
+  };
 
   return (
     <AnimatePresence>
@@ -59,9 +63,9 @@ const DetailPanel = ({ mode, transition, onClose, onNavigate }: DetailPanelProps
 
           <div className="p-5 pt-4">
             {transition ? (
-              <TransitionDetail transition={transition} onNavigate={onNavigate} theme={theme} />
+              <TransitionDetail transition={transition} onNavigate={onNavigate} theme={theme} modes={modes} triggerLabels={triggerLabels} ui={ui} />
             ) : mode ? (
-              <ModeDetail mode={mode} onNavigate={onNavigate} theme={theme} />
+              <ModeDetail mode={mode} onNavigate={onNavigate} theme={theme} modes={modes} transitions={transitions} categoryLabels={categoryLabels} ui={ui} />
             ) : null}
           </div>
         </motion.div>
@@ -77,10 +81,16 @@ function TransitionDetail({
   transition: t,
   onNavigate,
   theme,
+  modes,
+  triggerLabels,
+  ui,
 }: {
   transition: Transition;
   onNavigate: (id: ModeId) => void;
   theme: 'dark' | 'light';
+  modes: ETCSMode[];
+  triggerLabels: Record<string, string>;
+  ui: ReturnType<typeof useUI>;
 }) {
   const fromMode = modes.find((m) => m.id === t.from);
   const toMode = modes.find((m) => m.id === t.to);
@@ -137,28 +147,28 @@ function TransitionDetail({
           <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
             dk ? 'bg-blue-500/15 text-blue-300' : 'bg-blue-50 text-blue-600'
           }`}>
-            Automatic
+            {ui.badgeAutomatic}
           </span>
         )}
         {!t.isAutomatic && (
           <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
             dk ? 'bg-amber-500/15 text-amber-300' : 'bg-amber-50 text-amber-700'
           }`}>
-            Manual
+            {ui.badgeManual}
           </span>
         )}
         {t.isCommon && (
           <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
             dk ? 'bg-green-500/15 text-green-300' : 'bg-green-50 text-green-700'
           }`}>
-            Common
+            {ui.badgeCommon}
           </span>
         )}
         {t.isUniversal && (
           <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
             dk ? 'bg-red-500/15 text-red-300' : 'bg-red-50 text-red-700'
           }`}>
-            From any mode
+            {ui.badgeFromAnyMode}
           </span>
         )}
       </div>
@@ -166,7 +176,7 @@ function TransitionDetail({
       {/* Simple explanation */}
       <div className="mb-4">
         <h3 className={`text-[10px] uppercase tracking-wider font-medium mb-1 ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
-          In Simple Terms
+          {ui.inSimpleTerms}
         </h3>
         <p className={`text-sm leading-relaxed ${dk ? 'text-slate-200' : 'text-slate-800'}`}>
           {t.description}
@@ -176,7 +186,7 @@ function TransitionDetail({
       {/* Technical description */}
       <div className="mb-4">
         <h3 className={`text-[10px] uppercase tracking-wider font-medium mb-1 ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
-          Technical Detail
+          {ui.technicalDetail}
         </h3>
         <p className={`text-[13px] leading-relaxed ${dk ? 'text-slate-400' : 'text-slate-600'}`}>
           {t.detailedDescription}
@@ -186,7 +196,7 @@ function TransitionDetail({
       {/* Conditions */}
       <div className="mb-4">
         <h3 className={`text-[10px] uppercase tracking-wider font-medium mb-1.5 ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
-          Conditions
+          {ui.conditions}
         </h3>
         <ul className="space-y-1.5">
           {t.conditions.map((c, i) => (
@@ -201,7 +211,7 @@ function TransitionDetail({
                 : (dk ? 'text-slate-500' : 'text-slate-400')
               }>
                 {c.text}
-                {!c.isRequired && <span className={dk ? 'text-slate-600 ml-1' : 'text-slate-400 ml-1'}>(optional)</span>}
+                {!c.isRequired && <span className={dk ? 'text-slate-600 ml-1' : 'text-slate-400 ml-1'}>{ui.optional}</span>}
               </span>
             </li>
           ))}
@@ -218,10 +228,18 @@ function ModeDetail({
   mode,
   onNavigate,
   theme,
+  modes,
+  transitions,
+  categoryLabels,
+  ui,
 }: {
   mode: ETCSMode;
   onNavigate: (id: ModeId) => void;
   theme: 'dark' | 'light';
+  modes: ETCSMode[];
+  transitions: Transition[];
+  categoryLabels: Record<string, string>;
+  ui: ReturnType<typeof useUI>;
 }) {
   const transitionsFrom = transitions.filter(
     (t) => t.from === mode.id && !t.isUniversal
@@ -273,7 +291,7 @@ function ModeDetail({
 
       {/* ETCS Levels */}
       <div className="mb-4">
-        <h3 className={sectionLabel}>ETCS Levels</h3>
+        <h3 className={sectionLabel}>{ui.etcsLevels}</h3>
         <div className="flex gap-1.5">
           {mode.etcsLevel.map((level) => (
             <span
@@ -291,14 +309,14 @@ function ModeDetail({
       {/* Speed limit */}
       {mode.speedLimit && (
         <div className="mb-4">
-          <h3 className={sectionLabel}>Speed Limit</h3>
+          <h3 className={sectionLabel}>{ui.speedLimit}</h3>
           <p className={`text-sm ${dk ? 'text-slate-300' : 'text-slate-700'}`}>{mode.speedLimit}</p>
         </div>
       )}
 
       {/* Simple explanation */}
       <div className="mb-4">
-        <h3 className={sectionLabel}>In Simple Terms</h3>
+        <h3 className={sectionLabel}>{ui.inSimpleTerms}</h3>
         <p className={`text-sm leading-relaxed ${dk ? 'text-slate-200' : 'text-slate-800'}`}>
           {mode.description}
         </p>
@@ -306,7 +324,7 @@ function ModeDetail({
 
       {/* Technical description */}
       <div className="mb-4">
-        <h3 className={sectionLabel}>Technical Detail</h3>
+        <h3 className={sectionLabel}>{ui.technicalDetail}</h3>
         <p className={`text-[13px] leading-relaxed ${dk ? 'text-slate-400' : 'text-slate-600'}`}>
           {mode.detailedDescription}
         </p>
@@ -314,7 +332,7 @@ function ModeDetail({
 
       {/* Key characteristics */}
       <div className="mb-4">
-        <h3 className={`${sectionLabel} mb-1.5`}>Key Characteristics</h3>
+        <h3 className={`${sectionLabel} mb-1.5`}>{ui.keyCharacteristics}</h3>
         <ul className="space-y-1">
           {mode.keyCharacteristics.map((char, i) => (
             <li key={i} className={`text-sm flex items-start gap-2 ${dk ? 'text-slate-400' : 'text-slate-600'}`}>
@@ -330,20 +348,20 @@ function ModeDetail({
 
       {/* Driver responsibility */}
       <div className="mb-4">
-        <h3 className={sectionLabel}>Driver Responsibility</h3>
+        <h3 className={sectionLabel}>{ui.driverResponsibility}</h3>
         <p className={bodyText}>{mode.driverResponsibility}</p>
       </div>
 
       {/* Real-world context */}
       <div className="mb-4">
-        <h3 className={sectionLabel}>Real-World Context</h3>
+        <h3 className={sectionLabel}>{ui.realWorldContext}</h3>
         <p className={bodyText}>{mode.realWorldContext}</p>
       </div>
 
       {/* Transitions from this mode */}
       {transitionsFrom.length > 0 && (
         <div className="mb-4">
-          <h3 className={`${sectionLabel} mb-1.5`}>Transitions From This Mode</h3>
+          <h3 className={`${sectionLabel} mb-1.5`}>{ui.transitionsFromThisMode}</h3>
           <div className="space-y-1">
             {transitionsFrom.map((t) => (
               <button
@@ -374,7 +392,7 @@ function ModeDetail({
       {/* Transitions to this mode */}
       {transitionsTo.length > 0 && (
         <div className="mb-4">
-          <h3 className={`${sectionLabel} mb-1.5`}>Transitions To This Mode</h3>
+          <h3 className={`${sectionLabel} mb-1.5`}>{ui.transitionsToThisMode}</h3>
           <div className="space-y-1">
             {transitionsTo.map((t) => (
               <button
@@ -404,7 +422,7 @@ function ModeDetail({
 
       {/* Subset-026 reference */}
       <div className="mb-2">
-        <h3 className={sectionLabel}>Specification Reference</h3>
+        <h3 className={sectionLabel}>{ui.specificationReference}</h3>
         <p className={`text-sm font-mono ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
           {mode.subsetReference}
         </p>

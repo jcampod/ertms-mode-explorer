@@ -1,18 +1,32 @@
 import { useTheme } from '../../hooks/useTheme';
+import { useUI } from '../../i18n/useUI';
 
-const operationalPhases = [
-  { id: 'stop', label: 'Station Stop', color: '#ef4444', icon: '■', desc: 'Train at platform, precise stop ±0.5 m' },
-  { id: 'doors', label: 'Door Control', color: '#34d399', icon: '◊', desc: 'Open/close doors, passenger exchange' },
-  { id: 'depart', label: 'Departure', color: '#22d3ee', icon: '▶', desc: 'Doors locked, departure conditions met' },
-  { id: 'acc', label: 'Accelerating', color: '#3b82f6', icon: '>', desc: 'Traction applied to reach target speed' },
-  { id: 'cruise', label: 'Cruising', color: '#60a5fa', icon: '=', desc: 'Maintaining speed at target' },
-  { id: 'coast', label: 'Coasting', color: '#a78bfa', icon: '~', desc: 'Traction off — rolling on momentum to save energy' },
-  { id: 'brake', label: 'Braking', color: '#f59e0b', icon: '<', desc: 'Service braking for next station stop' },
+const phaseColors = [
+  { id: 'stop', color: '#ef4444', icon: '■' },
+  { id: 'doors', color: '#34d399', icon: '◊' },
+  { id: 'depart', color: '#22d3ee', icon: '▶' },
+  { id: 'acc', color: '#3b82f6', icon: '>' },
+  { id: 'cruise', color: '#60a5fa', icon: '=' },
+  { id: 'coast', color: '#a78bfa', icon: '~' },
+  { id: 'brake', color: '#f59e0b', icon: '<' },
 ];
 
 const ETCSIntegration = () => {
   const { theme } = useTheme();
   const dk = theme === 'dark';
+  const ui = useUI();
+
+  const operationalPhases = [
+    { ...phaseColors[0], label: ui.phaseStationStop, desc: ui.phaseStationStopDesc },
+    { ...phaseColors[1], label: ui.phaseDoorControl, desc: ui.phaseDoorControlDesc },
+    { ...phaseColors[2], label: ui.phaseDeparture, desc: ui.phaseDepartureDesc },
+    { ...phaseColors[3], label: ui.phaseAccelerating, desc: ui.phaseAcceleratingDesc },
+    { ...phaseColors[4], label: ui.phaseCruising, desc: ui.phaseCruisingDesc },
+    { ...phaseColors[5], label: ui.phaseCoasting, desc: ui.phaseCoastingDesc },
+    { ...phaseColors[6], label: ui.phaseBraking, desc: ui.phaseBrakingDesc },
+  ];
+
+  const atoCommands = [ui.cmdTraction, ui.cmdBraking, ui.cmdCoasting, ui.cmdDoors];
 
   const sectionLabel = `text-[10px] uppercase tracking-wider font-medium mb-2 block ${dk ? 'text-slate-500' : 'text-slate-400'}`;
 
@@ -20,7 +34,7 @@ const ETCSIntegration = () => {
     <div className="space-y-6">
       {/* ATO ↔ ETCS Relationship Diagram */}
       <div>
-        <span className={sectionLabel}>ATO Under ETCS Supervision</span>
+        <span className={sectionLabel}>{ui.atoUnderEtcsSupervision}</span>
         <div className={`rounded-xl border p-4 ${dk ? 'border-slate-800 bg-slate-900/40' : 'border-slate-200 bg-slate-50/50'}`}>
           <svg viewBox="0 0 600 260" className="w-full" style={{ maxHeight: '260px' }}>
             {/* ETCS outer box */}
@@ -42,7 +56,7 @@ const ETCSIntegration = () => {
               fontSize="12"
               fontWeight="600"
             >
-              ETCS Safety Envelope — Full Supervision (FS) / Automatic Driving (AD)
+              {ui.etcsSafetyEnvelope}
             </text>
             <text
               x="60"
@@ -50,7 +64,7 @@ const ETCSIntegration = () => {
               fill={dk ? '#64748b' : '#94a3b8'}
               fontSize="10"
             >
-              FS → AD when ATO engages · Movement Authority + Speed Supervision + Emergency Brake Override
+              {ui.fsAdTransition}
             </text>
 
             {/* ATO inner box */}
@@ -71,7 +85,7 @@ const ETCSIntegration = () => {
               fontSize="12"
               fontWeight="600"
             >
-              ATO Engaged (EG) — Automatic Driving
+              {ui.atoEngagedAutoDriving}
             </text>
             <text
               x="100"
@@ -79,7 +93,7 @@ const ETCSIntegration = () => {
               fill={dk ? '#64748b' : '#94a3b8'}
               fontSize="10"
             >
-              Journey Profile + Timetable + Energy Optimisation
+              {ui.atoJourneyProfile}
             </text>
 
             {/* ATO control arrows */}
@@ -91,9 +105,9 @@ const ETCSIntegration = () => {
                 fontSize="10"
                 fontWeight="500"
               >
-                ATO Commands:
+                {ui.atoCommands}
               </text>
-              {['Traction', 'Braking', 'Coasting', 'Doors'].map((cmd, i) => (
+              {atoCommands.map((cmd, i) => (
                 <g key={cmd}>
                   <rect
                     x={110 + i * 100}
@@ -136,7 +150,7 @@ const ETCSIntegration = () => {
                 fontSize="10"
                 fontWeight="500"
               >
-                ETCS Override: If ATO violates MA/speed → Service Brake → Emergency Brake
+                {ui.etcsOverride}
               </text>
             </g>
           </svg>
@@ -145,7 +159,7 @@ const ETCSIntegration = () => {
 
       {/* Operational Phases */}
       <div>
-        <span className={sectionLabel}>ATO Operational Phases — Station to Station Cycle</span>
+        <span className={sectionLabel}>{ui.atoOperationalPhases}</span>
         <div className={`flex gap-1.5 overflow-x-auto pb-2 items-start`}>
           {operationalPhases.map((phase, i) => (
             <div key={phase.id} className="flex items-center gap-1.5 flex-shrink-0">

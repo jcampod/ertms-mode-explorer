@@ -1,0 +1,107 @@
+import type { GoATranslation } from '../types';
+
+export const frGoALevels: Record<number, GoATranslation> = {
+  1: {
+    name: 'Exploitation ferroviaire non automatis\u00e9e',
+    shortName: 'GoA 1 \u2014 Manuel + DAS',
+    description: 'Le conducteur contr\u00f4le tous les aspects de la conduite. L\u2019ATO ne fournit que des informations consultatives, comme la vitesse recommand\u00e9e et les points de freinage optimaux.',
+    detailedDescription:
+      'Au niveau d\u2019automatisation 1, le syst\u00e8me ATO fonctionne comme un syst\u00e8me d\u2019aide \u00e0 la conduite (DAS). Il calcule le profil de vitesse optimal bas\u00e9 sur le Profil de trajet et l\u2019horaire, affichant les recommandations sur le DMI. Le conducteur conserve le contr\u00f4le total de la traction, du freinage, des portes et du d\u00e9part. Ce niveau r\u00e9duit la consommation d\u2019\u00e9nergie en guidant le conducteur vers un comportement de conduite efficace sans supprimer le contr\u00f4le humain.',
+    driverRole: 'Contr\u00f4le total de toutes les fonctions de conduite. Suit les recommandations consultatives de l\u2019ATO.',
+    atoRole: 'Consultatif uniquement. Calcule et affiche le profil de vitesse optimal et les points de freinage.',
+    taskNames: [
+      '\u00c9tablissement de l\u2019itin\u00e9raire et exploitation',
+      'Contr\u00f4le de l\u2019acc\u00e9l\u00e9ration',
+      'Supervision de la vitesse',
+      'Freinage de service',
+      'Freinage d\u2019urgence',
+      'Gestion des portes',
+      'Autorisation de d\u00e9part',
+      'D\u00e9tection d\u2019obstacles',
+      'Gestion des urgences',
+    ],
+    realWorldExamples: [
+      'Lignes principales avec optimisation de l\u2019efficacit\u00e9',
+      'Exploitation fret avec objectifs d\u2019\u00e9conomie d\u2019\u00e9nergie',
+    ],
+    specStatus: 'Stable \u2014 CCS TSI 2023, ATO Baseline 1',
+  },
+  2: {
+    name: 'Exploitation ferroviaire semi-automatique',
+    shortName: 'GoA 2 \u2014 Semi-automatique',
+    description: 'L\u2019ATO contr\u00f4le l\u2019acc\u00e9l\u00e9ration et le freinage automatiquement. Le conducteur g\u00e8re les portes, l\u2019autorisation de d\u00e9part et surveille les op\u00e9rations.',
+    detailedDescription:
+      'Au niveau d\u2019automatisation 2, le syst\u00e8me ATO prend le contr\u00f4le de la traction et du freinage, suivant le Profil de trajet pour l\u2019optimisation de la vitesse, le respect de l\u2019horaire et l\u2019efficacit\u00e9 \u00e9nerg\u00e9tique. Le conducteur reste en cabine, responsable de la gestion des portes, de l\u2019autorisation de d\u00e9part et de la supervision g\u00e9n\u00e9rale. Le conducteur peut prendre la priorit\u00e9 sur l\u2019ATO \u00e0 tout moment en actionnant les commandes de traction ou de frein. L\u2019ETCS maintient la supervision de s\u00e9curit\u00e9 tout au long.',
+    driverRole: 'Surveille le fonctionnement de l\u2019ATO. Contr\u00f4le les portes et le d\u00e9part. Peut prendre la priorit\u00e9 sur l\u2019ATO \u00e0 tout moment.',
+    atoRole: 'Contr\u00f4le l\u2019acc\u00e9l\u00e9ration, la vitesse de croisi\u00e8re, la marche sur l\u2019erre et le freinage. G\u00e8re les arr\u00eats en gare.',
+    taskNames: [
+      '\u00c9tablissement de l\u2019itin\u00e9raire et exploitation',
+      'Contr\u00f4le de l\u2019acc\u00e9l\u00e9ration',
+      'Supervision de la vitesse',
+      'Freinage de service',
+      'Freinage d\u2019urgence',
+      'Gestion des portes',
+      'Autorisation de d\u00e9part',
+      'D\u00e9tection d\u2019obstacles',
+      'Gestion des urgences',
+    ],
+    realWorldExamples: [
+      'Lignes de m\u00e9tro urbain (impl\u00e9mentation la plus courante)',
+      'Transport de banlieue avec arr\u00eats fr\u00e9quents',
+      'Thameslink (Royaume-Uni) ATO sur ETCS en phase pilote',
+    ],
+    specStatus: 'Stable \u2014 CCS TSI 2023, ATO Baseline 1',
+  },
+  3: {
+    name: 'Exploitation ferroviaire sans conducteur',
+    shortName: 'GoA 3 \u2014 Sans conducteur',
+    description: 'L\u2019ATO g\u00e8re toutes les fonctions de conduite. Pas de conducteur en cabine. Un agent de bord est pr\u00e9sent pour les situations d\u2019urgence et l\u2019assistance aux passagers.',
+    detailedDescription:
+      'Au niveau d\u2019automatisation 3, le syst\u00e8me ATO contr\u00f4le toutes les fonctions de conduite, y compris la traction, le freinage, la gestion des portes et le d\u00e9part. Aucun conducteur n\u2019est pr\u00e9sent en cabine. Un agent form\u00e9 voyage \u00e0 bord pour g\u00e9rer les situations d\u2019urgence, assister les passagers et effectuer une intervention manuelle si n\u00e9cessaire. Le syst\u00e8me inclut la d\u00e9tection d\u2019obstacles et la r\u00e9ponse automatique aux urgences, avec l\u2019agent de bord comme solution humaine de secours.',
+    driverRole: 'Pas de conducteur. Agent de bord pr\u00e9sent pour les urgences et l\u2019assistance aux passagers.',
+    atoRole: 'Contr\u00f4le total de la conduite incluant les portes et le d\u00e9part. R\u00e9ponse automatis\u00e9e aux obstacles.',
+    taskNames: [
+      '\u00c9tablissement de l\u2019itin\u00e9raire et exploitation',
+      'Contr\u00f4le de l\u2019acc\u00e9l\u00e9ration',
+      'Supervision de la vitesse',
+      'Freinage de service',
+      'Freinage d\u2019urgence',
+      'Gestion des portes',
+      'Autorisation de d\u00e9part',
+      'D\u00e9tection d\u2019obstacles',
+      'Gestion des urgences',
+    ],
+    realWorldExamples: [
+      'Docklands Light Railway (Londres)',
+      'SkyTrain (Vancouver)',
+    ],
+    specStatus: 'En d\u00e9veloppement \u2014 informatif dans les sp\u00e9cifications actuelles',
+  },
+  4: {
+    name: 'Exploitation ferroviaire sans personnel',
+    shortName: 'GoA 4 \u2014 Enti\u00e8rement automatique',
+    description: 'Exploitation enti\u00e8rement automatique sans personnel \u00e0 bord. Le syst\u00e8me g\u00e8re tout, y compris les situations d\u2019urgence et la d\u00e9tection d\u2019obstacles.',
+    detailedDescription:
+      'Au niveau d\u2019automatisation 4, l\u2019ensemble de l\u2019exploitation ferroviaire est enti\u00e8rement automatis\u00e9 sans pr\u00e9sence humaine \u00e0 bord. Le syst\u00e8me ATO g\u00e8re toutes les fonctions de conduite, les op\u00e9rations de portes, le d\u00e9part, la d\u00e9tection d\u2019obstacles et les r\u00e9ponses d\u2019urgence. La surveillance \u00e0 distance depuis un poste de commande centralis\u00e9 assure la supervision humaine. Les portes pali\u00e8res de quai et les syst\u00e8mes de capteurs avanc\u00e9s garantissent la s\u00e9curit\u00e9 sans personnel \u00e0 bord.',
+    driverRole: 'Aucun personnel \u00e0 bord. Le poste de commande \u00e0 distance assure la surveillance et l\u2019intervention.',
+    atoRole: 'Contr\u00f4le autonome complet de toutes les op\u00e9rations ferroviaires et fonctions de s\u00e9curit\u00e9.',
+    taskNames: [
+      '\u00c9tablissement de l\u2019itin\u00e9raire et exploitation',
+      'Contr\u00f4le de l\u2019acc\u00e9l\u00e9ration',
+      'Supervision de la vitesse',
+      'Freinage de service',
+      'Freinage d\u2019urgence',
+      'Gestion des portes',
+      'Autorisation de d\u00e9part',
+      'D\u00e9tection d\u2019obstacles',
+      'Gestion des urgences',
+    ],
+    realWorldExamples: [
+      'M\u00e9tro de Paris Ligne 14',
+      'M\u00e9tro de Duba\u00ef',
+      'M\u00e9tro de Copenhague',
+      'U-Bahn de Nuremberg (Lignes U2, U3)',
+    ],
+    specStatus: 'En d\u00e9veloppement \u2014 informatif dans les sp\u00e9cifications actuelles',
+  },
+};

@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'motion/react';
 import type { ModeId } from '../../data/types';
-import { modes } from '../../data/modes';
-import { modeColors, categoryColors, categoryLabels } from '../../utils/colors';
+import { useTranslatedModes, useCategoryLabels } from '../../i18n/useTranslatedData';
+import { modeColors, categoryColors } from '../../utils/colors';
 import { useTheme } from '../../hooks/useTheme';
 
 interface QuizTransitionDiagramProps {
@@ -57,10 +57,12 @@ export default function QuizTransitionDiagram({
 }: QuizTransitionDiagramProps) {
   const { theme } = useTheme();
   const dk = theme === 'dark';
+  const modes = useTranslatedModes();
+  const categoryLabels = useCategoryLabels();
   const [hoveredOption, setHoveredOption] = useState<ModeId | null>(null);
 
   const srcColors = modeColors[currentMode];
-  const srcMode = useMemo(() => modes.find((m) => m.id === currentMode), [currentMode]);
+  const srcMode = useMemo(() => modes.find((m) => m.id === currentMode), [currentMode, modes]);
 
   // Layout constants
   const viewW = 720;

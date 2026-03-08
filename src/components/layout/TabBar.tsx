@@ -1,19 +1,22 @@
+import { useMemo } from 'react';
 import { GitBranch, Gamepad2, Bot } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
+import { useUI } from '../../i18n/useUI';
 
 interface TabBarProps {
   activeTab: 'diagram' | 'simulator' | 'ato';
   onTabChange: (tab: 'diagram' | 'simulator' | 'ato') => void;
 }
 
-const tabs = [
-  { id: 'diagram' as const, label: 'State Diagram', icon: GitBranch },
-  { id: 'simulator' as const, label: 'Scenario Simulator', icon: Gamepad2 },
-  { id: 'ato' as const, label: 'ATO Overview', icon: Bot },
-];
-
 export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
   const { theme } = useTheme();
+  const ui = useUI();
+
+  const tabs = useMemo(() => [
+    { id: 'diagram' as const, label: ui.tabStateDiagram, icon: GitBranch },
+    { id: 'simulator' as const, label: ui.tabScenarioSimulator, icon: Gamepad2 },
+    { id: 'ato' as const, label: ui.tabATOOverview, icon: Bot },
+  ], [ui]);
 
   return (
     <nav className={`flex border-b shrink-0 ${

@@ -1,11 +1,11 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, ArrowLeft, RotateCcw, ChevronRight, X } from 'lucide-react';
 import type { ModeId } from '../../data/types';
-import { modes } from '../../data/modes';
-import { transitions } from '../../data/transitions';
 import { modeColors, categoryColors } from '../../utils/colors';
 import CurrentStateDisplay from './CurrentStateDisplay';
 import { useTheme } from '../../hooks/useTheme';
+import { useUI } from '../../i18n/useUI';
+import { useTranslatedModes, useTranslatedTransitions } from '../../i18n/useTranslatedData';
 
 interface FreeExplorerProps {
   currentMode: ModeId;
@@ -26,6 +26,9 @@ export default function FreeExplorer({
 }: FreeExplorerProps) {
   const { theme } = useTheme();
   const dk = theme === 'dark';
+  const ui = useUI();
+  const modes = useTranslatedModes();
+  const transitions = useTranslatedTransitions();
 
   const mode = modes.find((m) => m.id === currentMode);
   if (!mode) return null;
@@ -76,9 +79,9 @@ export default function FreeExplorer({
           className={`flex items-center gap-1.5 text-sm ${dk ? 'text-slate-400' : 'text-slate-500'} ${dk ? 'hover:text-slate-200' : 'hover:text-slate-800'} transition-colors`}
         >
           <X className="w-4 h-4" />
-          Exit
+          {ui.exit}
         </button>
-        <span className="text-xs text-blue-400/70 font-medium">Free Exploration</span>
+        <span className="text-xs text-blue-400/70 font-medium">{ui.freeExploration}</span>
         <div className="flex items-center gap-2">
           {history.length > 0 && (
             <button
@@ -86,7 +89,7 @@ export default function FreeExplorer({
               className={`flex items-center gap-1 text-xs ${dk ? 'text-slate-400' : 'text-slate-500'} ${dk ? 'hover:text-slate-200' : 'hover:text-slate-800'} transition-colors px-2 py-1 rounded ${dk ? 'bg-slate-800' : 'bg-slate-100'}`}
             >
               <ArrowLeft className="w-3 h-3" />
-              Back
+              {ui.back}
             </button>
           )}
           <button
@@ -94,7 +97,7 @@ export default function FreeExplorer({
             className={`flex items-center gap-1 text-xs ${dk ? 'text-slate-400' : 'text-slate-500'} ${dk ? 'hover:text-slate-200' : 'hover:text-slate-800'} transition-colors px-2 py-1 rounded ${dk ? 'bg-slate-800' : 'bg-slate-100'}`}
           >
             <RotateCcw className="w-3 h-3" />
-            Reset
+            {ui.reset}
           </button>
         </div>
       </div>
@@ -160,7 +163,7 @@ export default function FreeExplorer({
             {/* Key characteristics */}
             <div>
               <p className={`text-[10px] ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider font-medium mb-1.5`}>
-                Key Characteristics
+                {ui.keyCharacteristics}
               </p>
               <ul className="space-y-1">
                 {mode.keyCharacteristics.map((char, i) => (
@@ -178,7 +181,7 @@ export default function FreeExplorer({
             {/* Driver responsibility */}
             <div className={`pt-2 border-t ${dk ? 'border-slate-800' : 'border-slate-200'}`}>
               <p className={`text-[10px] ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider font-medium mb-1`}>
-                Driver Responsibility
+                {ui.driverResponsibility}
               </p>
               <p className={`text-xs ${dk ? 'text-slate-400' : 'text-slate-500'}`}>{mode.driverResponsibility}</p>
             </div>
@@ -187,12 +190,12 @@ export default function FreeExplorer({
           {/* Available transitions */}
           <div>
             <p className={`text-xs font-medium ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider mb-2`}>
-              Available Transitions ({availableTransitions.length})
+              {ui.availableTransitions} ({availableTransitions.length})
             </p>
 
             {availableTransitions.length === 0 ? (
               <p className={`text-xs ${dk ? 'text-slate-500' : 'text-slate-400'} italic`}>
-                No outgoing transitions from this mode. Use Back or Reset to navigate.
+                {ui.noOutgoingTransitions}
               </p>
             ) : (
               <div className="space-y-2">

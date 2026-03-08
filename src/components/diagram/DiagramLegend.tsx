@@ -1,7 +1,9 @@
 import type { ModeCategory } from '../../data/types';
 import type { DirectionFilter } from '../../hooks/useDiagramState';
-import { categoryColors, categoryLabels } from '../../utils/colors';
+import { categoryColors } from '../../utils/colors';
 import { useTheme } from '../../hooks/useTheme';
+import { useUI } from '../../i18n/useUI';
+import { useCategoryLabels } from '../../i18n/useTranslatedData';
 
 const allCategories: ModeCategory[] = [
   'operational',
@@ -21,11 +23,7 @@ interface DiagramLegendProps {
   onSetDirection: (dir: DirectionFilter) => void;
 }
 
-const directionOptions: { value: DirectionFilter; label: string; color: string }[] = [
-  { value: 'outgoing', label: 'Outgoing', color: '#60a5fa' },
-  { value: 'incoming', label: 'Incoming', color: '#34d399' },
-  { value: 'both', label: 'Both', color: '#a78bfa' },
-];
+type DirectionOption = { value: DirectionFilter; color: string };
 
 const DiagramLegend = ({
   activeFilters,
@@ -37,6 +35,14 @@ const DiagramLegend = ({
 }: DiagramLegendProps) => {
   const { theme } = useTheme();
   const dk = theme === 'dark';
+  const ui = useUI();
+  const categoryLabels = useCategoryLabels();
+
+  const directionOptions: (DirectionOption & { label: string })[] = [
+    { value: 'outgoing', label: ui.outgoing, color: '#60a5fa' },
+    { value: 'incoming', label: ui.incoming, color: '#34d399' },
+    { value: 'both', label: ui.both, color: '#a78bfa' },
+  ];
 
   const divider = `h-px ${dk ? 'bg-slate-700/50' : 'bg-slate-200'}`;
   const sectionLabel = `text-[10px] uppercase tracking-wider font-medium block ${dk ? 'text-slate-500' : 'text-slate-400'}`;
@@ -50,7 +56,7 @@ const DiagramLegend = ({
     }`}>
       {/* Category filter/legend — clickable */}
       <span className={`${sectionLabel} mb-1.5`}>
-        Mode Categories
+        {ui.modeCategories}
       </span>
       <div className="flex flex-col gap-0.5 mb-2">
         {allCategories.map((cat) => {
@@ -111,21 +117,21 @@ const DiagramLegend = ({
               : dk ? 'text-slate-400' : 'text-slate-500'
           }`}
         >
-          Common only
+          {ui.commonOnly}
         </span>
       </button>
 
       {/* Line styles legend */}
       <div className={`${divider} my-1.5`} />
       <span className={`${sectionLabel} mb-1`}>
-        Line Styles
+        {ui.lineStyles}
       </span>
       <div className="flex flex-col gap-1 mb-2">
         <div className="flex items-center gap-1.5 px-1.5">
           <svg width="24" height="6" className="flex-shrink-0">
             <line x1="0" y1="3" x2="24" y2="3" stroke={lineStroke} strokeWidth="1.5" />
           </svg>
-          <span className={`text-[10px] ${dk ? 'text-slate-400' : 'text-slate-500'}`}>Automatic</span>
+          <span className={`text-[10px] ${dk ? 'text-slate-400' : 'text-slate-500'}`}>{ui.badgeAutomatic}</span>
         </div>
         <div className="flex items-center gap-1.5 px-1.5">
           <svg width="24" height="6" className="flex-shrink-0">
@@ -139,14 +145,14 @@ const DiagramLegend = ({
               strokeDasharray="4 3"
             />
           </svg>
-          <span className={`text-[10px] ${dk ? 'text-slate-400' : 'text-slate-500'}`}>Driver-initiated</span>
+          <span className={`text-[10px] ${dk ? 'text-slate-400' : 'text-slate-500'}`}>{ui.triggerDriver}</span>
         </div>
       </div>
 
       {/* Direction filter — clickable toggle */}
       <div className={`${divider} mb-1.5`} />
       <span className={`${sectionLabel} mb-1`}>
-        On Hover — Show
+        {ui.onHoverShow}
       </span>
       <div className="flex gap-1">
         {directionOptions.map((opt) => {

@@ -1,6 +1,8 @@
 import type { ATOStateCategory } from '../../data/ato-types';
-import { atoCategoryColors, atoCategoryLabels } from '../../utils/ato-colors';
+import { atoCategoryColors } from '../../utils/ato-colors';
 import { useTheme } from '../../hooks/useTheme';
+import { useUI } from '../../i18n/useUI';
+import { useATOCategoryLabels } from '../../i18n/useTranslatedData';
 
 const allCategories: ATOStateCategory[] = [
   'inactive',
@@ -20,6 +22,8 @@ const ATODiagramLegend = ({
 }: ATODiagramLegendProps) => {
   const { theme } = useTheme();
   const dk = theme === 'dark';
+  const ui = useUI();
+  const atoCategoryLabels = useATOCategoryLabels();
 
   const divider = `h-px ${dk ? 'bg-slate-700/50' : 'bg-slate-200'}`;
   const sectionLabel = `text-[10px] uppercase tracking-wider font-medium block ${dk ? 'text-slate-500' : 'text-slate-400'}`;
@@ -33,7 +37,7 @@ const ATODiagramLegend = ({
     }`}>
       {/* Category filter/legend */}
       <span className={`${sectionLabel} mb-1.5`}>
-        ATO State Categories
+        {ui.atoStateCategories}
       </span>
       <div className="flex flex-col gap-0.5 mb-2">
         {allCategories.map((cat) => {
@@ -73,14 +77,14 @@ const ATODiagramLegend = ({
       {/* Line styles legend */}
       <div className={`${divider} my-1.5`} />
       <span className={`${sectionLabel} mb-1`}>
-        Line Styles
+        {ui.lineStyles}
       </span>
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-1.5 px-1.5">
           <svg width="24" height="6" className="flex-shrink-0">
             <line x1="0" y1="3" x2="24" y2="3" stroke={lineStroke} strokeWidth="1.5" />
           </svg>
-          <span className={`text-[10px] ${dk ? 'text-slate-400' : 'text-slate-500'}`}>Automatic</span>
+          <span className={`text-[10px] ${dk ? 'text-slate-400' : 'text-slate-500'}`}>{ui.badgeAutomatic}</span>
         </div>
         <div className="flex items-center gap-1.5 px-1.5">
           <svg width="24" height="6" className="flex-shrink-0">
@@ -94,7 +98,7 @@ const ATODiagramLegend = ({
               strokeDasharray="4 3"
             />
           </svg>
-          <span className={`text-[10px] ${dk ? 'text-slate-400' : 'text-slate-500'}`}>Driver-initiated</span>
+          <span className={`text-[10px] ${dk ? 'text-slate-400' : 'text-slate-500'}`}>{ui.triggerDriver}</span>
         </div>
       </div>
     </div>

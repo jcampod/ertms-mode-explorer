@@ -1,0 +1,107 @@
+import type { GoATranslation } from '../types';
+
+export const deGoALevels: Record<number, GoATranslation> = {
+  1: {
+    name: 'Nicht-automatisierter Zugbetrieb',
+    shortName: 'GoA 1 \u2014 Manuell + DAS',
+    description: 'Der Triebfahrzeugf\u00FChrer steuert alle Aspekte des Fahrens. ATO liefert nur beratende Informationen, wie empfohlene Geschwindigkeit und optimale Bremspunkte.',
+    detailedDescription:
+      'Bei Automatisierungsgrad 1 fungiert das ATO-System als Fahrerassistenzsystem (DAS). Es berechnet das optimale Geschwindigkeitsprofil basierend auf dem Fahrprofil und Fahrplan und zeigt Empfehlungen am DMI an. Der Triebfahrzeugf\u00FChrer beh\u00E4lt die volle Kontrolle \u00FCber Zugkraft, Bremsung, T\u00FCren und Abfahrt. Dieser Grad reduziert den Energieverbrauch, indem er den Triebfahrzeugf\u00FChrer zu effizientem Fahrverhalten anleitet, ohne die menschliche Kontrolle zu entfernen.',
+    driverRole: 'Volle Kontrolle \u00FCber alle Fahrfunktionen. Folgt den ATO-Beratungsempfehlungen.',
+    atoRole: 'Nur beratend. Berechnet und zeigt optimales Geschwindigkeitsprofil und Bremspunkte an.',
+    taskNames: [
+      'Fahrstra\u00DFeneinstellung und Betrieb',
+      'Beschleunigungssteuerung',
+      'Geschwindigkeits\u00FCberwachung',
+      'Betriebsbremsung',
+      'Notbremsung',
+      'T\u00FCrbedienung',
+      'Abfahrtsgenehmigung',
+      'Hinderniserkennung',
+      'Notfallbehandlung',
+    ],
+    realWorldExamples: [
+      'Hauptstrecken mit Effizienzoptimierung',
+      'G\u00FCterbetrieb mit Energiesparzielen',
+    ],
+    specStatus: 'Stabil \u2014 CCS TSI 2023, ATO Baseline 1',
+  },
+  2: {
+    name: 'Halbautomatischer Zugbetrieb',
+    shortName: 'GoA 2 \u2014 Halbautomatisch',
+    description: 'ATO steuert Beschleunigung und Bremsung automatisch. Der Triebfahrzeugf\u00FChrer bedient T\u00FCren, erteilt die Abfahrtsgenehmigung und \u00FCberwacht den Betrieb.',
+    detailedDescription:
+      'Bei Automatisierungsgrad 2 \u00FCbernimmt das ATO-System die Kontrolle \u00FCber Zugkraft und Bremsung und folgt dem Fahrprofil f\u00FCr Geschwindigkeitsoptimierung, Fahrplaneinhaltung und Energieeffizienz. Der Triebfahrzeugf\u00FChrer bleibt im F\u00FChrerhaus und ist verantwortlich f\u00FCr T\u00FCrbedienung, Abfahrtsgenehmigung und allgemeine \u00DCberwachung. Der Triebfahrzeugf\u00FChrer kann ATO jederzeit durch Bet\u00E4tigung der Zugkraft- oder Bremssteuerung \u00FCbersteuern. ETCS beh\u00E4lt die Sicherheits\u00FCberwachung w\u00E4hrend des gesamten Betriebs bei.',
+    driverRole: '\u00DCberwacht den ATO-Betrieb. Steuert T\u00FCren und Abfahrt. Kann ATO jederzeit \u00FCbersteuern.',
+    atoRole: 'Steuert Beschleunigung, Beharrungsfahrt, Ausrollen und Bremsung. Verwaltet Stationshalte.',
+    taskNames: [
+      'Fahrstra\u00DFeneinstellung und Betrieb',
+      'Beschleunigungssteuerung',
+      'Geschwindigkeits\u00FCberwachung',
+      'Betriebsbremsung',
+      'Notbremsung',
+      'T\u00FCrbedienung',
+      'Abfahrtsgenehmigung',
+      'Hinderniserkennung',
+      'Notfallbehandlung',
+    ],
+    realWorldExamples: [
+      'St\u00E4dtische U-Bahn-Linien (h\u00E4ufigste Implementierung)',
+      'S-Bahn mit h\u00E4ufigen Halten',
+      'Thameslink (UK) ATO \u00FCber ETCS-Pilotprojekt',
+    ],
+    specStatus: 'Stabil \u2014 CCS TSI 2023, ATO Baseline 1',
+  },
+  3: {
+    name: 'Fahrerloser Zugbetrieb',
+    shortName: 'GoA 3 \u2014 Fahrerlos',
+    description: 'ATO \u00FCbernimmt alle Fahrfunktionen. Kein Triebfahrzeugf\u00FChrer im F\u00FChrerhaus. Ein Zugbegleiter ist f\u00FCr Notf\u00E4lle und Fahrgastbetreuung an Bord.',
+    detailedDescription:
+      'Bei Automatisierungsgrad 3 steuert das ATO-System alle Fahrfunktionen einschlie\u00DFlich Zugkraft, Bremsung, T\u00FCrbedienung und Abfahrt. Kein Triebfahrzeugf\u00FChrer ist im F\u00FChrerhaus anwesend. Ein ausgebildeter Zugbegleiter f\u00E4hrt an Bord mit, um Notfallsituationen zu behandeln, Fahrg\u00E4ste zu unterst\u00FCtzen und bei Bedarf manuell einzugreifen. Das System umfasst Hinderniserkennung und automatische Notfallreaktion, wobei der Zugbegleiter als menschliche Sicherheitsreserve dient.',
+    driverRole: 'Kein Triebfahrzeugf\u00FChrer. Zugbegleiter an Bord f\u00FCr Notf\u00E4lle und Fahrgastbetreuung.',
+    atoRole: 'Volle Fahrkontrolle einschlie\u00DFlich T\u00FCren und Abfahrt. Automatische Hindernisreaktion.',
+    taskNames: [
+      'Fahrstra\u00DFeneinstellung und Betrieb',
+      'Beschleunigungssteuerung',
+      'Geschwindigkeits\u00FCberwachung',
+      'Betriebsbremsung',
+      'Notbremsung',
+      'T\u00FCrbedienung',
+      'Abfahrtsgenehmigung',
+      'Hinderniserkennung',
+      'Notfallbehandlung',
+    ],
+    realWorldExamples: [
+      'Docklands Light Railway (London)',
+      'SkyTrain (Vancouver)',
+    ],
+    specStatus: 'In Entwicklung \u2014 informativ in aktuellen Spezifikationen',
+  },
+  4: {
+    name: 'Unbemannter Zugbetrieb',
+    shortName: 'GoA 4 \u2014 Vollautomatisch',
+    description: 'Vollautomatischer Betrieb ohne Personal an Bord. Das System \u00FCbernimmt alles einschlie\u00DFlich Notfallbehandlung und Hinderniserkennung.',
+    detailedDescription:
+      'Bei Automatisierungsgrad 4 ist der gesamte Zugbetrieb vollautomatisiert, ohne menschliche Pr\u00E4senz an Bord. Das ATO-System \u00FCbernimmt alle Fahrfunktionen, T\u00FCrbedienung, Abfahrt, Hinderniserkennung und Notfallreaktionen. Fern\u00FCberwachung aus einer Betriebsleitstelle bietet menschliche Aufsicht. Bahnsteigsperrt\u00FCren und fortschrittliche Sensorsysteme gew\u00E4hrleisten die Sicherheit ohne Bordpersonal.',
+    driverRole: 'Kein Bordpersonal. Fern-Betriebsleitstelle \u00FCbernimmt \u00DCberwachung und Eingriff.',
+    atoRole: 'Vollst\u00E4ndige autonome Steuerung aller Zugbetriebs- und Sicherheitsfunktionen.',
+    taskNames: [
+      'Fahrstra\u00DFeneinstellung und Betrieb',
+      'Beschleunigungssteuerung',
+      'Geschwindigkeits\u00FCberwachung',
+      'Betriebsbremsung',
+      'Notbremsung',
+      'T\u00FCrbedienung',
+      'Abfahrtsgenehmigung',
+      'Hinderniserkennung',
+      'Notfallbehandlung',
+    ],
+    realWorldExamples: [
+      'Paris Metro Linie 14',
+      'Dubai Metro',
+      'Metro Kopenhagen',
+      'N\u00FCrnberger U-Bahn (Linien U2, U3)',
+    ],
+    specStatus: 'In Entwicklung \u2014 informativ in aktuellen Spezifikationen',
+  },
+};

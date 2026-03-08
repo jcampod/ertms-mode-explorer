@@ -1,5 +1,6 @@
 import { BookOpen } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
+import { useUI } from '../../i18n/useUI';
 
 const specifications = [
   {
@@ -42,13 +43,14 @@ const specifications = [
 const ATOReferences = () => {
   const { theme } = useTheme();
   const dk = theme === 'dark';
+  const ui = useUI();
 
   return (
     <div>
       <div className={`flex items-center gap-1.5 mb-3 ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
         <BookOpen className="w-3.5 h-3.5" />
         <span className="text-[10px] uppercase tracking-wider font-semibold">
-          References — Key ATO Specifications (CCS TSI 2023)
+          {ui.referencesTitle}
         </span>
       </div>
       <div className="space-y-2">

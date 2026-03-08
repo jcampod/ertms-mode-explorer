@@ -1,21 +1,38 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
-import { goaLevels } from '../../data/ato-goa';
 import type { GoALevel, ResponsibilityRole } from '../../data/ato-types';
 import { useTheme } from '../../hooks/useTheme';
+import { useUI } from '../../i18n/useUI';
+import { useTranslatedGoALevels } from '../../i18n/useTranslatedData';
 
-const roleColors: Record<ResponsibilityRole, { bg: string; text: string; bgLight: string; textLight: string; label: string }> = {
-  driver:    { bg: 'bg-blue-500/15',   text: 'text-blue-300',   bgLight: 'bg-blue-50',   textLight: 'text-blue-700',   label: 'Driver' },
-  ato:       { bg: 'bg-green-500/15',  text: 'text-green-300',  bgLight: 'bg-green-50',  textLight: 'text-green-700',  label: 'ATO' },
-  attendant: { bg: 'bg-amber-500/15',  text: 'text-amber-300',  bgLight: 'bg-amber-50',  textLight: 'text-amber-700',  label: 'Attendant' },
-  system:    { bg: 'bg-slate-500/15',  text: 'text-slate-300',  bgLight: 'bg-slate-100', textLight: 'text-slate-600',  label: 'System' },
+const roleColors: Record<ResponsibilityRole, { bg: string; text: string; bgLight: string; textLight: string }> = {
+  driver:    { bg: 'bg-blue-500/15',   text: 'text-blue-300',   bgLight: 'bg-blue-50',   textLight: 'text-blue-700'   },
+  ato:       { bg: 'bg-green-500/15',  text: 'text-green-300',  bgLight: 'bg-green-50',  textLight: 'text-green-700'  },
+  attendant: { bg: 'bg-amber-500/15',  text: 'text-amber-300',  bgLight: 'bg-amber-50',  textLight: 'text-amber-700'  },
+  system:    { bg: 'bg-slate-500/15',  text: 'text-slate-300',  bgLight: 'bg-slate-100', textLight: 'text-slate-600'  },
 };
 
 const GoAComparison = () => {
   const { theme } = useTheme();
   const dk = theme === 'dark';
+  const ui = useUI();
+  const goaLevels = useTranslatedGoALevels();
   const [expandedGoA, setExpandedGoA] = useState<GoALevel | null>(null);
+
+  const roleLabels: Record<ResponsibilityRole, string> = {
+    driver: ui.roleDriver,
+    ato: ui.roleATO,
+    attendant: ui.roleAttendant,
+    system: ui.roleSystem,
+  };
+
+  const goaShortLabels: Record<number, string> = {
+    1: ui.goaManual,
+    2: ui.goaSemiAuto,
+    3: ui.goaDriverless,
+    4: ui.goaUnattended,
+  };
 
   const toggleExpand = (level: GoALevel) => {
     setExpandedGoA((prev) => (prev === level ? null : level));
@@ -31,7 +48,7 @@ const GoAComparison = () => {
         {/* Header row */}
         <div className={`grid grid-cols-5 ${dk ? 'bg-slate-900/80' : 'bg-slate-50'}`}>
           <div className={`px-3 py-2.5 text-[10px] uppercase tracking-wider font-medium ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
-            Task
+            {ui.task}
           </div>
           {goaLevels.map((goa) => (
             <div
@@ -42,7 +59,7 @@ const GoAComparison = () => {
                 GoA {goa.level}
               </div>
               <div className={`text-[10px] mt-0.5 ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
-                {goa.level === 1 ? 'Manual' : goa.level === 2 ? 'Semi-Auto' : goa.level === 3 ? 'Driverless' : 'Unattended'}
+                {goaShortLabels[goa.level]}
               </div>
             </div>
           ))}
@@ -72,7 +89,7 @@ const GoAComparison = () => {
                   <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
                     dk ? `${role.bg} ${role.text}` : `${role.bgLight} ${role.textLight}`
                   }`}>
-                    {role.label}
+                    {roleLabels[resp.performedBy]}
                   </span>
                 </div>
               );
@@ -123,7 +140,7 @@ const GoAComparison = () => {
                   <div className={`px-4 py-3 space-y-3 border-t ${dk ? 'border-slate-800' : 'border-slate-200'}`}>
                     <div>
                       <h4 className={`text-[10px] uppercase tracking-wider font-medium mb-1 ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
-                        Description
+                        {ui.description}
                       </h4>
                       <p className={`text-sm leading-relaxed ${dk ? 'text-slate-300' : 'text-slate-600'}`}>
                         {goa.description}
@@ -133,7 +150,7 @@ const GoAComparison = () => {
                     <div className="grid grid-cols-2 gap-3">
                       <div>
                         <h4 className={`text-[10px] uppercase tracking-wider font-medium mb-1 ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
-                          Driver Role
+                          {ui.driverRole}
                         </h4>
                         <p className={`text-xs leading-relaxed ${dk ? 'text-slate-400' : 'text-slate-500'}`}>
                           {goa.driverRole}
@@ -141,7 +158,7 @@ const GoAComparison = () => {
                       </div>
                       <div>
                         <h4 className={`text-[10px] uppercase tracking-wider font-medium mb-1 ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
-                          ATO Role
+                          {ui.atoRole}
                         </h4>
                         <p className={`text-xs leading-relaxed ${dk ? 'text-slate-400' : 'text-slate-500'}`}>
                           {goa.atoRole}
@@ -152,7 +169,7 @@ const GoAComparison = () => {
                     {goa.realWorldExamples.length > 0 && (
                       <div>
                         <h4 className={`text-[10px] uppercase tracking-wider font-medium mb-1 ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
-                          Real-World Examples
+                          {ui.realWorldExamples}
                         </h4>
                         <ul className="space-y-0.5">
                           {goa.realWorldExamples.map((ex, i) => (

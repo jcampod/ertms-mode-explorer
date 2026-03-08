@@ -1,5 +1,6 @@
 import { Plus, Minus, Maximize2 } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
+import { useUI } from '../../i18n/useUI';
 
 interface DiagramControlsProps {
   onZoomIn: () => void;
@@ -13,6 +14,7 @@ const DiagramControls = ({
   onResetView,
 }: DiagramControlsProps) => {
   const { theme } = useTheme();
+  const ui = useUI();
 
   return (
     <div className="absolute top-3 left-3 z-20 flex flex-col gap-2">
@@ -29,7 +31,7 @@ const DiagramControls = ({
               ? 'text-slate-400 hover:bg-slate-700/60 hover:text-slate-200'
               : 'text-slate-500 hover:bg-slate-200/80 hover:text-slate-700'
           }`}
-          title="Zoom in"
+          title={ui.zoomIn}
         >
           <Plus size={14} />
         </button>
@@ -40,7 +42,7 @@ const DiagramControls = ({
               ? 'text-slate-400 hover:bg-slate-700/60 hover:text-slate-200'
               : 'text-slate-500 hover:bg-slate-200/80 hover:text-slate-700'
           }`}
-          title="Zoom out"
+          title={ui.zoomOut}
         >
           <Minus size={14} />
         </button>
@@ -52,7 +54,7 @@ const DiagramControls = ({
               ? 'text-slate-400 hover:bg-slate-700/60 hover:text-slate-200'
               : 'text-slate-500 hover:bg-slate-200/80 hover:text-slate-700'
           }`}
-          title="Reset view"
+          title={ui.resetView}
         >
           <Maximize2 size={14} />
         </button>

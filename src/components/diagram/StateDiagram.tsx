@@ -2,8 +2,7 @@ import { useRef, useMemo, useCallback, useEffect } from 'react';
 import { useDiagramState } from '../../hooks/useDiagramState';
 import { usePanZoom } from '../../hooks/usePanZoom';
 import { useTheme } from '../../hooks/useTheme';
-import { modes } from '../../data/modes';
-import { transitions } from '../../data/transitions';
+import { useTranslatedModes, useTranslatedTransitions } from '../../i18n/useTranslatedData';
 import { nodePositions } from '../../data/layout';
 import { modeColors } from '../../utils/colors';
 import { needsBidirectionalOffset } from '../../utils/edge-routing';
@@ -52,6 +51,8 @@ const StateDiagram = () => {
   } = usePanZoom();
 
   const { theme } = useTheme();
+  const modes = useTranslatedModes();
+  const transitions = useTranslatedTransitions();
 
   // Build a position lookup map
   const positionMap = useMemo(() => {
@@ -65,7 +66,7 @@ const StateDiagram = () => {
   // Filter modes by active category filters
   const filteredModes = useMemo(() => {
     return modes.filter((m) => activeFilters.has(m.category));
-  }, [activeFilters]);
+  }, [activeFilters, modes]);
 
   const filteredModeIds = useMemo(() => {
     return new Set(filteredModes.map((m) => m.id));
@@ -80,24 +81,24 @@ const StateDiagram = () => {
       if (t.from === t.to) return filteredModeIds.has(t.from);
       return filteredModeIds.has(t.from) && filteredModeIds.has(t.to);
     });
-  }, [filteredModeIds, showCommonOnly]);
+  }, [filteredModeIds, showCommonOnly, transitions]);
 
   // Universal transitions (rendered as dashed rings around targets)
   const universalTransitions = useMemo(() => {
     return transitions.filter((t) => t.isUniversal);
-  }, []);
+  }, [transitions]);
 
   // Get the selected mode object
   const selectedMode = useMemo(() => {
     if (!selectedNode) return null;
     return modes.find((m) => m.id === selectedNode) ?? null;
-  }, [selectedNode]);
+  }, [selectedNode, modes]);
 
   // Get the selected transition object
   const selectedTransition = useMemo(() => {
     if (!selectedEdge) return null;
     return transitions.find((t) => t.id === selectedEdge) ?? null;
-  }, [selectedEdge]);
+  }, [selectedEdge, transitions]);
 
 
   // Determine node state

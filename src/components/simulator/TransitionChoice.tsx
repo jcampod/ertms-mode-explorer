@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import type { ModeId } from '../../data/types';
-import { modes } from '../../data/modes';
+import { useTranslatedModes } from '../../i18n/useTranslatedData';
 import { modeColors } from '../../utils/colors';
 import { useTheme } from '../../hooks/useTheme';
 
@@ -21,6 +21,7 @@ export default function TransitionChoice({
 }: TransitionChoiceProps) {
   const { theme } = useTheme();
   const dk = theme === 'dark';
+  const modes = useTranslatedModes();
 
   const mode = modes.find((m) => m.id === modeId);
   if (!mode) return null;

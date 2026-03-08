@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import type { Transition } from '../../data/types';
-import { modes } from '../../data/modes';
+import { useTranslatedModes } from '../../i18n/useTranslatedData';
+import { useUI } from '../../i18n/useUI';
 
 const triggerColors: Record<string, string> = {
   driver: '#34d399',
@@ -9,19 +10,22 @@ const triggerColors: Record<string, string> = {
   failure: '#ef4444',
 };
 
-const triggerLabels: Record<string, string> = {
-  driver: 'Driver Initiated',
-  trackside: 'Trackside',
-  system: 'System',
-  failure: 'Failure',
-};
-
 interface TransitionTooltipProps {
   transition: Transition | null;
   position: { x: number; y: number } | null;
 }
 
 const TransitionTooltip = ({ transition, position }: TransitionTooltipProps) => {
+  const modes = useTranslatedModes();
+  const ui = useUI();
+
+  const triggerLabels: Record<string, string> = {
+    driver: ui.triggerDriver,
+    trackside: ui.triggerTrackside,
+    system: ui.triggerSystem,
+    failure: ui.triggerFailure,
+  };
+
   const fromMode = transition ? modes.find((m) => m.id === transition.from) : null;
   const toMode = transition ? modes.find((m) => m.id === transition.to) : null;
 
@@ -64,7 +68,7 @@ const TransitionTooltip = ({ transition, position }: TransitionTooltipProps) => 
               </span>
               {transition.isAutomatic && (
                 <span className="ml-1 inline-block rounded-full px-2 py-0.5 text-[10px] font-medium bg-slate-800 text-slate-400">
-                  Automatic
+                  {ui.badgeAutomatic}
                 </span>
               )}
             </div>
@@ -73,7 +77,7 @@ const TransitionTooltip = ({ transition, position }: TransitionTooltipProps) => 
             {transition.conditions.length > 0 && (
               <div className="mb-2">
                 <span className="text-[10px] uppercase tracking-wider text-slate-500 font-medium">
-                  Conditions
+                  {ui.conditions}
                 </span>
                 <ul className="mt-1 space-y-0.5">
                   {transition.conditions.map((cond, i) => (

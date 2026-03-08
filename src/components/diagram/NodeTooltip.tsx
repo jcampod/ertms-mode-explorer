@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react';
 import type { ETCSMode } from '../../data/types';
-import { modeColors, categoryColors, categoryLabels } from '../../utils/colors';
+import { modeColors, categoryColors } from '../../utils/colors';
+import { useCategoryLabels } from '../../i18n/useTranslatedData';
+import { useUI } from '../../i18n/useUI';
 
 interface NodeTooltipProps {
   mode: ETCSMode | null;
@@ -8,6 +10,8 @@ interface NodeTooltipProps {
 }
 
 const NodeTooltip = ({ mode, position }: NodeTooltipProps) => {
+  const categoryLabels = useCategoryLabels();
+  const ui = useUI();
   return (
     <AnimatePresence>
       {mode && position && (
@@ -58,7 +62,7 @@ const NodeTooltip = ({ mode, position }: NodeTooltipProps) => {
             {/* Speed limit */}
             {mode.speedLimit && (
               <div className="text-[11px] text-slate-400 mb-1.5">
-                <span className="text-slate-500">Speed: </span>
+                <span className="text-slate-500">{ui.tooltipSpeed}: </span>
                 {mode.speedLimit}
               </div>
             )}
@@ -70,7 +74,7 @@ const NodeTooltip = ({ mode, position }: NodeTooltipProps) => {
 
             {/* Hint */}
             <div className="mt-2 text-[10px] text-slate-600 italic">
-              Click for details
+              {ui.tooltipClickForDetails}
             </div>
           </div>
         </motion.div>

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Lightbulb } from 'lucide-react';
 import type { ScenarioStep } from '../../data/types';
 import { useTheme } from '../../hooks/useTheme';
+import { useUI } from '../../i18n/useUI';
 
 interface SituationCardProps {
   step: ScenarioStep;
@@ -14,6 +15,7 @@ export default function SituationCard({ step, scenarioTitle, compact }: Situatio
   const [showHint, setShowHint] = useState(false);
   const { theme } = useTheme();
   const dk = theme === 'dark';
+  const ui = useUI();
 
   // Reset hint visibility when step changes
   const [prevStepId, setPrevStepId] = useState(step.id);
@@ -39,7 +41,7 @@ export default function SituationCard({ step, scenarioTitle, compact }: Situatio
       <div>
         {!compact && (
           <p className={`text-[10px] ${dk ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-wider font-medium mb-1.5`}>
-            Situation
+            {ui.situation}
           </p>
         )}
         <p className={`${compact ? 'text-xs' : 'text-sm'} ${dk ? 'text-slate-300' : 'text-slate-600'} leading-relaxed ${compact ? 'line-clamp-2' : ''}`}>{step.situation}</p>
@@ -58,7 +60,7 @@ export default function SituationCard({ step, scenarioTitle, compact }: Situatio
             className="flex items-center gap-1.5 text-xs text-amber-400/70 hover:text-amber-400 transition-colors"
           >
             <Lightbulb className="w-3.5 h-3.5" />
-            {showHint ? 'Hide hint' : 'Show hint'}
+            {showHint ? ui.hideHint : ui.showHint}
           </button>
           <AnimatePresence>
             {showHint && (

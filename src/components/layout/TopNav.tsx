@@ -1,8 +1,11 @@
 import { Train, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
+import { useUI } from '../../i18n/useUI';
+import LanguageSelector from './LanguageSelector';
 
 export default function TopNav() {
   const { theme, toggleTheme } = useTheme();
+  const ui = useUI();
 
   return (
     <header className={`h-12 flex items-center justify-between px-4 border-b shrink-0 ${
@@ -15,15 +18,16 @@ export default function TopNav() {
         <h1 className={`text-sm font-semibold tracking-wide ${
           theme === 'dark' ? 'text-slate-100' : 'text-slate-800'
         }`}>
-          ERTMS Mode Explorer
+          {ui.appTitle}
         </h1>
       </div>
       <div className="flex items-center gap-3">
         <span className={`text-xs hidden sm:block ${
           theme === 'dark' ? 'text-slate-500' : 'text-slate-400'
         }`}>
-          ETCS Operating Modes &mdash; Subset-026
+          {ui.appSubtitle}
         </span>
+        <LanguageSelector />
         <button
           onClick={toggleTheme}
           className={`flex h-8 w-8 items-center justify-center rounded-lg transition-colors ${
@@ -31,7 +35,7 @@ export default function TopNav() {
               ? 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
               : 'text-slate-500 hover:bg-slate-200 hover:text-slate-700'
           }`}
-          title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          title={theme === 'dark' ? ui.switchToLight : ui.switchToDark}
         >
           {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
         </button>

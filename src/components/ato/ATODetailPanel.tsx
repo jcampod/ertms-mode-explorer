@@ -1,10 +1,10 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { X, ArrowRight, CheckCircle, Circle, Zap, User, Radio } from 'lucide-react';
 import type { ATOState, ATOStateId, ATOTransition } from '../../data/ato-types';
-import { atoTransitions } from '../../data/ato-transitions';
-import { atoStates } from '../../data/ato-modes';
-import { atoStateColors, atoCategoryColors, atoCategoryLabels } from '../../utils/ato-colors';
+import { atoStateColors, atoCategoryColors } from '../../utils/ato-colors';
 import { useTheme } from '../../hooks/useTheme';
+import { useUI } from '../../i18n/useUI';
+import { useTranslatedATOStates, useTranslatedATOTransitions, useATOCategoryLabels } from '../../i18n/useTranslatedData';
 
 interface ATODetailPanelProps {
   state: ATOState | null;
@@ -19,15 +19,19 @@ const triggerIcons = {
   system: Zap,
 };
 
-const triggerLabels = {
-  driver: 'Driver-initiated',
-  trackside: 'Trackside command',
-  system: 'Automatic (system)',
-};
-
 const ATODetailPanel = ({ state, transition, onClose, onNavigate }: ATODetailPanelProps) => {
   const isOpen = !!(state || transition);
   const { theme } = useTheme();
+  const ui = useUI();
+  const atoStates = useTranslatedATOStates();
+  const atoTransitions = useTranslatedATOTransitions();
+  const atoCategoryLabels = useATOCategoryLabels();
+
+  const triggerLabels = {
+    driver: ui.triggerDriver,
+    trackside: ui.triggerTrackside,
+    system: ui.triggerSystem,
+  };
 
   return (
     <AnimatePresence>
@@ -57,9 +61,9 @@ const ATODetailPanel = ({ state, transition, onClose, onNavigate }: ATODetailPan
 
           <div className="p-5 pt-4">
             {transition ? (
-              <ATOTransitionDetail transition={transition} onNavigate={onNavigate} theme={theme} />
+              <ATOTransitionDetail transition={transition} onNavigate={onNavigate} theme={theme} atoStates={atoStates} triggerLabels={triggerLabels} ui={ui} />
             ) : state ? (
-              <ATOStateDetail state={state} onNavigate={onNavigate} theme={theme} />
+              <ATOStateDetail state={state} onNavigate={onNavigate} theme={theme} atoStates={atoStates} atoTransitions={atoTransitions} atoCategoryLabels={atoCategoryLabels} ui={ui} />
             ) : null}
           </div>
         </motion.div>
@@ -75,10 +79,16 @@ function ATOTransitionDetail({
   transition: t,
   onNavigate,
   theme,
+  atoStates,
+  triggerLabels,
+  ui,
 }: {
   transition: ATOTransition;
   onNavigate: (id: ATOStateId) => void;
   theme: 'dark' | 'light';
+  atoStates: ATOState[];
+  triggerLabels: Record<string, string>;
+  ui: ReturnType<typeof useUI>;
 }) {
   const fromState = atoStates.find((s) => s.id === t.from);
   const toState = atoStates.find((s) => s.id === t.to);
@@ -135,28 +145,28 @@ function ATOTransitionDetail({
           <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
             dk ? 'bg-blue-500/15 text-blue-300' : 'bg-blue-50 text-blue-600'
           }`}>
-            Automatic
+            {ui.badgeAutomatic}
           </span>
         )}
         {!t.isAutomatic && (
           <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
             dk ? 'bg-amber-500/15 text-amber-300' : 'bg-amber-50 text-amber-700'
           }`}>
-            Manual
+            {ui.badgeManual}
           </span>
         )}
         {t.isCommon && (
           <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
             dk ? 'bg-green-500/15 text-green-300' : 'bg-green-50 text-green-700'
           }`}>
-            Common
+            {ui.badgeCommon}
           </span>
         )}
         {t.isUniversal && (
           <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
             dk ? 'bg-red-500/15 text-red-300' : 'bg-red-50 text-red-700'
           }`}>
-            From any state
+            {ui.badgeFromAnyState}
           </span>
         )}
       </div>
@@ -164,7 +174,7 @@ function ATOTransitionDetail({
       {/* Simple explanation */}
       <div className="mb-4">
         <h3 className={`text-[10px] uppercase tracking-wider font-medium mb-1 ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
-          In Simple Terms
+          {ui.inSimpleTerms}
         </h3>
         <p className={`text-sm leading-relaxed ${dk ? 'text-slate-200' : 'text-slate-800'}`}>
           {t.description}
@@ -174,7 +184,7 @@ function ATOTransitionDetail({
       {/* Technical description */}
       <div className="mb-4">
         <h3 className={`text-[10px] uppercase tracking-wider font-medium mb-1 ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
-          Technical Detail
+          {ui.technicalDetail}
         </h3>
         <p className={`text-[13px] leading-relaxed ${dk ? 'text-slate-400' : 'text-slate-600'}`}>
           {t.detailedDescription}
@@ -184,7 +194,7 @@ function ATOTransitionDetail({
       {/* Conditions */}
       <div className="mb-4">
         <h3 className={`text-[10px] uppercase tracking-wider font-medium mb-1.5 ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
-          Conditions
+          {ui.conditions}
         </h3>
         <ul className="space-y-1.5">
           {t.conditions.map((c, i) => (
@@ -199,7 +209,7 @@ function ATOTransitionDetail({
                 : (dk ? 'text-slate-500' : 'text-slate-400')
               }>
                 {c.text}
-                {!c.isRequired && <span className={dk ? 'text-slate-600 ml-1' : 'text-slate-400 ml-1'}>(optional)</span>}
+                {!c.isRequired && <span className={dk ? 'text-slate-600 ml-1' : 'text-slate-400 ml-1'}>{ui.optional}</span>}
               </span>
             </li>
           ))}
@@ -216,10 +226,18 @@ function ATOStateDetail({
   state: s,
   onNavigate,
   theme,
+  atoStates,
+  atoTransitions,
+  atoCategoryLabels,
+  ui,
 }: {
   state: ATOState;
   onNavigate: (id: ATOStateId) => void;
   theme: 'dark' | 'light';
+  atoStates: ATOState[];
+  atoTransitions: ATOTransition[];
+  atoCategoryLabels: Record<string, string>;
+  ui: ReturnType<typeof useUI>;
 }) {
   const transitionsFrom = atoTransitions.filter(
     (t) => t.from === s.id && !t.isUniversal
@@ -270,19 +288,19 @@ function ATOStateDetail({
 
       {/* GoA Relevance */}
       <div className="mb-4">
-        <h3 className={sectionLabel}>GoA Relevance</h3>
+        <h3 className={sectionLabel}>{ui.goaRelevance}</h3>
         <p className={`text-sm ${dk ? 'text-slate-300' : 'text-slate-700'}`}>{s.goaRelevance}</p>
       </div>
 
       {/* ETCS Requirement */}
       <div className="mb-4">
-        <h3 className={sectionLabel}>ETCS Requirement</h3>
+        <h3 className={sectionLabel}>{ui.etcsRequirement}</h3>
         <p className={`text-sm ${dk ? 'text-slate-300' : 'text-slate-700'}`}>{s.etcsRequirement}</p>
       </div>
 
       {/* Simple explanation */}
       <div className="mb-4">
-        <h3 className={sectionLabel}>In Simple Terms</h3>
+        <h3 className={sectionLabel}>{ui.inSimpleTerms}</h3>
         <p className={`text-sm leading-relaxed ${dk ? 'text-slate-200' : 'text-slate-800'}`}>
           {s.description}
         </p>
@@ -290,7 +308,7 @@ function ATOStateDetail({
 
       {/* Technical description */}
       <div className="mb-4">
-        <h3 className={sectionLabel}>Technical Detail</h3>
+        <h3 className={sectionLabel}>{ui.technicalDetail}</h3>
         <p className={`text-[13px] leading-relaxed ${dk ? 'text-slate-400' : 'text-slate-600'}`}>
           {s.detailedDescription}
         </p>
@@ -298,7 +316,7 @@ function ATOStateDetail({
 
       {/* Key characteristics */}
       <div className="mb-4">
-        <h3 className={`${sectionLabel} mb-1.5`}>Key Characteristics</h3>
+        <h3 className={`${sectionLabel} mb-1.5`}>{ui.keyCharacteristics}</h3>
         <ul className="space-y-1">
           {s.keyCharacteristics.map((char, i) => (
             <li key={i} className={`text-sm flex items-start gap-2 ${dk ? 'text-slate-400' : 'text-slate-600'}`}>
@@ -315,7 +333,7 @@ function ATOStateDetail({
       {/* Transitions from this state */}
       {transitionsFrom.length > 0 && (
         <div className="mb-4">
-          <h3 className={`${sectionLabel} mb-1.5`}>Transitions From This State</h3>
+          <h3 className={`${sectionLabel} mb-1.5`}>{ui.transitionsFromThisState}</h3>
           <div className="space-y-1">
             {transitionsFrom.map((t) => (
               <button
@@ -346,7 +364,7 @@ function ATOStateDetail({
       {/* Transitions to this state */}
       {transitionsTo.length > 0 && (
         <div className="mb-4">
-          <h3 className={`${sectionLabel} mb-1.5`}>Transitions To This State</h3>
+          <h3 className={`${sectionLabel} mb-1.5`}>{ui.transitionsToThisState}</h3>
           <div className="space-y-1">
             {transitionsTo.map((t) => (
               <button
@@ -376,7 +394,7 @@ function ATOStateDetail({
 
       {/* Specification reference */}
       <div className="mb-2">
-        <h3 className={sectionLabel}>Specification Reference</h3>
+        <h3 className={sectionLabel}>{ui.specificationReference}</h3>
         <p className={`text-sm font-mono ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
           {s.subsetReference}
         </p>

@@ -1,4 +1,5 @@
 import { useTheme } from '../../hooks/useTheme';
+import { useUI } from '../../i18n/useUI';
 import ATOStateDiagram from './ATOStateDiagram';
 import GoAComparison from './GoAComparison';
 import ETCSIntegration from './ETCSIntegration';
@@ -7,6 +8,7 @@ import ATOReferences from './ATOReferences';
 const ATOOverview = () => {
   const { theme } = useTheme();
   const dk = theme === 'dark';
+  const ui = useUI();
 
   const sectionHeader = `text-[10px] uppercase tracking-wider font-semibold mb-3 ${dk ? 'text-slate-500' : 'text-slate-400'}`;
 
@@ -23,7 +25,7 @@ const ATOOverview = () => {
           {/* ETCS Integration — full width */}
           <div>
             <h2 className={sectionHeader}>
-              ETCS Integration
+              {ui.etcsIntegration}
             </h2>
             <ETCSIntegration />
           </div>
@@ -31,7 +33,7 @@ const ATOOverview = () => {
           {/* GoA Comparison — full width */}
           <div>
             <h2 className={sectionHeader}>
-              Grades of Automation (GoA 1–4)
+              {ui.gradesOfAutomation}
             </h2>
             <GoAComparison />
           </div>

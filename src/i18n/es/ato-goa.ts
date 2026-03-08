@@ -1,0 +1,107 @@
+import type { GoATranslation } from '../types';
+
+export const esGoALevels: Record<number, GoATranslation> = {
+  1: {
+    name: 'Operación de tren no automatizada',
+    shortName: 'GoA 1 — Manual + DAS',
+    description: 'El maquinista controla todos los aspectos de la conducción. ATO proporciona solo información de asesoramiento, como velocidad recomendada y puntos óptimos de frenado.',
+    detailedDescription:
+      'En el Grado de Automatización 1, el sistema ATO funciona como un Sistema de Asesoramiento al Maquinista (DAS). Calcula el perfil de velocidad óptimo basado en el Perfil de Viaje y el horario, mostrando recomendaciones en el DMI. El maquinista conserva el control total de la tracción, el frenado, las puertas y la salida. Este grado reduce el consumo de energía guiando al maquinista hacia un comportamiento de conducción eficiente sin eliminar el control humano.',
+    driverRole: 'Control total de todas las funciones de conducción. Sigue las recomendaciones de asesoramiento de ATO.',
+    atoRole: 'Solo asesoramiento. Calcula y muestra el perfil de velocidad óptimo y los puntos de frenado.',
+    taskNames: [
+      'Establecimiento y operación de ruta',
+      'Control de aceleración',
+      'Supervisión de velocidad',
+      'Frenado de servicio',
+      'Frenado de emergencia',
+      'Operación de puertas',
+      'Autorización de salida',
+      'Detección de obstáculos',
+      'Gestión de emergencias',
+    ],
+    realWorldExamples: [
+      'Ferrocarriles de línea principal con optimización de eficiencia',
+      'Operaciones de mercancías con objetivos de ahorro energético',
+    ],
+    specStatus: 'Estable — CCS TSI 2023, ATO Baseline 1',
+  },
+  2: {
+    name: 'Operación de tren semiautomática',
+    shortName: 'GoA 2 — Semiautomático',
+    description: 'ATO controla la aceleración y el frenado automáticamente. El maquinista gestiona las puertas, la autorización de salida y monitoriza las operaciones.',
+    detailedDescription:
+      'En el Grado de Automatización 2, el sistema ATO toma el control de la tracción y el frenado, siguiendo el Perfil de Viaje para la optimización de velocidad, el cumplimiento del horario y la eficiencia energética. El maquinista permanece en la cabina, responsable de la operación de puertas, la autorización de salida y la supervisión general. El maquinista puede anular ATO en cualquier momento accionando los controles de tracción o freno. ETCS mantiene la supervisión de seguridad en todo momento.',
+    driverRole: 'Monitoriza la operación de ATO. Controla puertas y salida. Puede anular ATO en cualquier momento.',
+    atoRole: 'Controla aceleración, velocidad de crucero, inercia y frenado. Gestiona las paradas en estación.',
+    taskNames: [
+      'Establecimiento y operación de ruta',
+      'Control de aceleración',
+      'Supervisión de velocidad',
+      'Frenado de servicio',
+      'Frenado de emergencia',
+      'Operación de puertas',
+      'Autorización de salida',
+      'Detección de obstáculos',
+      'Gestión de emergencias',
+    ],
+    realWorldExamples: [
+      'Líneas de metro urbanas (implementación más común)',
+      'Ferrocarril de cercanías con paradas frecuentes',
+      'Thameslink (Reino Unido) piloto ATO sobre ETCS',
+    ],
+    specStatus: 'Estable — CCS TSI 2023, ATO Baseline 1',
+  },
+  3: {
+    name: 'Operación de tren sin maquinista',
+    shortName: 'GoA 3 — Sin maquinista',
+    description: 'ATO gestiona todas las funciones de conducción. No hay maquinista en la cabina. Un asistente de tren está a bordo para situaciones de emergencia y asistencia a los pasajeros.',
+    detailedDescription:
+      'En el Grado de Automatización 3, el sistema ATO controla todas las funciones de conducción incluyendo tracción, frenado, operación de puertas y salida. No hay maquinista presente en la cabina. Un asistente capacitado viaja a bordo para gestionar situaciones de emergencia, asistir a los pasajeros y realizar intervención manual si es necesario. El sistema incluye detección de obstáculos y respuesta automatizada de emergencia, con el asistente como reserva humana de seguridad.',
+    driverRole: 'No hay maquinista. Asistente a bordo para emergencias y apoyo a pasajeros.',
+    atoRole: 'Control completo de conducción incluyendo puertas y salida. Respuesta automatizada ante obstáculos.',
+    taskNames: [
+      'Establecimiento y operación de ruta',
+      'Control de aceleración',
+      'Supervisión de velocidad',
+      'Frenado de servicio',
+      'Frenado de emergencia',
+      'Operación de puertas',
+      'Autorización de salida',
+      'Detección de obstáculos',
+      'Gestión de emergencias',
+    ],
+    realWorldExamples: [
+      'Docklands Light Railway (Londres)',
+      'SkyTrain (Vancouver)',
+    ],
+    specStatus: 'En desarrollo — informativo en las especificaciones actuales',
+  },
+  4: {
+    name: 'Operación de tren desatendida',
+    shortName: 'GoA 4 — Totalmente automático',
+    description: 'Operación completamente automática sin personal a bordo. El sistema gestiona todo, incluyendo situaciones de emergencia y detección de obstáculos.',
+    detailedDescription:
+      'En el Grado de Automatización 4, toda la operación del tren está completamente automatizada sin presencia humana a bordo. El sistema ATO gestiona todas las funciones de conducción, operaciones de puertas, salida, detección de obstáculos y respuestas de emergencia. La monitorización remota desde un centro de control de operaciones proporciona supervisión humana. Las puertas de andén y los sistemas avanzados de sensores garantizan la seguridad sin personal a bordo.',
+    driverRole: 'Sin personal a bordo. Centro de operaciones remoto proporciona monitorización e intervención.',
+    atoRole: 'Control autónomo completo de todas las operaciones del tren y funciones de seguridad.',
+    taskNames: [
+      'Establecimiento y operación de ruta',
+      'Control de aceleración',
+      'Supervisión de velocidad',
+      'Frenado de servicio',
+      'Frenado de emergencia',
+      'Operación de puertas',
+      'Autorización de salida',
+      'Detección de obstáculos',
+      'Gestión de emergencias',
+    ],
+    realWorldExamples: [
+      'Metro de París Línea 14',
+      'Metro de Dubái',
+      'Metro de Copenhague',
+      'U-Bahn de Núremberg (Líneas U2, U3)',
+    ],
+    specStatus: 'En desarrollo — informativo en las especificaciones actuales',
+  },
+};

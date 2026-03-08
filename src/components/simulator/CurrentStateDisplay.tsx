@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import type { ModeId } from '../../data/types';
-import { modes } from '../../data/modes';
-import { modeColors, categoryColors, categoryLabels } from '../../utils/colors';
+import { useTranslatedModes, useCategoryLabels } from '../../i18n/useTranslatedData';
+import { modeColors, categoryColors } from '../../utils/colors';
 import { useTheme } from '../../hooks/useTheme';
 
 interface CurrentStateDisplayProps {
@@ -15,6 +15,8 @@ export default function CurrentStateDisplay({
 }: CurrentStateDisplayProps) {
   const { theme } = useTheme();
   const dk = theme === 'dark';
+  const modes = useTranslatedModes();
+  const categoryLabels = useCategoryLabels();
 
   const mode = modes.find((m) => m.id === modeId);
   if (!mode) return null;
