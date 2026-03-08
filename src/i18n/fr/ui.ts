@@ -39,6 +39,9 @@ export const frUI: UITranslations = {
   triggerTrackside: 'Commande sol',
   triggerSystem: 'Automatique (syst\u00e8me)',
   triggerFailure: 'D\u00e9tection de d\u00e9faillance',
+  triggerBoth: 'Conducteur / Syst\u00e8me',
+  // Line style labels
+  lineStyleBoth: 'Conducteur ou Syst\u00e8me',
   // Badges
   badgeAutomatic: 'Automatique',
   badgeManual: 'Manuel',

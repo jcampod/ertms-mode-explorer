@@ -57,7 +57,7 @@ export const frGoALevels: Record<number, GoATranslation> = {
     shortName: 'GoA 3 \u2014 Sans conducteur',
     description: 'L\u2019ATO g\u00e8re toutes les fonctions de conduite. Pas de conducteur en cabine. Un agent de bord est pr\u00e9sent pour les situations d\u2019urgence et l\u2019assistance aux passagers.',
     detailedDescription:
-      'Au niveau d\u2019automatisation 3, le syst\u00e8me ATO contr\u00f4le toutes les fonctions de conduite, y compris la traction, le freinage, la gestion des portes et le d\u00e9part. Aucun conducteur n\u2019est pr\u00e9sent en cabine. Un agent form\u00e9 voyage \u00e0 bord pour g\u00e9rer les situations d\u2019urgence, assister les passagers et effectuer une intervention manuelle si n\u00e9cessaire. Le syst\u00e8me inclut la d\u00e9tection d\u2019obstacles et la r\u00e9ponse automatique aux urgences, avec l\u2019agent de bord comme solution humaine de secours.',
+      'Au niveau d\u2019automatisation 3, le syst\u00e8me ATO contr\u00f4le toutes les fonctions de conduite, y compris la traction, le freinage, la gestion des portes et le d\u00e9part. Aucun conducteur n\u2019est pr\u00e9sent en cabine. Un agent form\u00e9 voyage \u00e0 bord pour g\u00e9rer les situations d\u2019urgence, assister les passagers et effectuer une intervention manuelle si n\u00e9cessaire. Le syst\u00e8me inclut la d\u00e9tection d\u2019obstacles et la r\u00e9ponse automatique aux urgences, avec l\u2019agent de bord comme solution humaine de secours. GoA 3 est une d\u00e9finition standard de l\u2019industrie IEC 62290, pas de la sp\u00e9cification ETCS.',
     driverRole: 'Pas de conducteur. Agent de bord pr\u00e9sent pour les urgences et l\u2019assistance aux passagers.',
     atoRole: 'Contr\u00f4le total de la conduite incluant les portes et le d\u00e9part. R\u00e9ponse automatis\u00e9e aux obstacles.',
     taskNames: [
@@ -75,14 +75,14 @@ export const frGoALevels: Record<number, GoATranslation> = {
       'Docklands Light Railway (Londres)',
       'SkyTrain (Vancouver)',
     ],
-    specStatus: 'En d\u00e9veloppement \u2014 informatif dans les sp\u00e9cifications actuelles',
+    specStatus: 'D\u00e9fini par IEC 62290, non couvert dans le ETCS Driver\'s Handbook v2.8.0',
   },
   4: {
     name: 'Exploitation ferroviaire sans personnel',
     shortName: 'GoA 4 \u2014 Enti\u00e8rement automatique',
     description: 'Exploitation enti\u00e8rement automatique sans personnel \u00e0 bord. Le syst\u00e8me g\u00e8re tout, y compris les situations d\u2019urgence et la d\u00e9tection d\u2019obstacles.',
     detailedDescription:
-      'Au niveau d\u2019automatisation 4, l\u2019ensemble de l\u2019exploitation ferroviaire est enti\u00e8rement automatis\u00e9 sans pr\u00e9sence humaine \u00e0 bord. Le syst\u00e8me ATO g\u00e8re toutes les fonctions de conduite, les op\u00e9rations de portes, le d\u00e9part, la d\u00e9tection d\u2019obstacles et les r\u00e9ponses d\u2019urgence. La surveillance \u00e0 distance depuis un poste de commande centralis\u00e9 assure la supervision humaine. Les portes pali\u00e8res de quai et les syst\u00e8mes de capteurs avanc\u00e9s garantissent la s\u00e9curit\u00e9 sans personnel \u00e0 bord.',
+      'Au niveau d\u2019automatisation 4, l\u2019ensemble de l\u2019exploitation ferroviaire est enti\u00e8rement automatis\u00e9 sans pr\u00e9sence humaine \u00e0 bord. Le syst\u00e8me ATO g\u00e8re toutes les fonctions de conduite, les op\u00e9rations de portes, le d\u00e9part, la d\u00e9tection d\u2019obstacles et les r\u00e9ponses d\u2019urgence. La surveillance \u00e0 distance depuis un poste de commande centralis\u00e9 assure la supervision humaine. Les portes pali\u00e8res de quai et les syst\u00e8mes de capteurs avanc\u00e9s garantissent la s\u00e9curit\u00e9 sans personnel \u00e0 bord. GoA 4 est une d\u00e9finition standard de l\u2019industrie IEC 62290, pas de la sp\u00e9cification ETCS.',
     driverRole: 'Aucun personnel \u00e0 bord. Le poste de commande \u00e0 distance assure la surveillance et l\u2019intervention.',
     atoRole: 'Contr\u00f4le autonome complet de toutes les op\u00e9rations ferroviaires et fonctions de s\u00e9curit\u00e9.',
     taskNames: [
@@ -102,6 +102,6 @@ export const frGoALevels: Record<number, GoATranslation> = {
       'M\u00e9tro de Copenhague',
       'U-Bahn de Nuremberg (Lignes U2, U3)',
     ],
-    specStatus: 'En d\u00e9veloppement \u2014 informatif dans les sp\u00e9cifications actuelles',
+    specStatus: 'D\u00e9fini par IEC 62290, non couvert dans le ETCS Driver\'s Handbook v2.8.0',
   },
 };

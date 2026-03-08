@@ -147,6 +147,20 @@ const DiagramLegend = ({
           </svg>
           <span className={`text-[10px] ${dk ? 'text-slate-400' : 'text-slate-500'}`}>{ui.triggerDriver}</span>
         </div>
+        <div className="flex items-center gap-1.5 px-1.5">
+          <svg width="24" height="6" className="flex-shrink-0">
+            <line
+              x1="0"
+              y1="3"
+              x2="24"
+              y2="3"
+              stroke={lineStroke}
+              strokeWidth="1.5"
+              strokeDasharray="3 3"
+            />
+          </svg>
+          <span className={`text-[10px] ${dk ? 'text-slate-400' : 'text-slate-500'}`}>{ui.lineStyleBoth}</span>
+        </div>
       </div>
 
       {/* Direction filter — clickable toggle */}

@@ -54,6 +54,9 @@ export interface UITranslations {
   triggerTrackside: string;
   triggerSystem: string;
   triggerFailure: string;
+  triggerBoth: string;
+  // Line style labels
+  lineStyleBoth: string;
   // Badges
   badgeAutomatic: string;
   badgeManual: string;

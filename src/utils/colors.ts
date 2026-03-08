@@ -21,8 +21,8 @@ export const modeColors: Record<ModeId, { fill: string; stroke: string; glow: st
   PT: { fill: '#713f12', stroke: '#fbbf24', glow: '#fbbf24', text: '#fde68a' },
   // Failure (reds)
   SF: { fill: '#7f1d1d', stroke: '#ef4444', glow: '#ef4444', text: '#fca5a5' },
-  NP: { fill: '#292524', stroke: '#78716c', glow: '#78716c', text: '#a8a29e' },
   // Inactive (grays)
+  NP: { fill: '#292524', stroke: '#78716c', glow: '#78716c', text: '#a8a29e' },
   IS: { fill: '#1c1917', stroke: '#78716c', glow: '#78716c', text: '#a8a29e' },
   SL: { fill: '#292524', stroke: '#a8a29e', glow: '#a8a29e', text: '#d6d3d1' },
 };

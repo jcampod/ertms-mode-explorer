@@ -44,7 +44,7 @@ export const deATOStates: Record<string, ATOStateTranslation> = {
       'Triebfahrzeugf\u00FChrer \u00FCber ATO-DMI (Driver Machine Interface) informiert',
     ],
     goaRelevance: 'Anwendbar auf alle GoA-Stufen (GoA 1\u20134)',
-    etcsRequirement: 'ETCS muss betriebsbereit sein; ATO wartet auf Full Supervision (FS)',
+    etcsRequirement: 'ETCS muss betriebsbereit sein; ATO wartet auf Full Supervision (FS) oder Automatic Driving (AD)',
   },
   AV: {
     name: 'Verf\u00FCgbar',

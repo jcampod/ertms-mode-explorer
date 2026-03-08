@@ -39,6 +39,9 @@ export const deUI: UITranslations = {
   triggerTrackside: 'Streckenseitiger Befehl',
   triggerSystem: 'Automatisch (System)',
   triggerFailure: 'St\u00F6rungserkennung',
+  triggerBoth: 'Triebfahrzeugf\u00FChrer / System',
+  // Line style labels
+  lineStyleBoth: 'Triebfahrzeugf\u00FChrer oder System',
   // Badges
   badgeAutomatic: 'Automatisch',
   badgeManual: 'Manuell',

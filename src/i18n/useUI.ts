@@ -41,6 +41,9 @@ const EN_DEFAULTS: UITranslations = {
   triggerTrackside: 'Trackside command',
   triggerSystem: 'Automatic (system)',
   triggerFailure: 'Failure detection',
+  triggerBoth: 'Driver / System',
+  // Line style labels
+  lineStyleBoth: 'Driver or System',
   // Badges
   badgeAutomatic: 'Automatic',
   badgeManual: 'Manual',

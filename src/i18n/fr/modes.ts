@@ -13,6 +13,7 @@ export const frModes: Record<string, ModeTranslation> = {
     realWorldContext:
       'C\u2019est l\u2019\u00e9tat du train lorsqu\u2019il est gar\u00e9 au d\u00e9p\u00f4t pendant la nuit, ou lorsqu\u2019une locomotive est stationn\u00e9e avec tous les syst\u00e8mes \u00e9teints. Se produit \u00e9galement lors de la phase initiale avant qu\u2019un conducteur ne commence son service et mette la cabine sous tension.',
     keyCharacteristics: [
+      'Le freinage d\u2019urgence est command\u00e9 en permanence',
       'Aucune fonction ETCS disponible',
       'Aucune supervision de vitesse ni intervention de freinage',
       'DMI inactif et \u00e9teint',
@@ -42,10 +43,10 @@ export const frModes: Record<string, ModeTranslation> = {
   SH: {
     name: 'Manoeuvre',
     description:
-      'Le train se d\u00e9place lentement dans un faisceau \u2014 attelage de wagons, repositionnement ou composition d\u2019un train. La vitesse est plafonn\u00e9e \u00e0 30 km/h, mais le conducteur doit surveiller la voie lui-m\u00eame car l\u2019ETCS ne v\u00e9rifie pas l\u2019itin\u00e9raire.',
+      'Le train se d\u00e9place lentement dans un faisceau \u2014 attelage de wagons, repositionnement ou composition d\u2019un train. La vitesse est limit\u00e9e selon les Valeurs Nationales, mais le conducteur doit surveiller la voie lui-m\u00eame car l\u2019ETCS ne v\u00e9rifie pas l\u2019itin\u00e9raire.',
     detailedDescription:
       'Le mode Shunting est utilis\u00e9 pour les mouvements \u00e0 basse vitesse dans les faisceaux : composition/d\u00e9composition de trains, positionnement de wagons et op\u00e9rations de triage. L\u2019ETCS assure la supervision d\u2019une vitesse plafond (g\u00e9n\u00e9ralement 30 km/h, configurable selon la valeur nationale) mais ne d\u00e9livre ni ne supervise d\u2019autorisation de mouvement (MA). Il n\u2019y a aucune protection contre les itin\u00e9raires conflictuels ou les voies occup\u00e9es. Le conducteur doit v\u00e9rifier visuellement que la voie est libre et suivre les signaux \u00e0 main ou les instructions locales de manoeuvre. En Niveau 2/3, la session RBC peut \u00eatre lib\u00e9r\u00e9e. Le principe cl\u00e9 de s\u00e9curit\u00e9 est que la vitesse est limit\u00e9e mais la s\u00e9curit\u00e9 de l\u2019itin\u00e9raire rel\u00e8ve de la responsabilit\u00e9 du conducteur.',
-    speedLimit: '30 km/h (la valeur nationale peut diff\u00e9rer)',
+    speedLimit: 'D\u00e9termin\u00e9 par les Valeurs Nationales',
     driverResponsibility:
       'Responsabilit\u00e9 compl\u00e8te de la s\u00e9curit\u00e9 de l\u2019itin\u00e9raire, de la d\u00e9tection d\u2019obstacles et du respect des instructions locales de manoeuvre.',
     realWorldContext:
@@ -85,7 +86,7 @@ export const frModes: Record<string, ModeTranslation> = {
       'Limited Supervision fournit une autorisation de mouvement et une supervision de vitesse, mais avec des informations de voie moins d\u00e9taill\u00e9es que FS. L\u2019unit\u00e9 embarqu\u00e9e dispose d\u2019un MA avec une EOA, donc le train est prot\u00e9g\u00e9 contre le d\u00e9passement de son autorisation. Cependant, la description de la voie peut \u00eatre incompl\u00e8te : les profils de gradient peuvent \u00eatre absents, et certaines restrictions de vitesse peuvent reposer sur des valeurs nationales par d\u00e9faut plut\u00f4t que sur des donn\u00e9es pr\u00e9cises de l\u2019infrastructure. Les calculs de courbes de freinage peuvent utiliser des param\u00e8tres conservateurs par d\u00e9faut, r\u00e9sultant potentiellement en des profils de vitesse plus restrictifs (mais toujours s\u00fbrs). LS a \u00e9t\u00e9 introduit pour permettre une migration progressive des syst\u00e8mes nationaux vers l\u2019ETCS complet, permettant un d\u00e9ploiement anticip\u00e9 avec un effort de mise en oeuvre r\u00e9duit c\u00f4t\u00e9 sol.',
     speedLimit: 'Selon le MA et le profil de vitesse disponible (les valeurs nationales peuvent s\u2019appliquer)',
     driverResponsibility:
-      'Conduire dans les limites de la vitesse supervis\u00e9e. \u00catre conscient que la supervision peut \u00eatre moins pr\u00e9cise qu\u2019en Full Supervision.',
+      'Doit observer les informations en bordure de voie et respecter les r\u00e8gles d\u2019exploitation nationales \u2014 les indications ETCS ne remplacent pas les signaux lat\u00e9raux.',
     realWorldContext:
       'Utilis\u00e9 sur les lignes en cours de migration vers l\u2019ETCS mais o\u00f9 les donn\u00e9es sol (profils de gradient, restrictions de vitesse d\u00e9taill\u00e9es) ne sont pas encore compl\u00e8tement ing\u00e9nier\u00e9es. Permet un d\u00e9ploiement anticip\u00e9 de l\u2019ETCS avec un effort de mise en oeuvre r\u00e9duit.',
     keyCharacteristics: [
@@ -99,10 +100,10 @@ export const frModes: Record<string, ModeTranslation> = {
   OS: {
     name: 'Marche \u00e0 vue',
     description:
-      'Avancez avec prudence \u2014 il pourrait y avoir quelque chose sur la voie devant (un autre train, un obstacle). La vitesse est plafonn\u00e9e \u00e0 30 km/h et le conducteur doit \u00eatre pr\u00eat \u00e0 s\u2019arr\u00eater \u00e0 tout moment en fonction de ce qu\u2019il voit.',
+      'Avancez avec prudence \u2014 il pourrait y avoir quelque chose sur la voie devant (un autre train, un obstacle). La vitesse est limit\u00e9e selon les Valeurs Nationales et le conducteur doit \u00eatre pr\u00eat \u00e0 s\u2019arr\u00eater \u00e0 tout moment en fonction de ce qu\u2019il voit.',
     detailedDescription:
       'Le mode On Sight est utilis\u00e9 lorsque le sol ne peut pas garantir que la section \u00e0 venir est libre. Cela se produit g\u00e9n\u00e9ralement lorsque les circuits de voie ou les compteurs d\u2019essieux sont en panne, lorsqu\u2019une section n\u00e9cessite une inspection visuelle, ou lorsque le poste d\u2019aiguillage a lib\u00e9r\u00e9 un itin\u00e9raire avec occupation connue \u00e0 l\u2019avant. L\u2019ETCS supervise une vitesse plafond (g\u00e9n\u00e9ralement 30 km/h) et le conducteur doit \u00eatre pr\u00eat \u00e0 s\u2019arr\u00eater avant tout obstacle visible. Le mode est d\u00e9clench\u00e9 par un profil de mode OS depuis le sol, g\u00e9n\u00e9ralement int\u00e9gr\u00e9 dans le MA. L\u2019unit\u00e9 embarqu\u00e9e continue de superviser le MA/EOA en plus de la vitesse plafond OS. Une fois la zone OS franchie, le syst\u00e8me revient en Full Supervision.',
-    speedLimit: '30 km/h (la valeur nationale peut diff\u00e9rer)',
+    speedLimit: 'D\u00e9termin\u00e9 par les Valeurs Nationales (typiquement 40 km/h)',
     driverResponsibility:
       'Conduire \u00e0 vue. \u00catre pr\u00eat \u00e0 s\u2019arr\u00eater dans la distance de visibilit\u00e9. Attention compl\u00e8te sur la voie \u00e0 l\u2019avant.',
     realWorldContext:
@@ -118,12 +119,12 @@ export const frModes: Record<string, ModeTranslation> = {
   SR: {
     name: 'Responsabilit\u00e9 du personnel',
     description:
-      'Le syst\u00e8me ne peut pas donner au train un itin\u00e9raire en bonne et due forme, alors le conducteur prend les choses en main. Le r\u00e9gulateur appelle par radio et dit \u00ab OK, vous pouvez y aller. \u00bb La vitesse est plafonn\u00e9e \u00e0 40 km/h. C\u2019est la solution de repli quand les choses ne fonctionnent pas normalement.',
+      'Le syst\u00e8me ne peut pas donner au train une route appropri\u00e9e, alors le conducteur prend le commandement. Le r\u00e9gulateur autorise le mouvement via l\u2019Instruction Europ\u00e9enne 7. La vitesse est limit\u00e9e selon les Valeurs Nationales. C\u2019est le mode de secours quand les choses ne fonctionnent pas normalement.',
     detailedDescription:
       'Le mode Staff Responsible est le mode de repli utilis\u00e9 lorsque l\u2019ETCS ne peut pas fournir d\u2019autorisation de mouvement mais que le train doit se d\u00e9placer. Sc\u00e9narios typiques : panne de communication RBC, dysfonctionnement du lecteur de balises, donn\u00e9es sol manquantes ou d\u00e9part depuis une zone non \u00e9quip\u00e9e. Le r\u00e9gulateur autorise le conducteur par ordre verbal, autorisation \u00e9crite ou proc\u00e9dure nationale. L\u2019ETCS supervise une vitesse plafond (40 km/h par d\u00e9faut) tandis que le conducteur prend la responsabilit\u00e9 des signaux, des restrictions de vitesse et des conditions de l\u2019itin\u00e9raire. Le conducteur doit acquitter l\u2019entr\u00e9e en mode SR sur le DMI. Si un MA valide est ensuite re\u00e7u, le syst\u00e8me transite vers Full Supervision. SR est essentiel pour la r\u00e9silience op\u00e9rationnelle \u2014 les trains peuvent continuer \u00e0 circuler en toute s\u00e9curit\u00e9 m\u00eame avec une infrastructure d\u00e9grad\u00e9e.',
-    speedLimit: '40 km/h (la valeur nationale peut diff\u00e9rer)',
+    speedLimit: 'D\u00e9termin\u00e9 par les Valeurs Nationales',
     driverResponsibility:
-      'Responsabilit\u00e9 compl\u00e8te du mouvement s\u00fbr sous autorisation du r\u00e9gulateur. Observer les signaux et les restrictions de vitesse.',
+      'Responsabilit\u00e9 totale du mouvement en s\u00e9curit\u00e9 sous autorisation du r\u00e9gulateur. Observer les signaux et les restrictions de vitesse. Doit circuler \u00e0 vue sauf exemption par instruction op\u00e9rationnelle.',
     realWorldContext:
       'Utilis\u00e9 lorsqu\u2019un conducteur re\u00e7oit un ordre verbal pour franchir un signal ferm\u00e9, lors du d\u00e9marrage d\u2019une mission sans MA disponible, ou lorsque la communication avec le RBC est perdue mais que le r\u00e9gulateur autorise le mouvement. Tr\u00e8s courant en exploitation d\u00e9grad\u00e9e.',
     keyCharacteristics: [
@@ -251,7 +252,7 @@ export const frModes: Record<string, ModeTranslation> = {
   IS: {
     name: 'Isolation',
     description:
-      'Le conducteur a d\u00e9lib\u00e9r\u00e9ment \u00e9teint l\u2019ETCS \u00e0 l\u2019aide d\u2019un interrupteur physique. Le syst\u00e8me est compl\u00e8tement d\u00e9sactiv\u00e9 \u2014 comme si on d\u00e9branchait la prise. Utilis\u00e9 lorsque l\u2019ETCS est en panne et ne peut pas \u00eatre r\u00e9par\u00e9 sur place.',
+      'Le conducteur a d\u00e9lib\u00e9r\u00e9ment d\u00e9sactiv\u00e9 l\u2019ETCS via une m\u00e9thode d\u2019isolement sp\u00e9cifique \u00e0 l\u2019impl\u00e9mentation. Le syst\u00e8me est compl\u00e8tement d\u00e9sactiv\u00e9. Utilis\u00e9 lorsque l\u2019ETCS est en panne et ne peut pas \u00eatre r\u00e9par\u00e9 sur place.',
     detailedDescription:
       'Le mode Isolation est activ\u00e9 lorsque le conducteur actionne l\u2019interrupteur physique d\u2019isolation ETCS pour d\u00e9sactiver compl\u00e8tement l\u2019\u00e9quipement embarqu\u00e9. C\u2019est une action d\u00e9lib\u00e9r\u00e9e. Une fois isol\u00e9, l\u2019ETCS ne fournit aucune supervision, aucun affichage DMI (ou affiche une indication d\u2019isolation), aucune commande de frein et aucune communication avec le sol. Le train fonctionne enti\u00e8rement selon les r\u00e8gles nationales et tout syst\u00e8me ind\u00e9pendant de protection nationale des trains. L\u2019Isolation est utilis\u00e9e lorsque l\u2019ETCS a un d\u00e9faut persistant qui ne peut pas \u00eatre r\u00e9solu, pendant la maintenance, ou dans des sc\u00e9narios sp\u00e9cifiques o\u00f9 l\u2019ETCS doit \u00eatre d\u00e9sactiv\u00e9. L\u2019interrupteur d\u2019isolation est g\u00e9n\u00e9ralement un interrupteur \u00e0 cl\u00e9 physique pour \u00e9viter une activation accidentelle. Pour en sortir, le conducteur remet l\u2019interrupteur en position normale, d\u00e9clenchant une s\u00e9quence de mise sous tension et un red\u00e9marrage du syst\u00e8me.',
     speedLimit: null,
@@ -260,10 +261,10 @@ export const frModes: Record<string, ModeTranslation> = {
     realWorldContext:
       'Utilis\u00e9 lorsque l\u2019ETCS embarqu\u00e9 a un d\u00e9faut persistant et que le train doit continuer jusqu\u2019\u00e0 l\u2019atelier de maintenance le plus proche. \u00c9galement utilis\u00e9 lors des tests et activit\u00e9s de maintenance de l\u2019\u00e9quipement embarqu\u00e9 en atelier.',
     keyCharacteristics: [
-      'ETCS d\u00e9lib\u00e9r\u00e9ment d\u00e9sactiv\u00e9 par le conducteur via un interrupteur physique',
+      'ETCS d\u00e9lib\u00e9r\u00e9ment d\u00e9sactiv\u00e9 par le conducteur via m\u00e9thode d\u2019isolement sp\u00e9cifique \u00e0 l\u2019impl\u00e9mentation',
       'Aucune fonction ETCS disponible',
       'Utilis\u00e9 pour les d\u00e9fauts persistants ou la maintenance',
-      'Interrupteur \u00e0 cl\u00e9 physique emp\u00eachant l\u2019activation accidentelle',
+      'La m\u00e9thode d\u2019isolement est sp\u00e9cifique \u00e0 l\u2019impl\u00e9mentation (non harmonis\u00e9e entre les trains)',
       'La sortie n\u00e9cessite la r\u00e9initialisation de l\u2019interrupteur et un red\u00e9marrage complet du syst\u00e8me',
     ],
   },
@@ -275,7 +276,7 @@ export const frModes: Record<string, ModeTranslation> = {
       'Le mode Non Leading est utilis\u00e9 lorsqu\u2019une unit\u00e9 motrice \u00e9quip\u00e9e ETCS fait partie d\u2019une rame mais ne contr\u00f4le pas le mouvement. Courant en traction multiple (deux locomotives ou plus attel\u00e9es ensemble) ou en exploitation r\u00e9versible o\u00f9 la locomotive arri\u00e8re a son ETCS actif mais la cabine avant a le contr\u00f4le. L\u2019unit\u00e9 embarqu\u00e9e est active et consciente de son statut mais ne demande ni ne d\u00e9tient de MA, et n\u2019\u00e9met pas de commandes de frein bas\u00e9es sur la supervision ETCS. La cabine en NL a g\u00e9n\u00e9ralement un affichage DMI r\u00e9duit. NL garantit qu\u2019une seule unit\u00e9 embarqu\u00e9e ETCS dans une rame supervise activement \u00e0 tout moment, emp\u00eachant les commandes de frein ou la gestion d\u2019autorisations conflictuelles.',
     speedLimit: null,
     driverResponsibility:
-      'Surveillance uniquement. Aucune responsabilit\u00e9 de conduite active depuis cette unit\u00e9. L\u2019unit\u00e9 menante contr\u00f4le le train.',
+      'Responsable de l\u2019ex\u00e9cution des ordres associ\u00e9s aux conditions de voie affich\u00e9es.',
     realWorldContext:
       'Un train de marchandises tract\u00e9 par deux locomotives attel\u00e9es : la locomotive de t\u00eate est en mode FS tandis que l\u2019ETCS de la locomotive arri\u00e8re est en mode NL. \u00c9galement utilis\u00e9 pour la voiture motrice arri\u00e8re d\u2019une rame r\u00e9versible \u00e0 grande vitesse.',
     keyCharacteristics: [
@@ -291,8 +292,8 @@ export const frModes: Record<string, ModeTranslation> = {
     description:
       'Le train doit reculer sur une courte distance \u2014 peut-\u00eatre qu\u2019il a d\u00e9pass\u00e9 un quai ou qu\u2019il doit \u00e9vacuer un tunnel. L\u2019ETCS surveille la vitesse et la distance pour s\u2019assurer qu\u2019il ne va pas trop loin.',
     detailedDescription:
-      'Le mode Reversing permet un mouvement contr\u00f4l\u00e9 en marche arri\u00e8re sous supervision ETCS. Le conducteur est autoris\u00e9 (via des informations sol ou une proc\u00e9dure ETCS sp\u00e9cifique) \u00e0 reculer sur une distance limit\u00e9e \u00e0 une vitesse limit\u00e9e. L\u2019ETCS surveille que le train ne d\u00e9passe pas la vitesse autoris\u00e9e en marche arri\u00e8re ni ne parcourt une distance sup\u00e9rieure \u00e0 celle autoris\u00e9e. Le DMI affiche l\u2019\u00e9tat de marche arri\u00e8re et la distance restante. Utilis\u00e9 pour reculer jusqu\u2019\u00e0 un quai apr\u00e8s un d\u00e9passement, se retirer d\u2019un point dangereux ou une \u00e9vacuation d\u2019urgence (par ex. reculer hors d\u2019un tunnel). Les param\u00e8tres de marche arri\u00e8re sont d\u00e9finis par les donn\u00e9es sol ou les valeurs nationales. Une fois termin\u00e9, le train passe \u00e0 un autre mode (g\u00e9n\u00e9ralement Post Trip ou Full Supervision). Ce n\u2019est pas pour la circulation bidirectionnelle r\u00e9guli\u00e8re.',
-    speedLimit: '30 km/h (selon les param\u00e8tres de la zone de marche arri\u00e8re)',
+      'Le mode Reversing permet un mouvement en marche arri\u00e8re contr\u00f4l\u00e9 sous supervision ETCS, principalement destin\u00e9 \u00e0 l\u2019\u00e9vacuation d\u2019urgence de situations dangereuses. Le conducteur est autoris\u00e9 (via des informations sol ou une proc\u00e9dure ETCS sp\u00e9cifique) \u00e0 reculer sur une distance limit\u00e9e \u00e0 une vitesse limit\u00e9e. L\u2019ETCS surveille que le train ne d\u00e9passe pas la vitesse autoris\u00e9e en marche arri\u00e8re ni ne parcourt une distance sup\u00e9rieure \u00e0 celle autoris\u00e9e. Le DMI affiche l\u2019\u00e9tat de marche arri\u00e8re et la distance restante. Utilis\u00e9 pour reculer jusqu\u2019\u00e0 un quai apr\u00e8s un d\u00e9passement, se retirer d\u2019un point dangereux ou une \u00e9vacuation d\u2019urgence (par ex. reculer hors d\u2019un tunnel). Les param\u00e8tres de marche arri\u00e8re sont d\u00e9finis par les donn\u00e9es sol ou les valeurs nationales. Une fois termin\u00e9, le train passe \u00e0 un autre mode (g\u00e9n\u00e9ralement Post Trip ou Full Supervision). Ce n\u2019est pas pour la circulation bidirectionnelle r\u00e9guli\u00e8re.',
+    speedLimit: 'D\u00e9fini par les param\u00e8tres de la zone de recul c\u00f4t\u00e9 voie',
     driverResponsibility:
       'Contr\u00f4ler le mouvement en marche arri\u00e8re dans les limites de vitesse et de distance autoris\u00e9es. Surveiller le DMI pour la distance restante.',
     realWorldContext:
@@ -310,7 +311,7 @@ export const frModes: Record<string, ModeTranslation> = {
     description:
       'L\u2019ATO (conduite automatique des trains) a le contr\u00f4le. Le train se conduit tout seul \u2014 acc\u00e9l\u00e9ration, freinage et arr\u00eats en gare automatiques \u2014 tandis que l\u2019ETCS surveille toujours tout pour garantir la s\u00e9curit\u00e9. Ajout\u00e9 dans le Baseline 4.',
     detailedDescription:
-      'Automatic Driving est un nouveau mode ETCS introduit dans le Baseline 4 (CCS TSI 2023) sp\u00e9cifiquement pour le fonctionnement ATO sur ETCS. Il est activ\u00e9 depuis Full Supervision lorsque le conducteur (GoA 2) ou le syst\u00e8me (GoA 3/4) enclenche l\u2019ATO. Dans ce mode, le syst\u00e8me embarqu\u00e9 ATO contr\u00f4le la traction, le freinage et la marche sur l\u2019erre selon un Profil de trajet re\u00e7u du sol ATO. L\u2019ETCS continue d\u2019assurer une supervision compl\u00e8te de s\u00e9curit\u00e9 \u2014 l\u2019autorisation de mouvement, le profil de vitesse et les courbes de freinage restent appliqu\u00e9s. Si les commandes ATO devaient violer une contrainte ETCS, la couche de s\u00e9curit\u00e9 intervient avec un freinage de service ou d\u2019urgence. Le conducteur peut d\u00e9sengager l\u2019ATO \u00e0 tout moment, revenant \u00e0 Full Supervision. Si l\u2019ETCS d\u00e9tecte une condition critique de s\u00e9curit\u00e9 (par ex. approche de l\u2019EOA), il prend la priorit\u00e9 sur l\u2019ATO automatiquement.',
+      'Automatic Driving est un nouveau mode ETCS introduit dans le Baseline 4 (CCS TSI 2023) sp\u00e9cifiquement pour le fonctionnement ATO sur ETCS. Le manuel v2.8.0 couvre uniquement GoA 1 (conseil au conducteur) et GoA 2 (conduite automatique supervis\u00e9e). Il est activ\u00e9 depuis Full Supervision lorsque le conducteur enclenche l\u2019ATO. Dans ce mode, le syst\u00e8me embarqu\u00e9 ATO contr\u00f4le la traction, le freinage et la marche sur l\u2019erre selon un Profil de trajet re\u00e7u du sol ATO. L\u2019ETCS continue d\u2019assurer une supervision compl\u00e8te de s\u00e9curit\u00e9 \u2014 l\u2019autorisation de mouvement, le profil de vitesse et les courbes de freinage restent appliqu\u00e9s. Si les commandes ATO devaient violer une contrainte ETCS, la couche de s\u00e9curit\u00e9 intervient avec un freinage de service ou d\u2019urgence. Le conducteur peut d\u00e9sengager l\u2019ATO \u00e0 tout moment, revenant \u00e0 Full Supervision. Si l\u2019ETCS d\u00e9tecte une condition critique de s\u00e9curit\u00e9 (par ex. approche de l\u2019EOA), il prend la priorit\u00e9 sur l\u2019ATO automatiquement.',
     speedLimit: 'Selon le profil de vitesse statique et le MA (l\u2019ATO optimise dans l\u2019enveloppe ETCS)',
     driverResponsibility:
       'GoA 2 : surveiller le fonctionnement de l\u2019ATO, g\u00e9rer les portes et le d\u00e9part, peut intervenir \u00e0 tout moment. GoA 3/4 : r\u00f4le r\u00e9duit ou absent du conducteur.',

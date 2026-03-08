@@ -83,7 +83,7 @@ export const transitions: Transition[] = [
       'The driver requests to enter Shunting mode for yard movements, or a shunting order is received from the trackside (e.g., via balise). The system transitions to SH mode for low-speed marshalling operations. Full train data entry may not be required for shunting.',
     isAutomatic: false,
     isCommon: true,
-    triggerType: 'driver',
+    triggerType: 'both',
   },
   {
     id: 'SB-SL',
@@ -216,16 +216,16 @@ export const transitions: Transition[] = [
     from: 'FS',
     to: 'SR',
     conditions: [
-      { text: 'MA conditions can no longer be maintained', isRequired: true },
+      { text: 'Driver selects Override function on DMI', isRequired: true },
       { text: 'Safe conditions exist for SR (not a trip situation)', isRequired: true },
       { text: 'Driver acknowledges SR mode', isRequired: true },
     ],
-    description: 'Loss of MA conditions, fallback to SR',
+    description: 'Driver Override function from Full Supervision to SR',
     detailedDescription:
-      'If the conditions for Full Supervision can no longer be met (e.g., track description becomes incomplete, communication issues that do not warrant a trip), the system may transition to Staff Responsible as a degraded but still operational mode. The driver must acknowledge the change.',
+      'The driver uses the Override function on the DMI to transition from Full Supervision to Staff Responsible mode. This is a driver-initiated action used when the driver needs to pass a signal or proceed without a valid MA under signaller authority. The driver must acknowledge the mode change and takes responsibility for safe movement.',
     isAutomatic: false,
     isCommon: false,
-    triggerType: 'system',
+    triggerType: 'driver',
   },
   {
     id: 'FS-TR',
@@ -254,7 +254,7 @@ export const transitions: Transition[] = [
       'A shunting order is received from the trackside (typically at a yard entry or station throat). The train transitions to Shunting mode, releasing the MA and switching to low-speed yard movement rules.',
     isAutomatic: false,
     isCommon: false,
-    triggerType: 'trackside',
+    triggerType: 'both',
   },
   {
     id: 'FS-UN',
@@ -269,7 +269,7 @@ export const transitions: Transition[] = [
       'The train transitions from an ETCS-equipped area to a section with no ETCS trackside equipment (Level 0). The MA is released and the system provides only basic ceiling speed supervision. The driver must follow national signalling rules.',
     isAutomatic: true,
     isCommon: false,
-    triggerType: 'trackside',
+    triggerType: 'both',
   },
   {
     id: 'FS-SN',
@@ -285,7 +285,7 @@ export const transitions: Transition[] = [
       'The train transitions from ETCS Full Supervision to an area protected by a national train protection system. The ETCS hands over supervision to the STM (Specific Transmission Module) for the relevant national system (e.g., PZB, KVB, ASFA). This is a planned transition at the boundary of ETCS and national system coverage.',
     isAutomatic: true,
     isCommon: false,
-    triggerType: 'trackside',
+    triggerType: 'both',
   },
   {
     id: 'FS-RV',
@@ -327,15 +327,15 @@ export const transitions: Transition[] = [
     from: 'OS',
     to: 'SR',
     conditions: [
-      { text: 'Conditions for OS mode can no longer be maintained', isRequired: true },
+      { text: 'Driver selects Override function on DMI', isRequired: true },
       { text: 'Driver acknowledges SR mode', isRequired: true },
     ],
-    description: 'Loss of OS conditions, fallback to SR',
+    description: 'Driver Override function from On Sight to SR',
     detailedDescription:
-      'If the conditions for On Sight mode can no longer be met (e.g., MA expires or communication is lost), the system falls back to Staff Responsible mode. The driver must acknowledge and take responsibility for safe movement.',
+      'The driver uses the Override function on the DMI to transition from On Sight mode to Staff Responsible mode. This is a driver-initiated action allowing the driver to proceed under signaller authority when needed. The driver must acknowledge and take responsibility for safe movement.',
     isAutomatic: false,
     isCommon: false,
-    triggerType: 'system',
+    triggerType: 'driver',
   },
   {
     id: 'OS-TR',
@@ -409,15 +409,15 @@ export const transitions: Transition[] = [
     from: 'UN',
     to: 'SR',
     conditions: [
-      { text: 'Level transition to ETCS level but no MA available', isRequired: true },
+      { text: 'Driver selects Override function on DMI', isRequired: true },
       { text: 'Driver acknowledges SR mode', isRequired: true },
     ],
-    description: 'Entering ETCS area without MA',
+    description: 'Driver Override function from Unfitted to SR',
     detailedDescription:
-      'The train enters an ETCS-equipped area from an unfitted area, but no movement authority is immediately available. The system transitions to Staff Responsible mode as a safe fallback until an MA can be obtained.',
+      'The driver uses the Override function on the DMI to transition from Unfitted mode to Staff Responsible mode. This is a driver-initiated action allowing the driver to proceed under signaller authority when entering an ETCS area without an MA. The driver must acknowledge and take responsibility for safe movement.',
     isAutomatic: false,
     isCommon: false,
-    triggerType: 'system',
+    triggerType: 'driver',
   },
 
   // ==========================================
@@ -445,16 +445,15 @@ export const transitions: Transition[] = [
     from: 'SN',
     to: 'SR',
     conditions: [
-      { text: 'Level transition from NTC to ETCS level', isRequired: true },
-      { text: 'No MA available from ETCS trackside', isRequired: true },
+      { text: 'Driver selects Override function on DMI', isRequired: true },
       { text: 'Driver acknowledges SR mode', isRequired: true },
     ],
-    description: 'National to ETCS without MA',
+    description: 'Driver Override function from National System to SR',
     detailedDescription:
-      'The train transitions from a national system to an ETCS area, but no movement authority is available from the ETCS trackside. The system enters Staff Responsible mode as a fallback. The driver must follow signaller instructions until an MA is obtained.',
+      'The driver uses the Override function on the DMI to transition from National System mode to Staff Responsible mode. This is a driver-initiated action used when entering an ETCS area from a national system without an available MA. The driver must follow signaller instructions and take responsibility for safe movement.',
     isAutomatic: false,
     isCommon: false,
-    triggerType: 'system',
+    triggerType: 'driver',
   },
 
   // ==========================================
@@ -529,22 +528,6 @@ export const transitions: Transition[] = [
     isCommon: true,
     triggerType: 'driver',
   },
-  {
-    id: 'SH-FS',
-    from: 'SH',
-    to: 'FS',
-    conditions: [
-      { text: 'Valid MA received for main line movement', isRequired: true },
-      { text: 'Complete track description available', isRequired: true },
-      { text: 'Transition from shunting to main line authorized', isRequired: true },
-    ],
-    description: 'From shunting to main line movement',
-    detailedDescription:
-      'During shunting operations, the train receives a valid movement authority for main line movement (e.g., after being assembled and now departing the yard). The system transitions to Full Supervision for the main line journey.',
-    isAutomatic: true,
-    isCommon: false,
-    triggerType: 'trackside',
-  },
 
   // ==========================================
   // NL -> SB
@@ -602,21 +585,6 @@ export const transitions: Transition[] = [
     isAutomatic: false,
     isCommon: false,
     triggerType: 'driver',
-  },
-  {
-    id: 'RV-PT',
-    from: 'RV',
-    to: 'PT',
-    conditions: [
-      { text: 'Reversing distance exceeded or reversing cancelled', isRequired: true },
-      { text: 'Train at standstill', isRequired: true },
-    ],
-    description: 'Reversing completed or limit reached',
-    detailedDescription:
-      'If the authorized reversing distance is reached, or the reversing movement is cancelled, and the train is at standstill, the system transitions to Post Trip. The driver must then follow recovery procedures to resume normal operation.',
-    isAutomatic: true,
-    isCommon: false,
-    triggerType: 'system',
   },
 
   // ==========================================
@@ -689,15 +657,15 @@ export const transitions: Transition[] = [
     from: 'LS',
     to: 'SR',
     conditions: [
-      { text: 'MA conditions can no longer be maintained', isRequired: true },
+      { text: 'Driver selects Override function on DMI', isRequired: true },
       { text: 'Driver acknowledges SR mode', isRequired: true },
     ],
-    description: 'Loss of MA conditions in Limited Supervision',
+    description: 'Driver Override function from Limited Supervision to SR',
     detailedDescription:
-      'If the movement authority conditions are lost while in Limited Supervision (e.g., communication failure, data inconsistency), the system falls back to Staff Responsible mode. The driver must acknowledge and take responsibility.',
+      'The driver uses the Override function on the DMI to transition from Limited Supervision to Staff Responsible mode. This is a driver-initiated action used when the driver needs to proceed under signaller authority. The driver must acknowledge and take responsibility for safe movement.',
     isAutomatic: false,
     isCommon: false,
-    triggerType: 'system',
+    triggerType: 'driver',
   },
   {
     id: 'LS-OS',
@@ -974,20 +942,18 @@ export const transitions: Transition[] = [
     description: 'ATO disengagement — return to manual driving under FS',
     detailedDescription:
       'When the driver takes manual control (by pressing the disengage button or overriding traction/brake controls) or when the ATO completes its journey, the system transitions from Automatic Driving back to Full Supervision. The driver resumes manual control with continuous ETCS speed supervision. This is the normal, controlled end of ATO operation.',
-    isAutomatic: false,
+    isAutomatic: true,
     isCommon: true,
-    triggerType: 'driver',
+    triggerType: 'both',
   },
   {
     id: 'AD-TR',
     from: 'AD',
     to: 'TR',
-    conditions: [
-      { text: 'Train passes End of Authority (EOA) or ATO violates safety envelope', isRequired: true },
-    ],
-    description: 'Safety trip during automatic driving',
+    conditions: [{ text: 'Trip condition detected during automatic driving', isRequired: true }],
+    description: 'Trip during automatic driving',
     detailedDescription:
-      'If the ATO system or an external event causes the train to approach or exceed the End of Authority, ETCS triggers an emergency trip regardless of ATO status. The emergency brake is applied and ATO is immediately disengaged. The system enters Trip mode. Recovery follows the standard TR→PT→SR→FS sequence.',
+      'If the ATO system violates the ETCS safety envelope or an End of Authority is overrun during Automatic Driving, the system immediately transitions to Trip mode with emergency braking. ETCS safety supervision always overrides ATO commands.',
     isAutomatic: true,
     isCommon: false,
     triggerType: 'system',
@@ -1002,6 +968,87 @@ export const transitions: Transition[] = [
     description: 'Transition to shunting from automatic driving',
     detailedDescription:
       'In certain operational scenarios, a transition from Automatic Driving to Shunting may be required (e.g., approaching a yard). ATO is disengaged and ETCS transitions to Shunting mode with its reduced supervision.',
+    isAutomatic: false,
+    isCommon: false,
+    triggerType: 'driver',
+  },
+
+  // ==========================================
+  // Additional Trip and mode transitions
+  // ==========================================
+  {
+    id: 'SB-TR',
+    from: 'SB',
+    to: 'TR',
+    conditions: [{ text: 'Trip condition received from trackside during Start of Mission', isRequired: true }],
+    description: 'Trip during start of mission',
+    detailedDescription:
+      'If a trip condition is detected during the Start of Mission procedure while in Stand By, the system transitions directly to Trip mode and commands the emergency brake.',
+    isAutomatic: true,
+    isCommon: false,
+    triggerType: 'system',
+  },
+  {
+    id: 'SH-TR',
+    from: 'SH',
+    to: 'TR',
+    conditions: [{ text: 'Trip condition detected during shunting', isRequired: true }],
+    description: 'Trip condition during shunting',
+    detailedDescription:
+      'A trip condition detected during shunting movements causes an immediate transition to Trip mode with emergency braking.',
+    isAutomatic: true,
+    isCommon: false,
+    triggerType: 'system',
+  },
+  {
+    id: 'FS-NL',
+    from: 'FS',
+    to: 'NL',
+    conditions: [
+      { text: 'Non-Leading input signal received (e.g. multiple traction configuration)', isRequired: true },
+      { text: 'Train controlled by leading unit', isRequired: true },
+    ],
+    description: 'Enter Non-Leading in multiple traction',
+    detailedDescription:
+      'When a non-leading input signal is received during Full Supervision — typically in multiple traction configurations — the unit transitions to Non Leading mode where it is supervised by the leading unit.',
+    isAutomatic: true,
+    isCommon: false,
+    triggerType: 'system',
+  },
+  {
+    id: 'UN-TR',
+    from: 'UN',
+    to: 'TR',
+    conditions: [{ text: 'Trip condition detected in unfitted area', isRequired: true }],
+    description: 'Trip condition in unfitted area',
+    detailedDescription:
+      'A trip condition detected while operating in Unfitted mode causes an immediate transition to Trip mode with emergency braking.',
+    isAutomatic: true,
+    isCommon: false,
+    triggerType: 'system',
+  },
+  {
+    id: 'SN-TR',
+    from: 'SN',
+    to: 'TR',
+    conditions: [{ text: 'Trip condition detected in national system area', isRequired: true }],
+    description: 'Trip condition in national system area',
+    detailedDescription:
+      'A trip condition detected while operating in National System mode causes an immediate transition to Trip mode with emergency braking.',
+    isAutomatic: true,
+    isCommon: false,
+    triggerType: 'system',
+  },
+  {
+    id: 'RV-SB',
+    from: 'RV',
+    to: 'SB',
+    conditions: [
+      { text: 'Driver closes the desk or performs End of Mission', isRequired: true },
+    ],
+    description: 'Exit reversing to Stand By',
+    detailedDescription:
+      'The driver exits Reversing mode by closing the desk or performing an End of Mission, returning the system to Stand By.',
     isAutomatic: false,
     isCommon: false,
     triggerType: 'driver',

@@ -5,7 +5,7 @@ export const modes: ETCSMode[] = [
     id: 'NP',
     name: 'No Power',
     abbreviation: 'NP',
-    category: 'failure',
+    category: 'inactive',
     description:
       'The train computer is switched off. Nothing works — no screen, no protection, no communication. Like a car with the ignition off.',
     detailedDescription:
@@ -18,6 +18,7 @@ export const modes: ETCSMode[] = [
     etcsLevel: ['0', '1', '2', '3', 'NTC'],
     subsetReference: 'Subset-026, Section 4.4.1',
     keyCharacteristics: [
+      'Emergency brake is permanently commanded',
       'No ETCS functions available',
       'No speed supervision or brake intervention',
       'DMI is inactive and blank',
@@ -58,7 +59,7 @@ export const modes: ETCSMode[] = [
       'The train is moving slowly in a yard — coupling wagons, repositioning, or assembling a train. Speed is capped at 30 km/h, but the driver has to watch the track themselves because ETCS does not check the route.',
     detailedDescription:
       'Shunting mode is used for low-speed yard movements: assembling/splitting trains, positioning wagons, and marshalling operations. ETCS provides ceiling speed supervision (typically 30 km/h, configurable per national value) but does not issue or supervise a movement authority (MA). There is no protection against conflicting routes or occupied track. The driver must visually check the path is clear and follow hand signals or local shunting instructions. In Level 2/3, the RBC communication session may be released. The key safety principle is that speed is limited but route safety is the driver\'s responsibility.',
-    speedLimit: '30 km/h (national value may differ)',
+    speedLimit: 'Determined by National Values',
     driverResponsibility:
       'Full responsibility for route safety, obstacle detection, and compliance with local shunting instructions.',
     realWorldContext:
@@ -108,7 +109,7 @@ export const modes: ETCSMode[] = [
       'Limited Supervision provides a movement authority and speed supervision, but with less detailed track information than FS. The on-board has an MA with an EOA, so the train is protected against overrunning its authority. However, the track description may be incomplete: gradient profiles may be absent, and some speed restrictions may rely on national default values rather than precise infrastructure data. Braking curve calculations may use conservative default parameters, potentially resulting in more restrictive (but still safe) speed profiles. LS was introduced to allow phased migration from national systems to full ETCS, enabling early deployment with reduced trackside implementation effort.',
     speedLimit: 'Per MA and available speed profile (national values may apply)',
     driverResponsibility:
-      'Drive within supervised speed. Be aware that supervision may be less precise than Full Supervision.',
+      'Must observe lineside information and comply with national operating rules — ETCS indications do not substitute lineside signals.',
     realWorldContext:
       'Used on lines that are being migrated to ETCS but where the trackside data (e.g., gradient profiles, detailed speed restrictions) is not yet fully engineered. Allows early deployment of ETCS with reduced implementation effort.',
     etcsLevel: ['1', '2', '3'],
@@ -130,7 +131,7 @@ export const modes: ETCSMode[] = [
       'Proceed carefully — there might be something on the track ahead (another train, an obstacle). Speed is capped at 30 km/h and the driver must be ready to stop at any moment based on what they can see.',
     detailedDescription:
       'On Sight mode is used when the trackside cannot guarantee the section ahead is clear. This typically occurs when track circuits or axle counters have failed, when a section needs visual inspection, or when the interlocking has released a route with known occupation ahead. ETCS supervises a ceiling speed (typically 30 km/h) and the driver must be prepared to stop short of any visible obstacle. The mode is triggered by an OS mode profile from trackside, usually embedded within the MA. The on-board continues to supervise the MA/EOA in addition to the OS ceiling speed. Once the OS area is passed, the system transitions back to Full Supervision.',
-    speedLimit: '30 km/h (national value may differ)',
+    speedLimit: 'Determined by National Values (typically 40 km/h)',
     driverResponsibility:
       'Drive on sight. Be prepared to stop within visible distance. Full attention to track ahead.',
     realWorldContext:
@@ -151,12 +152,12 @@ export const modes: ETCSMode[] = [
     abbreviation: 'SR',
     category: 'operational',
     description:
-      'The system can\'t give the train a proper route, so the driver takes charge. The signaller calls by radio and says "OK, you can go." Speed is capped at 40 km/h. This is the fallback when things aren\'t working normally.',
+      'The system can\'t give the train a proper route, so the driver takes charge. The signaller authorizes movement via European Instruction 7. Speed is capped at 40 km/h. This is the fallback when things aren\'t working normally.',
     detailedDescription:
       'Staff Responsible is the fallback mode used when ETCS cannot provide a movement authority but the train needs to move. Typical scenarios: RBC communication failure, balise reader malfunction, missing trackside data, or starting from a non-equipped area. The signaller authorizes the driver via verbal order, written authority, or national procedure. ETCS supervises a ceiling speed (default 40 km/h) while the driver takes responsibility for signals, speed restrictions, and route conditions. The driver must acknowledge SR mode entry on the DMI. If a valid MA is subsequently received, the system transitions to Full Supervision. SR is critical for operational resilience — trains can keep moving safely even with degraded infrastructure.',
-    speedLimit: '40 km/h (national value may differ)',
+    speedLimit: 'Determined by National Values',
     driverResponsibility:
-      'Full responsibility for safe movement under signaller authorization. Observe signals and speed restrictions.',
+      'Full responsibility for safe movement under signaller authorization. Observe signals and speed restrictions. Must run on sight unless exempted by operational instruction.',
     realWorldContext:
       'Used when a driver receives a verbal order to pass a signal at danger, when starting a mission and no MA is available yet, or when communication with the RBC is lost but the signaller authorizes movement. Very common in degraded operations.',
     etcsLevel: ['1', '2', '3'],
@@ -195,7 +196,7 @@ export const modes: ETCSMode[] = [
   },
   {
     id: 'SN',
-    name: 'STM National',
+    name: 'National System',
     abbreviation: 'SN',
     category: 'operational',
     description:
@@ -255,7 +256,7 @@ export const modes: ETCSMode[] = [
       'Allow train to stop. Do not attempt to move. Acknowledge trip and contact signaller.',
     realWorldContext:
       'Occurs if a driver misjudges braking and passes the EOA, if a communication failure causes the MA to expire at an inopportune moment, or if trackside deliberately trips the train due to a detected conflict. A serious operational event that is always investigated.',
-    etcsLevel: ['1', '2', '3'],
+    etcsLevel: ['0', '1', '2', '3', 'NTC'],
     subsetReference: 'Subset-026, Section 4.4.11',
     keyCharacteristics: [
       'Emergency brake applied immediately and automatically',
@@ -279,7 +280,7 @@ export const modes: ETCSMode[] = [
       'Contact signaller. Report trip event. Await authorization before any movement.',
     realWorldContext:
       'After a trip event at a station signal, the driver contacts the signaller by radio, explains the situation, and the signaller may issue a verbal authority to proceed in SR mode past the signal at danger, or may request the train to reverse to clear the overlap.',
-    etcsLevel: ['1', '2', '3'],
+    etcsLevel: ['0', '1', '2', '3', 'NTC'],
     subsetReference: 'Subset-026, Section 4.4.12',
     keyCharacteristics: [
       'Entered after trip and train standstill',
@@ -319,9 +320,9 @@ export const modes: ETCSMode[] = [
     abbreviation: 'IS',
     category: 'inactive',
     description:
-      'The driver has deliberately turned ETCS off using a physical switch. The system is completely disabled — like pulling the plug. Used when ETCS is broken and can\'t be fixed on the spot.',
+      'The driver has deliberately turned ETCS off using an implementation-specific isolation method. The system is completely disabled — like pulling the plug. Used when ETCS is broken and can\'t be fixed on the spot.',
     detailedDescription:
-      'Isolation is entered when the driver operates the physical ETCS isolation switch to completely disable the on-board equipment. This is a deliberate action. Once isolated, ETCS provides no supervision, no DMI display (or shows an isolation indication), no brake commands, and no trackside communication. The train operates entirely under national rules and any independent national train protection system. Isolation is used when ETCS has a persistent fault that cannot be cleared, during maintenance, or in specific scenarios where ETCS must be disabled. The isolation switch is typically a physical key-switch to prevent accidental activation. To exit, the driver returns the switch to normal, triggering a power-on sequence and system restart.',
+      'Isolation is entered when the driver operates the implementation-specific isolation method to completely disable the on-board equipment. This is a deliberate action. Once isolated, ETCS provides no supervision, no DMI display (or shows an isolation indication), no brake commands, and no trackside communication. The train operates entirely under national rules and any independent national train protection system. Isolation is used when ETCS has a persistent fault that cannot be cleared, during maintenance, or in specific scenarios where ETCS must be disabled. The isolation method is implementation-specific and not harmonised across trains. To exit, the driver returns the isolation to normal, triggering a power-on sequence and system restart.',
     speedLimit: null,
     driverResponsibility:
       'Full responsibility under national rules. No ETCS protection available. Must operate isolation switch.',
@@ -330,11 +331,11 @@ export const modes: ETCSMode[] = [
     etcsLevel: ['0', '1', '2', '3', 'NTC'],
     subsetReference: 'Subset-026, Section 4.4.14',
     keyCharacteristics: [
-      'ETCS deliberately disabled by driver via physical switch',
+      'ETCS deliberately disabled by driver via implementation-specific isolation method',
       'No ETCS functions available',
       'Used for persistent faults or maintenance',
-      'Physical key-switch prevents accidental activation',
-      'Exit requires switch reset and full system restart',
+      'Isolation method is implementation-specific (not harmonised across trains)',
+      'Exit requires isolation reset and full system restart',
     ],
   },
   {
@@ -348,7 +349,7 @@ export const modes: ETCSMode[] = [
       'Non Leading mode is used when a powered unit with ETCS is part of a consist but is not controlling the movement. Common in multiple traction (two or more locos coupled together) or push-pull operations where the rear loco has ETCS active but the front cab is in control. The on-board is active and aware of its status but does not request or hold an MA, and does not issue brake commands based on ETCS supervision. The cab in NL typically has a reduced DMI display. NL ensures only one ETCS on-board in a consist is actively supervising at any time, preventing conflicting brake commands or authority management.',
     speedLimit: null,
     driverResponsibility:
-      'Monitor only. No active driving responsibility from this unit. Leading unit controls the train.',
+      'Responsible for fulfilling orders associated with displayed track conditions.',
     realWorldContext:
       'A freight train hauled by two coupled locomotives: the front loco is in FS mode while the rear loco\'s ETCS is in NL mode. Also used for the rear power car of a high-speed push-pull trainset.',
     etcsLevel: ['0', '1', '2', '3', 'NTC'],
@@ -369,8 +370,8 @@ export const modes: ETCSMode[] = [
     description:
       'The train needs to go backwards for a short distance — maybe it overshot a platform or needs to evacuate a tunnel. ETCS watches the speed and distance to make sure it doesn\'t go too far.',
     detailedDescription:
-      'Reversing mode allows a controlled backward movement under ETCS supervision. The driver is authorized (via trackside information or specific ETCS procedure) to reverse for a limited distance at a limited speed. ETCS monitors that the train does not exceed the authorized reversing speed or travel beyond the authorized distance. The DMI shows the reversing state and remaining distance. Used for setting back to a platform after overrunning, retreating from a danger point, or emergency evacuation (e.g., reversing out of a tunnel). Reversing parameters are defined by trackside data or national values. Once complete, the train transitions to another mode (typically Post Trip or Full Supervision). This is not for regular bidirectional running.',
-    speedLimit: '30 km/h (per reversing area parameters)',
+      'Reversing mode allows a controlled backward movement under ETCS supervision, primarily intended for emergency escape from dangerous situations. The driver is authorized (via trackside information or specific ETCS procedure) to reverse for a limited distance at a limited speed. ETCS monitors that the train does not exceed the authorized reversing speed or travel beyond the authorized distance. The DMI shows the reversing state and remaining distance. The primary use case is emergency evacuation — for example, reversing out of a tunnel during a fire or retreating from a danger point. It may also be used for setting back to a platform after overrunning. Reversing parameters are defined by trackside data or national values. Once complete, the train transitions to another mode (typically Post Trip or Full Supervision). This is not for regular bidirectional running.',
+    speedLimit: 'Defined by trackside reversing area parameters',
     driverResponsibility:
       'Control reverse movement within authorized speed and distance. Monitor DMI for remaining distance.',
     realWorldContext:
@@ -393,13 +394,13 @@ export const modes: ETCSMode[] = [
     description:
       'ATO (Automatic Train Operation) is in control. The train drives itself — accelerating, braking, and stopping at stations automatically — while ETCS still watches over everything to ensure safety. Added in Baseline 4.',
     detailedDescription:
-      'Automatic Driving is a new ETCS mode introduced in Baseline 4 (CCS TSI 2023) specifically for ATO over ETCS operation. It is entered from Full Supervision when the driver (GoA 2) or the system (GoA 3/4) engages ATO. In this mode, the ATO on-board system controls traction, braking, and coasting according to a Journey Profile received from the ATO trackside. ETCS continues to provide full safety supervision — the Movement Authority, speed profile, and braking curves remain enforced. If ATO commands would violate any ETCS constraint, the safety layer intervenes with service or emergency braking. The driver can disengage ATO at any time, returning to Full Supervision. If ETCS detects a safety-critical condition (e.g., approaching EOA), it overrides ATO automatically.',
+      'Automatic Driving is a new ETCS mode introduced in Baseline 4 (CCS TSI 2023) specifically for ATO over ETCS operation. The handbook v2.8.0 covers GoA 1 (driver advisory) and GoA 2 (supervised automatic driving) only. It is entered from Full Supervision when the driver engages ATO (GoA 2). In this mode, the ATO on-board system controls traction, braking, and coasting according to a Journey Profile received from the ATO trackside. ETCS continues to provide full safety supervision — the Movement Authority, speed profile, and braking curves remain enforced. If ATO commands would violate any ETCS constraint, the safety layer intervenes with service or emergency braking. The driver can disengage ATO at any time, returning to Full Supervision. If ETCS detects a safety-critical condition (e.g., approaching EOA), it overrides ATO automatically.',
     speedLimit: 'Per static speed profile and MA (ATO optimises within ETCS envelope)',
     driverResponsibility:
-      'GoA 2: Monitor ATO operation, handle doors and departure, can override at any time. GoA 3/4: Reduced or no driver role.',
+      'GoA 1: Driver drives with ATO advisory information. GoA 2: Monitor ATO operation, handle doors and departure, can override at any time.',
     realWorldContext:
       'Currently being piloted on lines like Thameslink (UK) and various European metro systems. This mode enables energy-efficient, timetable-optimised driving while maintaining full ETCS safety protection. Expected to become standard for high-frequency urban and suburban services.',
-    etcsLevel: ['2', '3'],
+    etcsLevel: ['1', '2'],
     subsetReference: 'Subset-026, Section 4.4.18 (Baseline 4); Subset-125',
     keyCharacteristics: [
       'ATO controls traction, braking, and coasting automatically',

@@ -48,7 +48,7 @@ export const scenarios: Scenario[] = [
         correctAnswer: 'OS',
         incorrectOptions: ['SR', 'SH', 'LS'],
         explanation:
-          'When the trackside sends an On Sight (OS) mode profile, the system transitions to OS mode upon entering that area. In OS mode, the speed is restricted to 30 km/h and you must drive on sight — prepared to stop within visible distance. The MA remains valid; only the supervision mode changes to reflect the uncertain track occupation.',
+          'When the trackside sends an On Sight (OS) mode profile, the system transitions to OS mode upon entering that area. In OS mode, the speed is restricted to a speed determined by National Values and you must drive on sight — prepared to stop within visible distance. The MA remains valid; only the supervision mode changes to reflect the uncertain track occupation.',
         hint: 'The track ahead might be occupied. Which mode requires the driver to be prepared to stop at sight?',
       },
       {
@@ -114,7 +114,7 @@ export const scenarios: Scenario[] = [
         correctAnswer: 'SR',
         incorrectOptions: ['FS', 'OS', 'SH'],
         explanation:
-          'After a trip, the standard recovery is to proceed in Staff Responsible (SR) mode. The driver has received verbal authorization from the signaller and requests SR mode on the DMI. In SR mode, ETCS supervises a ceiling speed (40 km/h) but the driver takes responsibility for safe movement. Full Supervision cannot be entered yet because no MA is available at this point.',
+          'After a trip, the standard recovery is to proceed in Staff Responsible (SR) mode. The driver has received verbal authorization from the signaller and requests SR mode on the DMI. In SR mode, ETCS supervises a ceiling speed determined by National Values but the driver takes responsibility for safe movement. Full Supervision cannot be entered yet because no MA is available at this point. Note that SR is not the only post-trip option — at Level 2, the RBC could also propose FS, OS, LS, or SH mode.',
         hint: 'You have a verbal authorization from the signaller but no electronic movement authority from the RBC. Which mode allows movement under driver responsibility?',
       },
       {
@@ -167,7 +167,7 @@ export const scenarios: Scenario[] = [
         correctAnswer: 'SH',
         incorrectOptions: ['SR', 'OS', 'FS'],
         explanation:
-          'When a shunting request is made from Stand By, the system enters Shunting (SH) mode. In SH mode, ETCS supervises a ceiling speed of 30 km/h but provides no movement authority or route protection. The driver is responsible for observing the track ahead and following yard controller instructions.',
+          'When a shunting request is made from Stand By, the system enters Shunting (SH) mode. In SH mode, ETCS supervises a ceiling speed determined by National Values but provides no movement authority or route protection. The driver is responsible for observing the track ahead and following yard controller instructions.',
         hint: 'You need to make low-speed yard movements. Which mode is specifically designed for marshalling operations?',
       },
       {

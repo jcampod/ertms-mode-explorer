@@ -13,6 +13,7 @@ export const esModes: Record<string, ModeTranslation> = {
     realWorldContext:
       'Este es el estado del tren cuando está estacionado en un depósito durante la noche, o cuando una locomotora está aparcada con todos los sistemas apagados. También ocurre durante la fase inicial antes de que un maquinista comience su turno y encienda la cabina.',
     keyCharacteristics: [
+      'El freno de emergencia está permanentemente comandado',
       'No hay funciones ETCS disponibles',
       'No hay supervisión de velocidad ni intervención de freno',
       'El DMI está inactivo y apagado',
@@ -42,10 +43,10 @@ export const esModes: Record<string, ModeTranslation> = {
   SH: {
     name: 'Maniobras',
     description:
-      'El tren se mueve lentamente en un patio de maniobras: acoplando vagones, reposicionando o montando un tren. La velocidad está limitada a 30 km/h, pero el maquinista debe vigilar la vía por sí mismo porque ETCS no comprueba la ruta.',
+      'El tren se mueve lentamente en un patio de maniobras: acoplando vagones, reposicionando o montando un tren. La velocidad está limitada según Valores Nacionales, pero el maquinista debe vigilar la vía por sí mismo porque ETCS no comprueba la ruta.',
     detailedDescription:
       'El modo Shunting se utiliza para movimientos a baja velocidad en patios: montaje/división de trenes, posicionamiento de vagones y operaciones de clasificación. ETCS proporciona supervisión de velocidad máxima (normalmente 30 km/h, configurable según valor nacional) pero no emite ni supervisa una autorización de movimiento (MA). No hay protección contra rutas conflictivas ni vía ocupada. El maquinista debe comprobar visualmente que el camino está libre y seguir las señales manuales o las instrucciones locales de maniobra. En Nivel 2/3, la sesión de comunicación con el RBC puede liberarse. El principio clave de seguridad es que la velocidad está limitada pero la seguridad de la ruta es responsabilidad del maquinista.',
-    speedLimit: '30 km/h (el valor nacional puede ser diferente)',
+    speedLimit: 'Determinado por Valores Nacionales',
     driverResponsibility:
       'Responsabilidad total de la seguridad de la ruta, detección de obstáculos y cumplimiento de las instrucciones locales de maniobra.',
     realWorldContext:
@@ -85,7 +86,7 @@ export const esModes: Record<string, ModeTranslation> = {
       'Limited Supervision proporciona una autorización de movimiento y supervisión de velocidad, pero con información de vía menos detallada que FS. El equipo de a bordo tiene una MA con un EOA, por lo que el tren está protegido contra el rebasamiento de su autorización. Sin embargo, la descripción de la vía puede ser incompleta: los perfiles de gradiente pueden estar ausentes y algunas restricciones de velocidad pueden basarse en valores nacionales por defecto en lugar de datos precisos de infraestructura. Los cálculos de curvas de frenado pueden usar parámetros por defecto conservadores, lo que potencialmente resulta en perfiles de velocidad más restrictivos (pero igualmente seguros). LS se introdujo para permitir la migración gradual de sistemas nacionales a ETCS completo, habilitando un despliegue temprano con un esfuerzo reducido de implementación en vía.',
     speedLimit: 'Según MA y perfil de velocidad disponible (pueden aplicarse valores nacionales)',
     driverResponsibility:
-      'Conducir dentro de la velocidad supervisada. Tener en cuenta que la supervisión puede ser menos precisa que en Full Supervision.',
+      'Debe observar la información de señalización lateral y cumplir con las normas nacionales de operación — las indicaciones ETCS no sustituyen a las señales laterales.',
     realWorldContext:
       'Se utiliza en líneas que están siendo migradas a ETCS pero donde los datos de vía (por ejemplo, perfiles de gradiente, restricciones detalladas de velocidad) aún no están completamente proyectados. Permite un despliegue temprano de ETCS con un esfuerzo de implementación reducido.',
     keyCharacteristics: [
@@ -99,10 +100,10 @@ export const esModes: Record<string, ModeTranslation> = {
   OS: {
     name: 'Marcha a la vista',
     description:
-      'Proceda con precaución: puede haber algo en la vía por delante (otro tren, un obstáculo). La velocidad está limitada a 30 km/h y el maquinista debe estar preparado para detenerse en cualquier momento según lo que pueda ver.',
+      'Proceda con precaución: puede haber algo en la vía por delante (otro tren, un obstáculo). La velocidad está limitada según Valores Nacionales y el maquinista debe estar preparado para detenerse en cualquier momento según lo que pueda ver.',
     detailedDescription:
       'El modo On Sight se utiliza cuando la vía no puede garantizar que el tramo por delante está libre. Esto ocurre típicamente cuando los circuitos de vía o contadores de ejes han fallado, cuando un tramo necesita inspección visual o cuando el enclavamiento ha establecido una ruta con ocupación conocida por delante. ETCS supervisa una velocidad máxima (normalmente 30 km/h) y el maquinista debe estar preparado para detenerse ante cualquier obstáculo visible. El modo se activa por un perfil de modo OS desde la vía, normalmente integrado en la MA. El equipo de a bordo continúa supervisando la MA/EOA además de la velocidad máxima de OS. Una vez que se pasa la zona OS, el sistema transiciona de vuelta a Full Supervision.',
-    speedLimit: '30 km/h (el valor nacional puede ser diferente)',
+    speedLimit: 'Determinado por Valores Nacionales (normalmente 40 km/h)',
     driverResponsibility:
       'Conducir a la vista. Estar preparado para detenerse dentro de la distancia visible. Atención total a la vía por delante.',
     realWorldContext:
@@ -118,12 +119,12 @@ export const esModes: Record<string, ModeTranslation> = {
   SR: {
     name: 'Responsabilidad del personal',
     description:
-      'El sistema no puede dar al tren una ruta adecuada, así que el maquinista toma el mando. El responsable de circulación llama por radio y dice "de acuerdo, puede circular." La velocidad está limitada a 40 km/h. Este es el recurso cuando las cosas no funcionan con normalidad.',
+      'El sistema no puede dar al tren una ruta adecuada, así que el maquinista toma el mando. El responsable de circulación autoriza el movimiento mediante la Instrucción Europea 7. La velocidad está limitada según Valores Nacionales. Este es el recurso cuando las cosas no funcionan normalmente.',
     detailedDescription:
       'Staff Responsible es el modo de reserva utilizado cuando ETCS no puede proporcionar una autorización de movimiento pero el tren necesita moverse. Escenarios típicos: fallo de comunicación con el RBC, avería del lector de balizas, datos de vía ausentes o inicio desde un área no equipada. El responsable de circulación autoriza al maquinista mediante orden verbal, autorización escrita o procedimiento nacional. ETCS supervisa una velocidad máxima (por defecto 40 km/h) mientras el maquinista asume la responsabilidad de señales, restricciones de velocidad y condiciones de la ruta. El maquinista debe confirmar la entrada en modo SR en el DMI. Si posteriormente se recibe una MA válida, el sistema transiciona a Full Supervision. SR es fundamental para la resiliencia operativa: los trenes pueden seguir moviéndose de forma segura incluso con infraestructura degradada.',
-    speedLimit: '40 km/h (el valor nacional puede ser diferente)',
+    speedLimit: 'Determinado por Valores Nacionales',
     driverResponsibility:
-      'Responsabilidad total del movimiento seguro bajo autorización del responsable de circulación. Observar señales y restricciones de velocidad.',
+      'Responsabilidad total del movimiento seguro bajo autorización del responsable de circulación. Observar señales y restricciones de velocidad. Debe circular a la vista salvo exención por instrucción operacional.',
     realWorldContext:
       'Se utiliza cuando un maquinista recibe una orden verbal para rebasar una señal en peligro, al iniciar una misión sin MA disponible o cuando se pierde la comunicación con el RBC pero el responsable de circulación autoriza el movimiento. Muy habitual en operaciones degradadas.',
     keyCharacteristics: [
@@ -251,7 +252,7 @@ export const esModes: Record<string, ModeTranslation> = {
   IS: {
     name: 'Aislamiento',
     description:
-      'El maquinista ha desactivado deliberadamente ETCS mediante un interruptor físico. El sistema está completamente deshabilitado, como desenchufarlo. Se utiliza cuando ETCS está averiado y no se puede reparar en el acto.',
+      'El maquinista ha desactivado deliberadamente el ETCS mediante un método de aislamiento específico de la implementación. El sistema está completamente deshabilitado, como desenchufarlo. Se usa cuando el ETCS está averiado y no puede repararse en el momento.',
     detailedDescription:
       'El modo Isolation se activa cuando el maquinista acciona el interruptor físico de aislamiento ETCS para deshabilitar completamente el equipo de a bordo. Es una acción deliberada. Una vez aislado, ETCS no proporciona supervisión, no hay indicación en el DMI (o muestra una indicación de aislamiento), no hay comandos de freno ni comunicación con la vía. El tren opera enteramente bajo las normas nacionales y cualquier sistema nacional independiente de protección del tren. Isolation se utiliza cuando ETCS tiene un fallo persistente que no se puede resolver, durante el mantenimiento o en escenarios específicos donde ETCS debe deshabilitarse. El interruptor de aislamiento es típicamente un interruptor de llave físico para prevenir activaciones accidentales. Para salir, el maquinista devuelve el interruptor a la posición normal, lo que desencadena una secuencia de encendido y reinicio del sistema.',
     speedLimit: null,
@@ -260,10 +261,10 @@ export const esModes: Record<string, ModeTranslation> = {
     realWorldContext:
       'Se utiliza cuando el ETCS de a bordo tiene un fallo persistente y el tren necesita continuar hasta la instalación de mantenimiento más cercana. También se usa durante pruebas y actividades de mantenimiento del equipo de a bordo en talleres.',
     keyCharacteristics: [
-      'ETCS deshabilitado deliberadamente por el maquinista mediante interruptor físico',
+      'ETCS desactivado deliberadamente por el maquinista mediante método de aislamiento específico de la implementación',
       'No hay funciones ETCS disponibles',
       'Utilizado para fallos persistentes o mantenimiento',
-      'Interruptor de llave físico previene activación accidental',
+      'El método de aislamiento es específico de la implementación (no armonizado entre trenes)',
       'La salida requiere restablecer el interruptor y reinicio completo del sistema',
     ],
   },
@@ -275,7 +276,7 @@ export const esModes: Record<string, ModeTranslation> = {
       'El modo Non Leading se utiliza cuando una unidad con tracción y ETCS forma parte de una composición pero no está controlando el movimiento. Es habitual en tracción múltiple (dos o más locomotoras acopladas) u operaciones push-pull donde la locomotora trasera tiene ETCS activo pero la cabina delantera está al mando. El equipo de a bordo está activo y consciente de su estado pero no solicita ni mantiene una MA, y no emite comandos de freno basados en la supervisión ETCS. La cabina en NL normalmente tiene una visualización reducida en el DMI. NL asegura que solo un equipo de a bordo ETCS en una composición esté supervisando activamente en cada momento, previniendo comandos de freno o gestión de autorización conflictivos.',
     speedLimit: null,
     driverResponsibility:
-      'Solo monitorización. No hay responsabilidad de conducción activa desde esta unidad. La unidad líder controla el tren.',
+      'Responsable de cumplir las órdenes asociadas a las condiciones de vía mostradas.',
     realWorldContext:
       'Un tren de mercancías remolcado por dos locomotoras acopladas: la locomotora delantera está en modo FS mientras que el ETCS de la locomotora trasera está en modo NL. También se usa para el coche motor trasero de un tren push-pull de alta velocidad.',
     keyCharacteristics: [
@@ -291,8 +292,8 @@ export const esModes: Record<string, ModeTranslation> = {
     description:
       'El tren necesita ir hacia atrás una corta distancia, quizá porque pasó de largo un andén o necesita evacuar un túnel. ETCS vigila la velocidad y la distancia para asegurarse de que no vaya demasiado lejos.',
     detailedDescription:
-      'El modo Reversing permite un movimiento controlado hacia atrás bajo supervisión ETCS. El maquinista está autorizado (a través de información de vía o un procedimiento ETCS específico) a retroceder una distancia limitada a una velocidad limitada. ETCS monitoriza que el tren no supere la velocidad de retroceso autorizada ni recorra más de la distancia autorizada. El DMI muestra el estado de retroceso y la distancia restante. Se usa para retroceder hasta un andén después de pasarse, retirarse de un punto de peligro o evacuación de emergencia (por ejemplo, retroceder fuera de un túnel). Los parámetros de retroceso se definen por los datos de vía o valores nacionales. Una vez completado, el tren transiciona a otro modo (normalmente Post Trip o Full Supervision). Esto no es para circulación bidireccional regular.',
-    speedLimit: '30 km/h (según parámetros del área de retroceso)',
+      'El modo Reversing permite un movimiento hacia atrás controlado bajo supervisión ETCS, principalmente destinado a la evacuación de emergencia de situaciones peligrosas. El maquinista está autorizado (a través de información de vía o un procedimiento ETCS específico) a retroceder una distancia limitada a una velocidad limitada. ETCS monitoriza que el tren no supere la velocidad de retroceso autorizada ni recorra más de la distancia autorizada. El DMI muestra el estado de retroceso y la distancia restante. Se usa para retroceder hasta un andén después de pasarse, retirarse de un punto de peligro o evacuación de emergencia (por ejemplo, retroceder fuera de un túnel). Los parámetros de retroceso se definen por los datos de vía o valores nacionales. Una vez completado, el tren transiciona a otro modo (normalmente Post Trip o Full Supervision). Esto no es para circulación bidireccional regular.',
+    speedLimit: 'Definido por los parámetros del área de retroceso de vía',
     driverResponsibility:
       'Controlar el movimiento de retroceso dentro de la velocidad y distancia autorizadas. Monitorizar el DMI para la distancia restante.',
     realWorldContext:
@@ -310,10 +311,10 @@ export const esModes: Record<string, ModeTranslation> = {
     description:
       'ATO (Operación Automática de Trenes) está al mando. El tren se conduce solo: acelerando, frenando y parando en estaciones automáticamente, mientras ETCS sigue vigilando todo para garantizar la seguridad. Añadido en la Baseline 4.',
     detailedDescription:
-      'Automatic Driving es un nuevo modo ETCS introducido en la Baseline 4 (CCS TSI 2023) específicamente para la operación ATO sobre ETCS. Se entra desde Full Supervision cuando el maquinista (GoA 2) o el sistema (GoA 3/4) activa ATO. En este modo, el sistema ATO de a bordo controla la tracción, el frenado y la marcha por inercia según un Perfil de Viaje recibido del ATO de vía. ETCS continúa proporcionando supervisión completa de seguridad: la Autorización de Movimiento, el perfil de velocidad y las curvas de frenado siguen aplicándose. Si los comandos de ATO violaran cualquier restricción ETCS, la capa de seguridad interviene con frenado de servicio o de emergencia. El maquinista puede desactivar ATO en cualquier momento, volviendo a Full Supervision. Si ETCS detecta una condición crítica de seguridad (por ejemplo, aproximación al EOA), anula ATO automáticamente.',
+      'Automatic Driving es un nuevo modo ETCS introducido en la Baseline 4 (CCS TSI 2023) específicamente para la operación ATO sobre ETCS. El handbook v2.8.0 cubre GoA 1 (asesoramiento al maquinista) y GoA 2 (conducción automática supervisada) solamente. Se entra desde Full Supervision cuando el maquinista (GoA 2) activa ATO. En este modo, el sistema ATO de a bordo controla la tracción, el frenado y la marcha por inercia según un Perfil de Viaje recibido del ATO de vía. ETCS continúa proporcionando supervisión completa de seguridad: la Autorización de Movimiento, el perfil de velocidad y las curvas de frenado siguen aplicándose. Si los comandos de ATO violaran cualquier restricción ETCS, la capa de seguridad interviene con frenado de servicio o de emergencia. El maquinista puede desactivar ATO en cualquier momento, volviendo a Full Supervision. Si ETCS detecta una condición crítica de seguridad (por ejemplo, aproximación al EOA), anula ATO automáticamente.',
     speedLimit: 'Según perfil de velocidad estática y MA (ATO optimiza dentro de la envolvente ETCS)',
     driverResponsibility:
-      'GoA 2: Monitorizar la operación ATO, gestionar puertas y salida, puede anular en cualquier momento. GoA 3/4: Rol del maquinista reducido o inexistente.',
+      'GoA 2: Monitorizar la operación ATO, gestionar puertas y salida, puede anular en cualquier momento.',
     realWorldContext:
       'Actualmente en pruebas piloto en líneas como Thameslink (Reino Unido) y varios sistemas de metro europeos. Este modo permite una conducción energéticamente eficiente y optimizada según horario, manteniendo la protección de seguridad ETCS completa. Se espera que se convierta en estándar para servicios urbanos y suburbanos de alta frecuencia.',
     keyCharacteristics: [

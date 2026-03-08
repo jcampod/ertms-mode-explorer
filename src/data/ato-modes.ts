@@ -55,7 +55,7 @@ export const atoStates: ATOState[] = [
       'Driver informed via ATO DMI (Driver Machine Interface)',
     ],
     goaRelevance: 'Applicable to all GoA levels (GoA 1–4)',
-    etcsRequirement: 'ETCS must be operational; ATO awaits Full Supervision (FS) mode',
+    etcsRequirement: 'ETCS must be operational; ATO awaits Full Supervision (FS) or Automatic Driving (AD) mode',
     subsetReference: 'Subset-125, Section 5.3',
   },
   {

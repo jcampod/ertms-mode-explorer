@@ -47,8 +47,8 @@ export const frTransitions: Record<string, TransitionTranslation> = {
     detailedDescription:
       'Le conducteur demande l\u2019entr\u00e9e en mode Shunting pour les mouvements en faisceau, ou un ordre de manoeuvre est re\u00e7u du sol (par ex. via balise). Le syst\u00e8me passe en mode SH pour les op\u00e9rations de triage \u00e0 basse vitesse. La saisie compl\u00e8te des donn\u00e9es du train peut ne pas \u00eatre requise pour la manoeuvre.',
     conditions: [
-      'Demande de manoeuvre du conducteur ou ordre du sol',
-      'Le conducteur acquitte le mode manoeuvre',
+      'Demande de manoeuvre du conducteur ou ordre c\u00f4t\u00e9 voie',
+      'Le conducteur confirme le mode de manoeuvre',
     ],
   },
   'SB-SL': {
@@ -126,7 +126,7 @@ export const frTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'FS-SR': {
-    description: 'Perte des conditions du MA, repli vers SR',
+    description: 'Le conducteur active la fonction Override en Full Supervision',
     detailedDescription:
       'Si les conditions de Full Supervision ne peuvent plus \u00eatre maintenues (par ex. description de voie devenant incompl\u00e8te, probl\u00e8mes de communication ne justifiant pas un Trip), le syst\u00e8me peut passer en mode Staff Responsible comme mode d\u00e9grad\u00e9 mais encore op\u00e9rationnel. Le conducteur doit acquitter le changement.',
     conditions: [
@@ -193,7 +193,7 @@ export const frTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'OS-SR': {
-    description: 'Perte des conditions OS, repli vers SR',
+    description: 'Le conducteur active la fonction Override en On Sight',
     detailedDescription:
       'Si les conditions du mode On Sight ne peuvent plus \u00eatre maintenues (par ex. MA expir\u00e9 ou communication perdue), le syst\u00e8me se replie en mode Staff Responsible. Le conducteur doit acquitter et prendre la responsabilit\u00e9 du mouvement s\u00fbr.',
     conditions: [
@@ -241,7 +241,7 @@ export const frTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'UN-SR': {
-    description: 'Entr\u00e9e dans une zone ETCS sans MA',
+    description: 'Le conducteur active la fonction Override en Unfitted',
     detailedDescription:
       'Le train entre dans une zone \u00e9quip\u00e9e ETCS depuis une zone Unfitted, mais aucune autorisation de mouvement n\u2019est imm\u00e9diatement disponible. Le syst\u00e8me passe en mode Staff Responsible comme repli s\u00fbr jusqu\u2019\u00e0 l\u2019obtention d\u2019un MA.',
     conditions: [
@@ -263,7 +263,7 @@ export const frTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'SN-SR': {
-    description: 'Du national vers l\u2019ETCS sans MA',
+    description: 'Le conducteur active la fonction Override en STM National',
     detailedDescription:
       'Le train passe d\u2019un syst\u00e8me national \u00e0 une zone ETCS, mais aucune autorisation de mouvement n\u2019est disponible depuis le sol ETCS. Le syst\u00e8me entre en mode Staff Responsible comme solution de repli. Le conducteur doit suivre les instructions du r\u00e9gulateur jusqu\u2019\u00e0 l\u2019obtention d\u2019un MA.',
     conditions: [
@@ -315,16 +315,6 @@ export const frTransitions: Record<string, TransitionTranslation> = {
       'Le conducteur d\u00e9s\u00e9lectionne le mode manoeuvre',
     ],
   },
-  'SH-FS': {
-    description: 'De la manoeuvre au mouvement en ligne',
-    detailedDescription:
-      'Pendant les op\u00e9rations de Shunting, le train re\u00e7oit une autorisation de mouvement valide pour le mouvement en ligne (par ex. apr\u00e8s assemblage et d\u00e9part du faisceau). Le syst\u00e8me passe en Full Supervision pour le trajet en ligne.',
-    conditions: [
-      'MA valide re\u00e7u pour le mouvement en ligne',
-      'Description compl\u00e8te de la voie disponible',
-      'Transition de la manoeuvre au mouvement en ligne autoris\u00e9e',
-    ],
-  },
 
   // NL -> SB
   'NL-SB': {
@@ -357,15 +347,6 @@ export const frTransitions: Record<string, TransitionTranslation> = {
       'Mouvement en marche arri\u00e8re termin\u00e9',
       'Le conducteur s\u00e9lectionne la direction avant',
       'MA valide pour le mouvement vers l\u2019avant disponible',
-    ],
-  },
-  'RV-PT': {
-    description: 'Marche arri\u00e8re termin\u00e9e ou limite atteinte',
-    detailedDescription:
-      'Si la distance autoris\u00e9e en marche arri\u00e8re est atteinte, ou si le mouvement est annul\u00e9, et que le train est \u00e0 l\u2019arr\u00eat, le syst\u00e8me passe en Post Trip. Le conducteur doit alors suivre les proc\u00e9dures de r\u00e9tablissement pour reprendre le fonctionnement normal.',
-    conditions: [
-      'Distance de marche arri\u00e8re d\u00e9pass\u00e9e ou marche arri\u00e8re annul\u00e9e',
-      'Train \u00e0 l\u2019arr\u00eat',
     ],
   },
 
@@ -409,7 +390,7 @@ export const frTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'LS-SR': {
-    description: 'Perte des conditions du MA en Limited Supervision',
+    description: 'Le conducteur active la fonction Override en Limited Supervision',
     detailedDescription:
       'Si les conditions de l\u2019autorisation de mouvement sont perdues en Limited Supervision (par ex. panne de communication, incoh\u00e9rence de donn\u00e9es), le syst\u00e8me se replie en mode Staff Responsible. Le conducteur doit acquitter et prendre la responsabilit\u00e9.',
     conditions: [
@@ -582,11 +563,11 @@ export const frTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'AD-TR': {
-    description: 'Trip de s\u00e9curit\u00e9 pendant Automatic Driving',
+    description: 'Trip en Automatic Driving',
     detailedDescription:
-      'Si le syst\u00e8me ATO ou un \u00e9v\u00e9nement externe provoque l\u2019approche ou le d\u00e9passement de la fin d\u2019autorisation par le train, l\u2019ETCS d\u00e9clenche un freinage d\u2019urgence quel que soit l\u2019\u00e9tat de l\u2019ATO. Le frein d\u2019urgence est appliqu\u00e9 et l\u2019ATO est imm\u00e9diatement d\u00e9sengag\u00e9. Le syst\u00e8me entre en mode Trip. Le r\u00e9tablissement suit la s\u00e9quence standard TR\u2192PT\u2192SR\u2192FS.',
+      'Une condition de s\u00e9curit\u00e9 provoque un trip pendant l\u2019op\u00e9ration ATO. L\u2019ETCS annule la conduite automatique et applique imm\u00e9diatement le freinage d\u2019urgence.',
     conditions: [
-      'Le train d\u00e9passe la fin d\u2019autorisation (EOA) ou l\u2019ATO viole l\u2019enveloppe de s\u00e9curit\u00e9',
+      'Condition de trip d\u00e9tect\u00e9e pendant la conduite automatique',
     ],
   },
   'AD-SH': {
@@ -595,6 +576,58 @@ export const frTransitions: Record<string, TransitionTranslation> = {
       'Dans certains sc\u00e9narios op\u00e9rationnels, une transition de Automatic Driving \u00e0 Shunting peut \u00eatre n\u00e9cessaire (par ex. approche d\u2019un faisceau). L\u2019ATO est d\u00e9sengag\u00e9 et l\u2019ETCS passe en mode Shunting avec sa supervision r\u00e9duite.',
     conditions: [
       'Demande de manoeuvre acquitt\u00e9e pendant le fonctionnement ATO',
+    ],
+  },
+
+  // New transitions
+  'SB-TR': {
+    description: 'Trip depuis Stand By',
+    detailedDescription:
+      'Une condition de s\u00e9curit\u00e9 provoque un trip en mode Stand By. L\u2019ETCS applique imm\u00e9diatement le freinage d\u2019urgence.',
+    conditions: [
+      'Condition de trip d\u00e9tect\u00e9e par le syst\u00e8me',
+    ],
+  },
+  'SH-TR': {
+    description: 'Trip pendant les manoeuvres',
+    detailedDescription:
+      'Une condition de s\u00e9curit\u00e9 provoque un trip pendant les op\u00e9rations de manoeuvre. L\u2019ETCS applique imm\u00e9diatement le freinage d\u2019urgence.',
+    conditions: [
+      'Condition de trip d\u00e9tect\u00e9e pendant les manoeuvres',
+    ],
+  },
+  'FS-NL': {
+    description: 'Transition vers Non Leading depuis Full Supervision',
+    detailedDescription:
+      'Le conducteur indique que cette unit\u00e9 n\u2019est plus l\u2019unit\u00e9 de traction principale. L\u2019ETCS passe en mode Non Leading.',
+    conditions: [
+      'Le conducteur s\u00e9lectionne Non Leading',
+      'Une autre unit\u00e9 prend le contr\u00f4le principal',
+    ],
+  },
+  'UN-TR': {
+    description: 'Trip en mode Unfitted',
+    detailedDescription:
+      'Une condition de s\u00e9curit\u00e9 provoque un trip en zone non \u00e9quip\u00e9e. L\u2019ETCS applique imm\u00e9diatement le freinage d\u2019urgence.',
+    conditions: [
+      'Condition de trip d\u00e9tect\u00e9e en territoire non \u00e9quip\u00e9',
+    ],
+  },
+  'SN-TR': {
+    description: 'Trip en mode STM National',
+    detailedDescription:
+      'Une condition de s\u00e9curit\u00e9 provoque un trip sous le syst\u00e8me national via STM. L\u2019ETCS applique imm\u00e9diatement le freinage d\u2019urgence.',
+    conditions: [
+      'Condition de trip d\u00e9tect\u00e9e sous supervision du syst\u00e8me national',
+    ],
+  },
+  'RV-SB': {
+    description: 'Fin du recul vers Stand By',
+    detailedDescription:
+      'Apr\u00e8s avoir compl\u00e9t\u00e9 le mouvement de recul autoris\u00e9, le syst\u00e8me passe en Stand By pour reprendre la pr\u00e9paration de la mission.',
+    conditions: [
+      'Mouvement de recul termin\u00e9',
+      'Train \u00e0 l\u2019arr\u00eat',
     ],
   },
 };

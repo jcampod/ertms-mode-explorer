@@ -44,7 +44,7 @@ export const frATOStates: Record<string, ATOStateTranslation> = {
       'Le conducteur est inform\u00e9 via le DMI ATO',
     ],
     goaRelevance: 'Applicable \u00e0 tous les niveaux GoA (GoA 1\u20134)',
-    etcsRequirement: 'L\u2019ETCS doit \u00eatre op\u00e9rationnel ; l\u2019ATO attend le mode Full Supervision (FS)',
+    etcsRequirement: 'L\u2019ETCS doit \u00eatre op\u00e9rationnel ; l\u2019ATO attend Full Supervision (FS) ou Automatic Driving (AD)',
   },
   AV: {
     name: 'Disponible',

@@ -57,7 +57,7 @@ export const deGoALevels: Record<number, GoATranslation> = {
     shortName: 'GoA 3 \u2014 Fahrerlos',
     description: 'ATO \u00FCbernimmt alle Fahrfunktionen. Kein Triebfahrzeugf\u00FChrer im F\u00FChrerhaus. Ein Zugbegleiter ist f\u00FCr Notf\u00E4lle und Fahrgastbetreuung an Bord.',
     detailedDescription:
-      'Bei Automatisierungsgrad 3 steuert das ATO-System alle Fahrfunktionen einschlie\u00DFlich Zugkraft, Bremsung, T\u00FCrbedienung und Abfahrt. Kein Triebfahrzeugf\u00FChrer ist im F\u00FChrerhaus anwesend. Ein ausgebildeter Zugbegleiter f\u00E4hrt an Bord mit, um Notfallsituationen zu behandeln, Fahrg\u00E4ste zu unterst\u00FCtzen und bei Bedarf manuell einzugreifen. Das System umfasst Hinderniserkennung und automatische Notfallreaktion, wobei der Zugbegleiter als menschliche Sicherheitsreserve dient.',
+      'Bei Automatisierungsgrad 3 steuert das ATO-System alle Fahrfunktionen einschlie\u00DFlich Zugkraft, Bremsung, T\u00FCrbedienung und Abfahrt. Kein Triebfahrzeugf\u00FChrer ist im F\u00FChrerhaus anwesend. Ein ausgebildeter Zugbegleiter f\u00E4hrt an Bord mit, um Notfallsituationen zu behandeln, Fahrg\u00E4ste zu unterst\u00FCtzen und bei Bedarf manuell einzugreifen. Das System umfasst Hinderniserkennung und automatische Notfallreaktion, wobei der Zugbegleiter als menschliche Sicherheitsreserve dient. GoA 3 ist eine IEC 62290 Industriestandarddefinition, nicht aus der ETCS-Spezifikation.',
     driverRole: 'Kein Triebfahrzeugf\u00FChrer. Zugbegleiter an Bord f\u00FCr Notf\u00E4lle und Fahrgastbetreuung.',
     atoRole: 'Volle Fahrkontrolle einschlie\u00DFlich T\u00FCren und Abfahrt. Automatische Hindernisreaktion.',
     taskNames: [
@@ -75,14 +75,14 @@ export const deGoALevels: Record<number, GoATranslation> = {
       'Docklands Light Railway (London)',
       'SkyTrain (Vancouver)',
     ],
-    specStatus: 'In Entwicklung \u2014 informativ in aktuellen Spezifikationen',
+    specStatus: 'Definiert durch IEC 62290, nicht im ETCS Driver\'s Handbook v2.8.0 behandelt',
   },
   4: {
     name: 'Unbemannter Zugbetrieb',
     shortName: 'GoA 4 \u2014 Vollautomatisch',
     description: 'Vollautomatischer Betrieb ohne Personal an Bord. Das System \u00FCbernimmt alles einschlie\u00DFlich Notfallbehandlung und Hinderniserkennung.',
     detailedDescription:
-      'Bei Automatisierungsgrad 4 ist der gesamte Zugbetrieb vollautomatisiert, ohne menschliche Pr\u00E4senz an Bord. Das ATO-System \u00FCbernimmt alle Fahrfunktionen, T\u00FCrbedienung, Abfahrt, Hinderniserkennung und Notfallreaktionen. Fern\u00FCberwachung aus einer Betriebsleitstelle bietet menschliche Aufsicht. Bahnsteigsperrt\u00FCren und fortschrittliche Sensorsysteme gew\u00E4hrleisten die Sicherheit ohne Bordpersonal.',
+      'Bei Automatisierungsgrad 4 ist der gesamte Zugbetrieb vollautomatisiert, ohne menschliche Pr\u00E4senz an Bord. Das ATO-System \u00FCbernimmt alle Fahrfunktionen, T\u00FCrbedienung, Abfahrt, Hinderniserkennung und Notfallreaktionen. Fern\u00FCberwachung aus einer Betriebsleitstelle bietet menschliche Aufsicht. Bahnsteigsperrt\u00FCren und fortschrittliche Sensorsysteme gew\u00E4hrleisten die Sicherheit ohne Bordpersonal. GoA 4 ist eine IEC 62290 Industriestandarddefinition, nicht aus der ETCS-Spezifikation.',
     driverRole: 'Kein Bordpersonal. Fern-Betriebsleitstelle \u00FCbernimmt \u00DCberwachung und Eingriff.',
     atoRole: 'Vollst\u00E4ndige autonome Steuerung aller Zugbetriebs- und Sicherheitsfunktionen.',
     taskNames: [
@@ -102,6 +102,6 @@ export const deGoALevels: Record<number, GoATranslation> = {
       'Metro Kopenhagen',
       'N\u00FCrnberger U-Bahn (Linien U2, U3)',
     ],
-    specStatus: 'In Entwicklung \u2014 informativ in aktuellen Spezifikationen',
+    specStatus: 'Definiert durch IEC 62290, nicht im ETCS Driver\'s Handbook v2.8.0 behandelt',
   },
 };

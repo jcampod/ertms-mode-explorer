@@ -40,9 +40,9 @@ export const esTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'SB-SH': {
-    description: 'Solicitud de maniobras desde Stand By',
+    description: 'Solicitud de maniobras u orden de vía desde Stand By',
     detailedDescription:
-      'El maquinista solicita entrar en modo Shunting para movimientos de patio, o se recibe una orden de maniobras desde la vía (por ejemplo, a través de baliza). El sistema transiciona al modo SH para operaciones de clasificación a baja velocidad. Puede no ser necesaria la introducción completa de datos del tren para maniobras.',
+      'El maquinista solicita entrar en modo Shunting para movimientos de patio, o se recibe una orden de maniobras desde la vía (por ejemplo, a través de baliza). La transición puede ser iniciada tanto por solicitud del maquinista como por orden de vía. El sistema transiciona al modo SH para operaciones de clasificación a baja velocidad. Puede no ser necesaria la introducción completa de datos del tren para maniobras.',
     conditions: [
       'Solicitud de maniobras del maquinista u orden de vía',
       'El maquinista confirma el modo de maniobras',
@@ -119,7 +119,7 @@ export const esTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'FS-SR': {
-    description: 'Pérdida de condiciones de MA, recurso a SR',
+    description: 'El maquinista activa la función Override en Full Supervision',
     detailedDescription:
       'Si las condiciones para Full Supervision ya no pueden mantenerse (por ejemplo, la descripción de la vía se vuelve incompleta, problemas de comunicación que no justifican un disparo), el sistema puede transicionar a Staff Responsible como modo degradado pero aún operativo. El maquinista debe confirmar el cambio.',
     conditions: [
@@ -184,7 +184,7 @@ export const esTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'OS-SR': {
-    description: 'Pérdida de condiciones de OS, recurso a SR',
+    description: 'El maquinista activa la función Override en On Sight',
     detailedDescription:
       'Si las condiciones para el modo On Sight ya no pueden mantenerse (por ejemplo, la MA expira o se pierde la comunicación), el sistema recurre al modo Staff Responsible. El maquinista debe confirmar y asumir la responsabilidad del movimiento seguro.',
     conditions: [
@@ -228,7 +228,7 @@ export const esTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'UN-SR': {
-    description: 'Entrada en área ETCS sin MA',
+    description: 'El maquinista activa la función Override en Unfitted',
     detailedDescription:
       'El tren entra en un área equipada con ETCS desde un área no equipada, pero no hay autorización de movimiento disponible inmediatamente. El sistema transiciona al modo Staff Responsible como recurso seguro hasta que se pueda obtener una MA.',
     conditions: [
@@ -248,7 +248,7 @@ export const esTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'SN-SR': {
-    description: 'Nacional a ETCS sin MA',
+    description: 'El maquinista activa la función Override en STM National',
     detailedDescription:
       'El tren transiciona de un sistema nacional a un área ETCS, pero no hay autorización de movimiento disponible desde la vía ETCS. El sistema entra en modo Staff Responsible como recurso. El maquinista debe seguir las instrucciones del responsable de circulación hasta obtener una MA.',
     conditions: [
@@ -294,16 +294,6 @@ export const esTransitions: Record<string, TransitionTranslation> = {
       'El maquinista desactiva el modo de maniobras',
     ],
   },
-  'SH-FS': {
-    description: 'De maniobras a movimiento en línea principal',
-    detailedDescription:
-      'Durante las operaciones de maniobra, el tren recibe una autorización de movimiento válida para movimiento en línea principal (por ejemplo, después de ser montado y listo para salir del patio). El sistema transiciona a Full Supervision para el viaje en línea principal.',
-    conditions: [
-      'MA válida recibida para movimiento en línea principal',
-      'Descripción completa de la vía disponible',
-      'Transición de maniobras a línea principal autorizada',
-    ],
-  },
   'NL-SB': {
     description: 'Unidad Non Leading se convierte en líder',
     detailedDescription:
@@ -330,15 +320,6 @@ export const esTransitions: Record<string, TransitionTranslation> = {
       'Movimiento de retroceso completado',
       'El maquinista selecciona la dirección hacia adelante',
       'MA válida para movimiento hacia adelante disponible',
-    ],
-  },
-  'RV-PT': {
-    description: 'Retroceso completado o límite alcanzado',
-    detailedDescription:
-      'Si se alcanza la distancia de retroceso autorizada, o el movimiento de retroceso se cancela, y el tren está detenido, el sistema transiciona a Post Trip. El maquinista debe entonces seguir los procedimientos de recuperación para reanudar la operación normal.',
-    conditions: [
-      'Distancia de retroceso excedida o retroceso cancelado',
-      'Tren detenido',
     ],
   },
   'FS-FS-MA-UPDATE': {
@@ -380,7 +361,7 @@ export const esTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'LS-SR': {
-    description: 'Pérdida de condiciones de MA en Limited Supervision',
+    description: 'El maquinista activa la función Override en Limited Supervision',
     detailedDescription:
       'Si las condiciones de la autorización de movimiento se pierden durante Limited Supervision (por ejemplo, fallo de comunicación, inconsistencia de datos), el sistema recurre al modo Staff Responsible. El maquinista debe confirmar y asumir la responsabilidad.',
     conditions: [
@@ -542,20 +523,61 @@ export const esTransitions: Record<string, TransitionTranslation> = {
       'ATO completa la desactivación controlada',
     ],
   },
-  'AD-TR': {
-    description: 'Disparo de seguridad durante Automatic Driving',
-    detailedDescription:
-      'Si el sistema ATO o un evento externo provoca que el tren se aproxime o rebase el Fin de Autorización, ETCS activa un disparo de emergencia independientemente del estado de ATO. Se aplica el freno de emergencia y ATO se desactiva inmediatamente. El sistema entra en modo Trip. La recuperación sigue la secuencia estándar TR, PT, SR, FS.',
-    conditions: [
-      'El tren rebasa el Fin de Autorización (EOA) o ATO viola la envolvente de seguridad',
-    ],
-  },
   'AD-SH': {
     description: 'Transición a Shunting desde Automatic Driving',
     detailedDescription:
       'En ciertos escenarios operativos, puede requerirse una transición de Automatic Driving a Shunting (por ejemplo, al aproximarse a un patio). ATO se desactiva y ETCS transiciona al modo Shunting con su supervisión reducida.',
     conditions: [
       'Solicitud de maniobras confirmada durante la operación ATO',
+    ],
+  },
+  'SB-TR': {
+    description: 'Trip desde Stand By',
+    detailedDescription:
+      'Una condición de seguridad causa un trip mientras se está en modo Stand By. El ETCS aplica inmediatamente el freno de emergencia.',
+    conditions: ['Condición de trip detectada por el sistema'],
+  },
+  'SH-TR': {
+    description: 'Trip durante maniobras',
+    detailedDescription:
+      'Una condición de seguridad causa un trip durante operaciones de maniobras. El ETCS aplica inmediatamente el freno de emergencia.',
+    conditions: ['Condición de trip detectada durante maniobras'],
+  },
+  'FS-NL': {
+    description: 'Transición a Non Leading desde Full Supervision',
+    detailedDescription:
+      'El maquinista indica que esta unidad ya no es la unidad tractora líder. El ETCS transiciona a modo Non Leading.',
+    conditions: [
+      'El maquinista selecciona Non Leading',
+      'Otra unidad asume el control líder',
+    ],
+  },
+  'UN-TR': {
+    description: 'Trip en modo Unfitted',
+    detailedDescription:
+      'Una condición de seguridad causa un trip mientras se opera en área no equipada. El ETCS aplica inmediatamente el freno de emergencia.',
+    conditions: ['Condición de trip detectada en territorio no equipado'],
+  },
+  'SN-TR': {
+    description: 'Trip en modo STM National',
+    detailedDescription:
+      'Una condición de seguridad causa un trip mientras se opera bajo el sistema nacional a través del STM. El ETCS aplica inmediatamente el freno de emergencia.',
+    conditions: [
+      'Condición de trip detectada bajo supervisión del sistema nacional',
+    ],
+  },
+  'RV-SB': {
+    description: 'Fin de retroceso a Stand By',
+    detailedDescription:
+      'Tras completar el movimiento de retroceso autorizado, el sistema transiciona a Stand By para reiniciar la preparación de la misión.',
+    conditions: ['Movimiento de retroceso completado', 'Tren en parada'],
+  },
+  'AD-TR': {
+    description: 'Trip en Automatic Driving',
+    detailedDescription:
+      'Una condición de seguridad causa un trip durante operación ATO. El ETCS anula la conducción automática y aplica el freno de emergencia inmediatamente.',
+    conditions: [
+      'Condición de trip detectada durante conducción automática',
     ],
   },
 };

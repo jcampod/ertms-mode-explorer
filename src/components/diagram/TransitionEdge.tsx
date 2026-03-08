@@ -72,7 +72,7 @@ const TransitionEdge = ({
 
   const markerEnd = getMarkerEnd();
 
-  const dashArray = transition.isAutomatic ? undefined : '6 4';
+  const dashArray = transition.triggerType === 'both' ? '3 3' : (transition.isAutomatic ? undefined : '6 4');
 
   return (
     <motion.g

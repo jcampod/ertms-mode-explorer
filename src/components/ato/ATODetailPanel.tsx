@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { X, ArrowRight, CheckCircle, Circle, Zap, User, Radio } from 'lucide-react';
+import { X, ArrowRight, CheckCircle, Circle, Zap, User, Users, Radio } from 'lucide-react';
 import type { ATOState, ATOStateId, ATOTransition } from '../../data/ato-types';
 import { atoStateColors, atoCategoryColors } from '../../utils/ato-colors';
 import { useTheme } from '../../hooks/useTheme';
@@ -17,6 +17,7 @@ const triggerIcons = {
   driver: User,
   trackside: Radio,
   system: Zap,
+  both: Users,
 };
 
 const ATODetailPanel = ({ state, transition, onClose, onNavigate }: ATODetailPanelProps) => {
@@ -31,6 +32,7 @@ const ATODetailPanel = ({ state, transition, onClose, onNavigate }: ATODetailPan
     driver: ui.triggerDriver,
     trackside: ui.triggerTrackside,
     system: ui.triggerSystem,
+    both: ui.triggerBoth,
   };
 
   return (
@@ -136,7 +138,9 @@ function ATOTransitionDetail({
       {/* Badges row */}
       <div className="flex flex-wrap gap-1.5 mb-4">
         <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${
-          dk ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-600'
+          t.triggerType === 'both'
+            ? (dk ? 'bg-teal-500/15 text-teal-300' : 'bg-teal-50 text-teal-700')
+            : (dk ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-600')
         }`}>
           <TriggerIcon size={10} />
           {triggerLabels[t.triggerType]}

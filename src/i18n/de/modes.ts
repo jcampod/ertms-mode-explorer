@@ -13,6 +13,7 @@ export const deModes: Record<string, ModeTranslation> = {
     realWorldContext:
       'Dies ist der Zustand des Zuges, wenn er \u00FCber Nacht im Depot abgestellt ist, oder wenn eine Lokomotive mit allen Systemen heruntergefahren geparkt ist. Tritt auch in der Anfangsphase auf, bevor ein Triebfahrzeugf\u00FChrer seine Schicht beginnt und das F\u00FChrerhaus hochf\u00E4hrt.',
     keyCharacteristics: [
+      'Notbremsung wird dauerhaft kommandiert',
       'Keine ETCS-Funktionen verf\u00FCgbar',
       'Keine Geschwindigkeits\u00FCberwachung oder Bremseingriff',
       'DMI ist inaktiv und dunkel',
@@ -42,10 +43,10 @@ export const deModes: Record<string, ModeTranslation> = {
   SH: {
     name: 'Rangieren',
     description:
-      'Der Zug bewegt sich langsam in einem Rangierbahnhof \u2014 Wagen kuppeln, umsetzen oder einen Zug zusammenstellen. Die Geschwindigkeit ist auf 30 km/h begrenzt, aber der Triebfahrzeugf\u00FChrer muss die Strecke selbst beobachten, da ETCS den Fahrweg nicht pr\u00FCft.',
+      'Der Zug bewegt sich langsam in einem Rangierbahnhof \u2014 Wagen kuppeln, umsetzen oder einen Zug zusammenstellen. Die Geschwindigkeit ist durch Nationale Werte begrenzt, aber der Triebfahrzeugf\u00FChrer muss die Strecke selbst beobachten, da ETCS den Fahrweg nicht pr\u00FCft.',
     detailedDescription:
       'Der Rangiermodus wird f\u00FCr Bewegungen mit geringer Geschwindigkeit im Rangierbahnhof verwendet: Zusammenstellen/Trennen von Z\u00FCgen, Positionieren von Wagen und Rangierbetrieb. ETCS bietet eine H\u00F6chstgeschwindigkeits\u00FCberwachung (typischerweise 30 km/h, konfigurierbar je nach nationalem Wert), erteilt jedoch keine Fahrterlaubnis (MA) und \u00FCberwacht diese auch nicht. Es gibt keinen Schutz gegen konfligierende Fahrstra\u00DFen oder belegte Gleise. Der Triebfahrzeugf\u00FChrer muss visuell pr\u00FCfen, ob der Weg frei ist, und den Handzeichen oder lokalen Rangieranweisungen folgen. Bei Level 2/3 kann die RBC-Kommunikationssitzung freigegeben werden. Das wesentliche Sicherheitsprinzip ist, dass die Geschwindigkeit begrenzt ist, aber die Fahrwegsicherheit in der Verantwortung des Triebfahrzeugf\u00FChrers liegt.',
-    speedLimit: '30 km/h (nationaler Wert kann abweichen)',
+    speedLimit: 'Bestimmt durch Nationale Werte',
     driverResponsibility:
       'Volle Verantwortung f\u00FCr Fahrwegsicherheit, Hinderniserkennung und Einhaltung lokaler Rangieranweisungen.',
     realWorldContext:
@@ -85,7 +86,7 @@ export const deModes: Record<string, ModeTranslation> = {
       'Limited Supervision bietet eine Fahrterlaubnis und Geschwindigkeits\u00FCberwachung, aber mit weniger detaillierten Streckeninformationen als FS. Die Fahrzeugausr\u00FCstung hat eine MA mit einem EOA, sodass der Zug gegen das \u00DCberfahren seiner Erlaubnis gesch\u00FCtzt ist. Allerdings kann die Streckenbeschreibung unvollst\u00E4ndig sein: Neigungsprofile k\u00F6nnen fehlen, und einige Geschwindigkeitsbeschr\u00E4nkungen k\u00F6nnen auf nationalen Standardwerten statt auf pr\u00E4zisen Infrastrukturdaten beruhen. Bremskurvenberechnungen k\u00F6nnen konservative Standardparameter verwenden, was zu restriktiveren (aber dennoch sicheren) Geschwindigkeitsprofilen f\u00FChren kann. LS wurde eingef\u00FChrt, um eine schrittweise Migration von nationalen Systemen zu vollem ETCS zu erm\u00F6glichen, mit reduziertem Aufwand f\u00FCr die streckenseitige Implementierung.',
     speedLimit: 'Gem\u00E4\u00DF MA und verf\u00FCgbarem Geschwindigkeitsprofil (nationale Werte k\u00F6nnen gelten)',
     driverResponsibility:
-      'Innerhalb der \u00FCberwachten Geschwindigkeit fahren. Beachten, dass die \u00DCberwachung weniger pr\u00E4zise als bei Full Supervision sein kann.',
+      'Muss streckenseitige Informationen beachten und nationale Betriebsvorschriften einhalten \u2014 ETCS-Anzeigen ersetzen nicht die Streckensignale.',
     realWorldContext:
       'Wird auf Strecken eingesetzt, die auf ETCS umger\u00FCstet werden, aber deren streckenseitige Daten (z. B. Neigungsprofile, detaillierte Geschwindigkeitsbeschr\u00E4nkungen) noch nicht vollst\u00E4ndig erstellt sind. Erm\u00F6glicht fr\u00FChe ETCS-Inbetriebnahme mit reduziertem Implementierungsaufwand.',
     keyCharacteristics: [
@@ -99,10 +100,10 @@ export const deModes: Record<string, ModeTranslation> = {
   OS: {
     name: 'Fahren auf Sicht',
     description:
-      'Vorsichtig weiterfahren \u2014 es k\u00F6nnte etwas auf dem Gleis voraus sein (ein anderer Zug, ein Hindernis). Die Geschwindigkeit ist auf 30 km/h begrenzt und der Triebfahrzeugf\u00FChrer muss jederzeit bereit sein, aufgrund dessen, was er sieht, anzuhalten.',
+      'Vorsichtig weiterfahren \u2014 es k\u00F6nnte etwas auf dem Gleis voraus sein (ein anderer Zug, ein Hindernis). Die Geschwindigkeit ist durch Nationale Werte begrenzt und der Triebfahrzeugf\u00FChrer muss jederzeit bereit sein, aufgrund dessen, was er sieht, anzuhalten.',
     detailedDescription:
       'On Sight wird verwendet, wenn die Streckenausr\u00FCstung nicht garantieren kann, dass der vorausliegende Abschnitt frei ist. Dies tritt typischerweise auf, wenn Gleisfreimeldeanlagen oder Achsz\u00E4hler ausgefallen sind, wenn ein Abschnitt visuell \u00FCberpr\u00FCft werden muss, oder wenn das Stellwerk eine Fahrstra\u00DFe mit bekannter Belegung voraus freigegeben hat. ETCS \u00FCberwacht eine H\u00F6chstgeschwindigkeit (typischerweise 30 km/h) und der Triebfahrzeugf\u00FChrer muss bereit sein, vor jedem sichtbaren Hindernis anzuhalten. Die Betriebsart wird durch ein On Sight-Betriebsartprofil von der Streckenausr\u00FCstung ausgel\u00F6st, \u00FCblicherweise innerhalb der MA eingebettet. Die Fahrzeugausr\u00FCstung \u00FCberwacht weiterhin die MA/EOA zus\u00E4tzlich zur On Sight-H\u00F6chstgeschwindigkeit. Sobald der On Sight-Bereich passiert ist, wechselt das System zur\u00FCck zu Full Supervision.',
-    speedLimit: '30 km/h (nationaler Wert kann abweichen)',
+    speedLimit: 'Bestimmt durch Nationale Werte (typischerweise 40 km/h)',
     driverResponsibility:
       'Auf Sicht fahren. Bereit sein, innerhalb der Sichtweite anzuhalten. Volle Aufmerksamkeit auf das vorausliegende Gleis.',
     realWorldContext:
@@ -118,12 +119,12 @@ export const deModes: Record<string, ModeTranslation> = {
   SR: {
     name: 'Personalverantwortlich',
     description:
-      'Das System kann dem Zug keine ordnungsgem\u00E4\u00DFe Fahrstra\u00DFe geben, also \u00FCbernimmt der Triebfahrzeugf\u00FChrer. Der Fahrdienstleiter ruft per Funk an und sagt: \u201EOK, Sie d\u00FCrfen fahren.\u201C Die Geschwindigkeit ist auf 40 km/h begrenzt. Dies ist der R\u00FCckfallmodus, wenn die Dinge nicht normal funktionieren.',
+      'Das System kann dem Zug keine ordnungsgem\u00E4\u00DFe Fahrstra\u00DFe geben, daher \u00FCbernimmt der Triebfahrzeugf\u00FChrer. Der Fahrdienstleiter genehmigt die Bewegung \u00FCber die Europ\u00E4ische Weisung 7. Die Geschwindigkeit ist durch Nationale Werte begrenzt. Dies ist der R\u00FCckfallmodus, wenn die Dinge nicht normal funktionieren.',
     detailedDescription:
       'Staff Responsible ist die R\u00FCckfallbetriebsart, die verwendet wird, wenn ETCS keine Fahrterlaubnis bereitstellen kann, der Zug sich aber bewegen muss. Typische Szenarien: RBC-Kommunikationsausfall, Balisenleserfehlfunktion, fehlende streckenseitige Daten oder Start aus einem nicht ausger\u00FCsteten Bereich. Der Fahrdienstleiter autorisiert den Triebfahrzeugf\u00FChrer per m\u00FCndlichem Befehl, schriftlicher Genehmigung oder nationalem Verfahren. ETCS \u00FCberwacht eine H\u00F6chstgeschwindigkeit (Standard 40 km/h), w\u00E4hrend der Triebfahrzeugf\u00FChrer die Verantwortung f\u00FCr Signale, Geschwindigkeitsbeschr\u00E4nkungen und Streckenbedingungen \u00FCbernimmt. Der Triebfahrzeugf\u00FChrer muss den Eintritt in den SR-Modus am DMI best\u00E4tigen. Wenn anschlie\u00DFend eine g\u00FCltige MA empfangen wird, wechselt das System zu Full Supervision. SR ist entscheidend f\u00FCr die betriebliche Widerstandsf\u00E4higkeit \u2014 Z\u00FCge k\u00F6nnen sich auch bei eingeschr\u00E4nkter Infrastruktur sicher weiterbewegen.',
-    speedLimit: '40 km/h (nationaler Wert kann abweichen)',
+    speedLimit: 'Bestimmt durch Nationale Werte',
     driverResponsibility:
-      'Volle Verantwortung f\u00FCr sichere Bewegung unter Genehmigung des Fahrdienstleiters. Signale und Geschwindigkeitsbeschr\u00E4nkungen beachten.',
+      'Volle Verantwortung f\u00FCr sichere Bewegung unter Genehmigung des Fahrdienstleiters. Signale und Geschwindigkeitsbeschr\u00E4nkungen beachten. Muss auf Sicht fahren, sofern nicht durch betriebliche Anweisung befreit.',
     realWorldContext:
       'Wird verwendet, wenn ein Triebfahrzeugf\u00FChrer einen m\u00FCndlichen Befehl erh\u00E4lt, an einem Halt zeigenden Signal vorbeizufahren, wenn eine Mission gestartet wird und noch keine MA verf\u00FCgbar ist, oder wenn die Kommunikation mit dem RBC verloren geht, der Fahrdienstleiter aber die Bewegung genehmigt. Sehr h\u00E4ufig im Gest\u00F6rtbetrieb.',
     keyCharacteristics: [
@@ -251,7 +252,7 @@ export const deModes: Record<string, ModeTranslation> = {
   IS: {
     name: 'Isolierung',
     description:
-      'Der Triebfahrzeugf\u00FChrer hat ETCS absichtlich mit einem physischen Schalter ausgeschaltet. Das System ist vollst\u00E4ndig deaktiviert \u2014 wie das Ziehen des Steckers. Wird verwendet, wenn ETCS defekt ist und nicht vor Ort repariert werden kann.',
+      'Der Triebfahrzeugf\u00FChrer hat ETCS absichtlich \u00FCber eine implementierungsspezifische Isolierungsmethode abgeschaltet. Das System ist vollst\u00E4ndig deaktiviert. Wird verwendet, wenn ETCS defekt ist und nicht vor Ort repariert werden kann.',
     detailedDescription:
       'Isolation wird eingenommen, wenn der Triebfahrzeugf\u00FChrer den physischen ETCS-Isolierschalter bet\u00E4tigt, um die Bordausr\u00FCstung vollst\u00E4ndig zu deaktivieren. Dies ist eine bewusste Handlung. Nach der Isolation bietet ETCS keine \u00DCberwachung, keine DMI-Anzeige (oder zeigt eine Isolation-Anzeige), keine Bremsbefehle und keine streckenseitige Kommunikation. Der Zug f\u00E4hrt vollst\u00E4ndig nach nationalen Vorschriften und einem ggf. vorhandenen unabh\u00E4ngigen nationalen Zugsicherungssystem. Isolation wird verwendet, wenn ETCS einen dauerhaften Fehler hat, der nicht behoben werden kann, bei Wartungsarbeiten oder in bestimmten Szenarien, in denen ETCS deaktiviert werden muss. Der Isolierschalter ist typischerweise ein physischer Schl\u00FCsselschalter, um versehentliche Aktivierung zu verhindern. Zum Verlassen stellt der Triebfahrzeugf\u00FChrer den Schalter auf Normal, was eine Einschaltsequenz und Systemneustart ausl\u00F6st.',
     speedLimit: null,
@@ -260,10 +261,10 @@ export const deModes: Record<string, ModeTranslation> = {
     realWorldContext:
       'Wird verwendet, wenn die ETCS-Bordausr\u00FCstung einen dauerhaften Fehler hat und der Zug zur n\u00E4chsten Werkstatt weiterfahren muss. Wird auch bei Tests und Wartungsarbeiten an der Bordausr\u00FCstung in Werkst\u00E4tten verwendet.',
     keyCharacteristics: [
-      'ETCS absichtlich durch Triebfahrzeugf\u00FChrer per physischem Schalter deaktiviert',
+      'ETCS absichtlich vom Triebfahrzeugf\u00FChrer \u00FCber implementierungsspezifische Isolierungsmethode deaktiviert',
       'Keine ETCS-Funktionen verf\u00FCgbar',
       'Verwendet bei dauerhaften Fehlern oder Wartung',
-      'Physischer Schl\u00FCsselschalter verhindert versehentliche Aktivierung',
+      'Die Isolierungsmethode ist implementierungsspezifisch (nicht zwischen Z\u00FCgen harmonisiert)',
       'Verlassen erfordert Schalterr\u00FCckstellung und vollst\u00E4ndigen Systemneustart',
     ],
   },
@@ -275,7 +276,7 @@ export const deModes: Record<string, ModeTranslation> = {
       'Non Leading wird verwendet, wenn ein angetriebenes Fahrzeug mit ETCS Teil eines Zuges ist, aber nicht die Bewegung steuert. H\u00E4ufig bei Mehrfachtraktion (zwei oder mehr Lokomotiven gekuppelt) oder Wendezugbetrieb, bei dem die hintere Lokomotive ETCS aktiv hat, aber das vordere F\u00FChrerhaus die Kontrolle hat. Die Fahrzeugausr\u00FCstung ist aktiv und kennt ihren Status, fordert aber keine MA an, h\u00E4lt keine MA und gibt keine Bremsbefehle aufgrund der ETCS-\u00DCberwachung aus. Das F\u00FChrerhaus in Non Leading hat typischerweise eine reduzierte DMI-Anzeige. Non Leading stellt sicher, dass nur eine ETCS-Fahrzeugausr\u00FCstung in einem Verband aktiv \u00FCberwacht, um konfligierende Bremsbefehle oder Erlaubnisverwaltung zu verhindern.',
     speedLimit: null,
     driverResponsibility:
-      'Nur \u00DCberwachung. Keine aktive Fahrverantwortung von dieser Einheit. Die f\u00FChrende Einheit steuert den Zug.',
+      'Verantwortlich f\u00FCr die Erf\u00FCllung der Auftr\u00E4ge im Zusammenhang mit angezeigten Streckenbedingungen.',
     realWorldContext:
       'Ein G\u00FCterzug mit zwei gekuppelten Lokomotiven: die vordere Lok ist im Full Supervision-Modus, w\u00E4hrend die ETCS-Ausr\u00FCstung der hinteren Lok im Non Leading-Modus ist. Wird auch f\u00FCr den hinteren Triebkopf eines Hochgeschwindigkeits-Wendezuges verwendet.',
     keyCharacteristics: [
@@ -291,8 +292,8 @@ export const deModes: Record<string, ModeTranslation> = {
     description:
       'Der Zug muss ein kurzes St\u00FCck r\u00FCckw\u00E4rts fahren \u2014 vielleicht hat er einen Bahnsteig \u00FCberfahren oder muss einen Tunnel evakuieren. ETCS \u00FCberwacht Geschwindigkeit und Entfernung, um sicherzustellen, dass er nicht zu weit f\u00E4hrt.',
     detailedDescription:
-      'Reversing erm\u00F6glicht eine kontrollierte R\u00FCckw\u00E4rtsbewegung unter ETCS-\u00DCberwachung. Der Triebfahrzeugf\u00FChrer ist (\u00FCber streckenseitige Informationen oder ein spezifisches ETCS-Verfahren) autorisiert, eine begrenzte Strecke mit begrenzter Geschwindigkeit r\u00FCckw\u00E4rts zu fahren. ETCS \u00FCberwacht, dass der Zug die autorisierte R\u00FCckw\u00E4rtsgeschwindigkeit nicht \u00FCberschreitet oder \u00FCber die autorisierte Entfernung hinausf\u00E4hrt. Das DMI zeigt den Reversing-Zustand und die verbleibende Entfernung an. Wird f\u00FCr das Zur\u00FCcksetzen an einen Bahnsteig nach \u00DCberfahren, R\u00FCckzug von einem Gefahrenpunkt oder Notfallevakuierung (z. B. R\u00FCckw\u00E4rtsfahrt aus einem Tunnel) verwendet. Reversing-Parameter werden durch streckenseitige Daten oder nationale Werte definiert. Nach Abschluss wechselt der Zug in eine andere Betriebsart (typischerweise Post Trip oder Full Supervision). Dies ist nicht f\u00FCr regul\u00E4ren bidirektionalen Betrieb.',
-    speedLimit: '30 km/h (gem\u00E4\u00DF R\u00FCckw\u00E4rtsbereichsparametern)',
+      'Der Modus Reversing erm\u00F6glicht eine kontrollierte R\u00FCckw\u00E4rtsbewegung unter ETCS-\u00DCberwachung, haupts\u00E4chlich f\u00FCr die Notevakuierung aus Gefahrensituationen vorgesehen. Der Triebfahrzeugf\u00FChrer ist (\u00FCber streckenseitige Informationen oder ein spezifisches ETCS-Verfahren) autorisiert, eine begrenzte Strecke mit begrenzter Geschwindigkeit r\u00FCckw\u00E4rts zu fahren. ETCS \u00FCberwacht, dass der Zug die autorisierte R\u00FCckw\u00E4rtsgeschwindigkeit nicht \u00FCberschreitet oder \u00FCber die autorisierte Entfernung hinausf\u00E4hrt. Das DMI zeigt den Reversing-Zustand und die verbleibende Entfernung an. Wird f\u00FCr das Zur\u00FCcksetzen an einen Bahnsteig nach \u00DCberfahren, R\u00FCckzug von einem Gefahrenpunkt oder Notfallevakuierung (z. B. R\u00FCckw\u00E4rtsfahrt aus einem Tunnel) verwendet. Reversing-Parameter werden durch streckenseitige Daten oder nationale Werte definiert. Nach Abschluss wechselt der Zug in eine andere Betriebsart (typischerweise Post Trip oder Full Supervision). Dies ist nicht f\u00FCr regul\u00E4ren bidirektionalen Betrieb.',
+    speedLimit: 'Definiert durch die streckenseitigen Parameter des R\u00FCckfahrbereichs',
     driverResponsibility:
       'R\u00FCckw\u00E4rtsbewegung innerhalb der autorisierten Geschwindigkeit und Entfernung steuern. DMI f\u00FCr verbleibende Entfernung \u00FCberwachen.',
     realWorldContext:
@@ -310,10 +311,10 @@ export const deModes: Record<string, ModeTranslation> = {
     description:
       'ATO (Automatischer Zugbetrieb) hat die Kontrolle. Der Zug f\u00E4hrt selbst \u2014 beschleunigt, bremst und h\u00E4lt automatisch an Stationen \u2014 w\u00E4hrend ETCS weiterhin alles \u00FCberwacht, um die Sicherheit zu gew\u00E4hrleisten. Eingef\u00FChrt in Baseline 4.',
     detailedDescription:
-      'Automatic Driving ist eine neue ETCS-Betriebsart, die in Baseline 4 (CCS TSI 2023) speziell f\u00FCr ATO \u00FCber ETCS-Betrieb eingef\u00FChrt wurde. Sie wird von Full Supervision aus eingenommen, wenn der Triebfahrzeugf\u00FChrer (GoA 2) oder das System (GoA 3/4) ATO einschaltet. In dieser Betriebsart steuert das ATO-Bordsystem Zugkraft, Bremsung und Ausrollen gem\u00E4\u00DF einem vom ATO-Streckensystem empfangenen Fahrprofil. ETCS bietet weiterhin volle Sicherheits\u00FCberwachung \u2014 Fahrterlaubnis, Geschwindigkeitsprofil und Bremskurven werden weiter durchgesetzt. Wenn ATO-Befehle eine ETCS-Beschr\u00E4nkung verletzen w\u00FCrden, greift die Sicherheitsschicht mit Betriebs- oder Notbremsung ein. Der Triebfahrzeugf\u00FChrer kann ATO jederzeit ausschalten und kehrt zu Full Supervision zur\u00FCck. Wenn ETCS einen sicherheitskritischen Zustand erkennt (z. B. Ann\u00E4herung an EOA), \u00FCbersteuert es ATO automatisch.',
+      'Automatic Driving ist eine neue ETCS-Betriebsart, die in Baseline 4 (CCS TSI 2023) speziell f\u00FCr ATO \u00FCber ETCS-Betrieb eingef\u00FChrt wurde. Das Handbuch v2.8.0 behandelt nur GoA 1 (Fahrerberatung) und GoA 2 (\u00FCberwachtes automatisches Fahren). In dieser Betriebsart steuert das ATO-Bordsystem Zugkraft, Bremsung und Ausrollen gem\u00E4\u00DF einem vom ATO-Streckensystem empfangenen Fahrprofil. ETCS bietet weiterhin volle Sicherheits\u00FCberwachung \u2014 Fahrterlaubnis, Geschwindigkeitsprofil und Bremskurven werden weiter durchgesetzt. Wenn ATO-Befehle eine ETCS-Beschr\u00E4nkung verletzen w\u00FCrden, greift die Sicherheitsschicht mit Betriebs- oder Notbremsung ein. Der Triebfahrzeugf\u00FChrer kann ATO jederzeit ausschalten und kehrt zu Full Supervision zur\u00FCck. Wenn ETCS einen sicherheitskritischen Zustand erkennt (z. B. Ann\u00E4herung an EOA), \u00FCbersteuert es ATO automatisch.',
     speedLimit: 'Gem\u00E4\u00DF statischem Geschwindigkeitsprofil und MA (ATO optimiert innerhalb der ETCS-H\u00FCllkurve)',
     driverResponsibility:
-      'GoA 2: ATO-Betrieb \u00FCberwachen, T\u00FCren und Abfahrt handhaben, kann jederzeit \u00FCbersteuern. GoA 3/4: Reduzierte oder keine Triebfahrzeugf\u00FChrerrolle.',
+      'GoA 2: ATO-Betrieb \u00FCberwachen, T\u00FCren und Abfahrt handhaben, kann jederzeit \u00FCbersteuern.',
     realWorldContext:
       'Wird derzeit auf Strecken wie Thameslink (UK) und verschiedenen europ\u00E4ischen U-Bahn-Systemen erprobt. Diese Betriebsart erm\u00F6glicht energieeffizientes, fahrplanoptimiertes Fahren bei voller ETCS-Sicherheits\u00FCberwachung. Wird voraussichtlich Standard f\u00FCr hochfrequenten Stadt- und Vorortverkehr.',
     keyCharacteristics: [

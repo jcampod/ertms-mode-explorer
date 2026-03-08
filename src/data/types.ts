@@ -11,7 +11,7 @@ export type ModeId =
   | 'SR' | 'UN' | 'SL' | 'TR' | 'PT' | 'SF'
   | 'IS' | 'NL' | 'RV' | 'SN' | 'AD';
 
-export type TriggerType = 'driver' | 'trackside' | 'system' | 'failure';
+export type TriggerType = 'driver' | 'trackside' | 'system' | 'failure' | 'both';
 
 export interface ETCSMode {
   id: ModeId;

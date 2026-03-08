@@ -60,7 +60,7 @@ export const goaLevels: GoAInfo[] = [
     shortName: 'GoA 3 — Driverless',
     description: 'ATO handles all driving functions. No driver in the cab. A train attendant is onboard for emergency situations and passenger assistance.',
     detailedDescription:
-      'At Grade of Automation 3, the ATO system controls all driving functions including traction, braking, door operation, and departure. No driver is present in the cab. A trained attendant travels onboard to handle emergency situations, assist passengers, and perform manual intervention if required. The system includes obstacle detection and automated emergency response, with the attendant as a human safety fallback.',
+      'At Grade of Automation 3, the ATO system controls all driving functions including traction, braking, door operation, and departure. No driver is present in the cab. A trained attendant travels onboard to handle emergency situations, assist passengers, and perform manual intervention if required. The system includes obstacle detection and automated emergency response, with the attendant as a human safety fallback. GoA 3 is an IEC 62290 industry standard definition, not from the ETCS specification.',
     driverRole: 'No driver. Attendant onboard for emergencies and passenger support.',
     atoRole: 'Full driving control including doors and departure. Automated obstacle response.',
     responsibilities: [
@@ -78,7 +78,7 @@ export const goaLevels: GoAInfo[] = [
       'Docklands Light Railway (London)',
       'SkyTrain (Vancouver)',
     ],
-    specStatus: 'In development — informational in current specifications',
+    specStatus: 'Defined by IEC 62290, not covered in ETCS Driver\'s Handbook v2.8.0',
   },
   {
     level: 4,
@@ -86,7 +86,7 @@ export const goaLevels: GoAInfo[] = [
     shortName: 'GoA 4 — Fully Automatic',
     description: 'Fully automatic operation with no staff onboard. The system handles everything including emergency situations and obstacle detection.',
     detailedDescription:
-      'At Grade of Automation 4, the entire train operation is fully automated with no human presence onboard. The ATO system handles all driving functions, door operations, departure, obstacle detection, and emergency responses. Remote monitoring from an operations control centre provides human oversight. Platform screen doors and advanced sensor systems ensure safety without onboard personnel.',
+      'At Grade of Automation 4, the entire train operation is fully automated with no human presence onboard. The ATO system handles all driving functions, door operations, departure, obstacle detection, and emergency responses. Remote monitoring from an operations control centre provides human oversight. Platform screen doors and advanced sensor systems ensure safety without onboard personnel. GoA 4 is an IEC 62290 industry standard definition, not from the ETCS specification.',
     driverRole: 'No onboard staff. Remote operations centre provides monitoring and intervention.',
     atoRole: 'Complete autonomous control of all train operations and safety functions.',
     responsibilities: [
@@ -106,6 +106,6 @@ export const goaLevels: GoAInfo[] = [
       'Copenhagen Metro',
       'Nuremberg U-Bahn (Lines U2, U3)',
     ],
-    specStatus: 'In development — informational in current specifications',
+    specStatus: 'Defined by IEC 62290, not covered in ETCS Driver\'s Handbook v2.8.0',
   },
 ];

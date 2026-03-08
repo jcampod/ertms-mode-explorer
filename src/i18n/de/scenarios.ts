@@ -31,7 +31,7 @@ export const deScenarios: Record<string, ScenarioTranslation> = {
         question:
           'Das RBC hat ein On Sight-Betriebsartprofil gesendet, da das vorausliegende Gleis aufgrund ausgefallener Gleisfreimeldung belegt sein k\u00F6nnte. In welche Betriebsart wechselt das System, wenn Sie in diesen Bereich einfahren?',
         explanation:
-          'Wenn die Streckenausr\u00FCstung ein On Sight (OS)-Betriebsartprofil sendet, wechselt das System beim Einfahren in diesen Bereich in den OS-Modus. Im OS-Modus wird die Geschwindigkeit auf 30 km/h begrenzt und Sie m\u00FCssen auf Sicht fahren \u2014 bereit, innerhalb der Sichtweite anzuhalten. Die MA bleibt g\u00FCltig; nur die \u00DCberwachungsbetriebsart \u00E4ndert sich, um die unsichere Gleisbelegung widerzuspiegeln.',
+          'Wenn die Streckenausr\u00FCstung ein On Sight (OS)-Betriebsartprofil sendet, wechselt das System beim Einfahren in diesen Bereich in den OS-Modus. Im OS-Modus wird die Geschwindigkeit auf eine durch Nationale Werte bestimmte Geschwindigkeit begrenzt und Sie m\u00FCssen auf Sicht fahren \u2014 bereit, innerhalb der Sichtweite anzuhalten. Die MA bleibt g\u00FCltig; nur die \u00DCberwachungsbetriebsart \u00E4ndert sich, um die unsichere Gleisbelegung widerzuspiegeln.',
         hint: 'Das Gleis voraus k\u00F6nnte belegt sein. Welche Betriebsart erfordert, dass der Triebfahrzeugf\u00FChrer bereit ist, auf Sicht anzuhalten?',
       },
       {
@@ -75,7 +75,7 @@ export const deScenarios: Record<string, ScenarioTranslation> = {
         question:
           'Der Fahrdienstleiter hat best\u00E4tigt, dass der Fahrweg sicher ist und Sie zum Weiterfahren autorisiert. Sie fordern am DMI an, sich vorw\u00E4rts zu bewegen. In welche Betriebsart wechselt das System?',
         explanation:
-          'Nach einem Trip ist die Standardwiederherstellung, im Modus Staff Responsible (SR) weiterzufahren. Der Triebfahrzeugf\u00FChrer hat eine m\u00FCndliche Genehmigung vom Fahrdienstleiter erhalten und fordert den Staff Responsible-Modus am DMI an. Im Staff Responsible-Modus \u00FCberwacht ETCS eine H\u00F6chstgeschwindigkeit (40 km/h), aber der Triebfahrzeugf\u00FChrer \u00FCbernimmt die Verantwortung f\u00FCr sichere Bewegung. Voll\u00FCberwachung kann noch nicht eingenommen werden, da zu diesem Zeitpunkt keine MA verf\u00FCgbar ist.',
+          'Nach einem Trip ist die Standardwiederherstellung, im Modus Staff Responsible (SR) weiterzufahren. Der Triebfahrzeugf\u00FChrer hat eine m\u00FCndliche Genehmigung vom Fahrdienstleiter erhalten und fordert den Staff Responsible-Modus am DMI an. Im Staff Responsible-Modus \u00FCberwacht ETCS eine durch Nationale Werte bestimmte H\u00F6chstgeschwindigkeit, aber der Triebfahrzeugf\u00FChrer \u00FCbernimmt die Verantwortung f\u00FCr sichere Bewegung. Voll\u00FCberwachung kann noch nicht eingenommen werden, da zu diesem Zeitpunkt keine MA verf\u00FCgbar ist. Beachten Sie, dass Staff Responsible nicht die einzige Post-Trip-Option auf Niveau 2 ist.',
         hint: 'Sie haben eine m\u00FCndliche Genehmigung vom Fahrdienstleiter, aber keine elektronische Fahrterlaubnis vom RBC. Welche Betriebsart erlaubt Bewegung unter Verantwortung des Triebfahrzeugf\u00FChrers?',
       },
       {
@@ -110,7 +110,7 @@ export const deScenarios: Record<string, ScenarioTranslation> = {
         question:
           'Sie haben Rangieren aus Stand By angefordert. Das System akzeptiert die Anforderung. In welche Betriebsart wechselt ETCS?',
         explanation:
-          'Wenn eine Rangieranforderung aus Stand By gestellt wird, wechselt das System in den Shunting-Modus (SH). Im Shunting-Modus \u00FCberwacht ETCS eine H\u00F6chstgeschwindigkeit von 30 km/h, bietet aber keine Fahrterlaubnis oder Fahrwegschutz. Der Triebfahrzeugf\u00FChrer ist verantwortlich f\u00FCr die Beobachtung des vorausliegenden Gleises und die Befolgung der Anweisungen des Rangierleiters.',
+          'Wenn eine Rangieranforderung aus Stand By gestellt wird, wechselt das System in den Shunting-Modus (SH). Im Shunting-Modus \u00FCberwacht ETCS eine durch Nationale Werte bestimmte H\u00F6chstgeschwindigkeit, bietet aber keine Fahrterlaubnis oder Fahrwegschutz. Der Triebfahrzeugf\u00FChrer ist verantwortlich f\u00FCr die Beobachtung des vorausliegenden Gleises und die Befolgung der Anweisungen des Rangierleiters.',
         hint: 'Sie m\u00FCssen Rangierbewegungen mit geringer Geschwindigkeit durchf\u00FChren. Welche Betriebsart ist speziell f\u00FCr den Rangierbetrieb konzipiert?',
       },
       {

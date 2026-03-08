@@ -44,8 +44,8 @@ export const deTransitions: Record<string, TransitionTranslation> = {
     detailedDescription:
       'Der Triebfahrzeugf\u00FChrer fordert den Wechsel in den Shunting-Modus f\u00FCr Rangierarbeiten an, oder ein Rangierbefehl wird von der Streckenausr\u00FCstung empfangen (z. B. per Balise). Das System wechselt in den Shunting-Modus f\u00FCr Rangierbewegungen mit geringer Geschwindigkeit. Vollst\u00E4ndige Zugdateneingabe ist f\u00FCr das Rangieren m\u00F6glicherweise nicht erforderlich.',
     conditions: [
-      'Rangieranforderung vom Triebfahrzeugf\u00FChrer oder streckenseitiger Befehl',
-      'Triebfahrzeugf\u00FChrer best\u00E4tigt Shunting-Modus',
+      'Rangieranforderung des Triebfahrzeugf\u00FChrers oder streckenseitiger Befehl',
+      'Triebfahrzeugf\u00FChrer best\u00E4tigt Rangiermodus',
     ],
   },
   'SB-SL': {
@@ -119,7 +119,7 @@ export const deTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'FS-SR': {
-    description: 'Verlust der MA-Bedingungen, R\u00FCckfall auf Staff Responsible',
+    description: 'Triebfahrzeugf\u00FChrer aktiviert Override-Funktion in Full Supervision',
     detailedDescription:
       'Wenn die Bedingungen f\u00FCr Full Supervision nicht mehr erf\u00FCllt werden k\u00F6nnen (z. B. Streckenbeschreibung wird unvollst\u00E4ndig, Kommunikationsprobleme, die keinen Trip rechtfertigen), kann das System in den Staff Responsible-Modus als eingeschr\u00E4nkten, aber noch betriebsf\u00E4higen Modus wechseln. Der Triebfahrzeugf\u00FChrer muss die \u00C4nderung best\u00E4tigen.',
     conditions: [
@@ -184,7 +184,7 @@ export const deTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'OS-SR': {
-    description: 'Verlust der On Sight-Bedingungen, R\u00FCckfall auf Staff Responsible',
+    description: 'Triebfahrzeugf\u00FChrer aktiviert Override-Funktion in On Sight',
     detailedDescription:
       'Wenn die Bedingungen f\u00FCr On Sight nicht mehr erf\u00FCllt werden k\u00F6nnen (z. B. MA l\u00E4uft ab oder Kommunikation geht verloren), f\u00E4llt das System in den Staff Responsible-Modus zur\u00FCck. Der Triebfahrzeugf\u00FChrer muss best\u00E4tigen und die Verantwortung f\u00FCr sichere Bewegung \u00FCbernehmen.',
     conditions: [
@@ -228,7 +228,7 @@ export const deTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'UN-SR': {
-    description: 'Einfahrt in ETCS-Bereich ohne MA',
+    description: 'Triebfahrzeugf\u00FChrer aktiviert Override-Funktion in Unfitted',
     detailedDescription:
       'Der Zug f\u00E4hrt von einem Unfitted-Bereich in einen ETCS-ausger\u00FCsteten Bereich, aber es ist keine Fahrterlaubnis sofort verf\u00FCgbar. Das System wechselt in den Staff Responsible-Modus als sichere R\u00FCckfallbetriebsart, bis eine MA erhalten werden kann.',
     conditions: [
@@ -248,7 +248,7 @@ export const deTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'SN-SR': {
-    description: 'Nationales System zu ETCS ohne MA',
+    description: 'Triebfahrzeugf\u00FChrer aktiviert Override-Funktion in STM National',
     detailedDescription:
       'Der Zug wechselt von einem nationalen System in einen ETCS-Bereich, aber es ist keine Fahrterlaubnis von der ETCS-Streckenausr\u00FCstung verf\u00FCgbar. Das System geht als R\u00FCckfallbetriebsart in den Staff Responsible-Modus. Der Triebfahrzeugf\u00FChrer muss den Anweisungen des Fahrdienstleiters folgen, bis eine MA erhalten wird.',
     conditions: [
@@ -294,16 +294,6 @@ export const deTransitions: Record<string, TransitionTranslation> = {
       'Triebfahrzeugf\u00FChrer deaktiviert Shunting-Modus',
     ],
   },
-  'SH-FS': {
-    description: 'Von Shunting zur Hauptstreckenfahrt',
-    detailedDescription:
-      'W\u00E4hrend der Rangierarbeiten empf\u00E4ngt der Zug eine g\u00FCltige Fahrterlaubnis f\u00FCr Hauptstreckenfahrt (z. B. nach dem Zusammenstellen, wenn der Zug nun den Rangierbahnhof verl\u00E4sst). Das System wechselt zu Full Supervision f\u00FCr die Hauptstreckenfahrt.',
-    conditions: [
-      'G\u00FCltige MA f\u00FCr Hauptstreckenfahrt empfangen',
-      'Vollst\u00E4ndige Streckenbeschreibung verf\u00FCgbar',
-      '\u00DCbergang von Shunting zur Hauptstrecke autorisiert',
-    ],
-  },
   'NL-SB': {
     description: 'Non Leading-Einheit wird f\u00FChrend',
     detailedDescription:
@@ -330,15 +320,6 @@ export const deTransitions: Record<string, TransitionTranslation> = {
       'R\u00FCckw\u00E4rtsbewegung abgeschlossen',
       'Triebfahrzeugf\u00FChrer w\u00E4hlt Vorw\u00E4rtsrichtung',
       'G\u00FCltige MA f\u00FCr Vorw\u00E4rtsbewegung verf\u00FCgbar',
-    ],
-  },
-  'RV-PT': {
-    description: 'Reversing abgeschlossen oder Grenze erreicht',
-    detailedDescription:
-      'Wenn die autorisierte Reversing-Entfernung erreicht ist oder die R\u00FCckw\u00E4rtsbewegung abgebrochen wird und der Zug im Stillstand ist, wechselt das System zu Post Trip. Der Triebfahrzeugf\u00FChrer muss dann die Wiederherstellungsverfahren befolgen, um den Normalbetrieb wieder aufzunehmen.',
-    conditions: [
-      'R\u00FCckw\u00E4rtsentfernung \u00FCberschritten oder R\u00FCckw\u00E4rtsfahren abgebrochen',
-      'Zug im Stillstand',
     ],
   },
   'FS-FS-MA-UPDATE': {
@@ -380,7 +361,7 @@ export const deTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'LS-SR': {
-    description: 'Verlust der MA-Bedingungen bei Limited Supervision',
+    description: 'Triebfahrzeugf\u00FChrer aktiviert Override-Funktion in Limited Supervision',
     detailedDescription:
       'Wenn die Fahrterlaubnisbedingungen w\u00E4hrend Limited Supervision verloren gehen (z. B. Kommunikationsausfall, Dateninkonsistenz), f\u00E4llt das System in den Staff Responsible-Modus zur\u00FCck. Der Triebfahrzeugf\u00FChrer muss best\u00E4tigen und die Verantwortung \u00FCbernehmen.',
     conditions: [
@@ -543,11 +524,11 @@ export const deTransitions: Record<string, TransitionTranslation> = {
     ],
   },
   'AD-TR': {
-    description: 'Sicherheits-Trip w\u00E4hrend Automatic Driving',
+    description: 'Trip bei Automatic Driving',
     detailedDescription:
-      'Wenn das ATO-System oder ein externes Ereignis dazu f\u00FChrt, dass sich der Zug dem Fahrerlaubnisende n\u00E4hert oder es \u00FCberschreitet, l\u00F6st ETCS unabh\u00E4ngig vom ATO-Status einen Notfall-Trip aus. Die Notbremse wird angewendet und ATO wird sofort ausgeschaltet. Das System geht in den Trip-Modus. Die Wiederherstellung folgt der Standard-Sequenz Trip\u2192Post Trip\u2192Staff Responsible\u2192Full Supervision.',
+      'Eine Sicherheitsbedingung verursacht einen Trip w\u00E4hrend des ATO-Betriebs. Das ETCS \u00FCbersteuert das automatische Fahren und wendet sofort die Notbremsung an.',
     conditions: [
-      'Zug \u00FCberf\u00E4hrt Fahrerlaubnisende (EOA) oder ATO verletzt Sicherheitsh\u00FCllkurve',
+      'Trip-Bedingung w\u00E4hrend automatischer Fahrt erkannt',
     ],
   },
   'AD-SH': {
@@ -556,6 +537,48 @@ export const deTransitions: Record<string, TransitionTranslation> = {
       'In bestimmten Betriebsszenarien kann ein \u00DCbergang von Automatic Driving zu Shunting erforderlich sein (z. B. Ann\u00E4herung an einen Rangierbahnhof). ATO wird ausgeschaltet und ETCS wechselt in den Shunting-Modus mit seiner reduzierten \u00DCberwachung.',
     conditions: [
       'Rangieranforderung w\u00E4hrend des ATO-Betriebs best\u00E4tigt',
+    ],
+  },
+  'SB-TR': {
+    description: 'Trip aus Stand By',
+    detailedDescription:
+      'Eine Sicherheitsbedingung verursacht einen Trip im Stand By Modus. Das ETCS wendet sofort die Notbremsung an.',
+    conditions: ['Vom System erkannte Trip-Bedingung'],
+  },
+  'SH-TR': {
+    description: 'Trip w\u00E4hrend Rangierfahrt',
+    detailedDescription:
+      'Eine Sicherheitsbedingung verursacht einen Trip w\u00E4hrend des Rangierbetriebs. Das ETCS wendet sofort die Notbremsung an.',
+    conditions: ['W\u00E4hrend des Rangierens erkannte Trip-Bedingung'],
+  },
+  'FS-NL': {
+    description: '\u00DCbergang zu Non Leading aus Full Supervision',
+    detailedDescription:
+      'Der Triebfahrzeugf\u00FChrer gibt an, dass diese Einheit nicht mehr die f\u00FChrende Traktionseinheit ist. Das ETCS wechselt in den Modus Non Leading.',
+    conditions: [
+      'Triebfahrzeugf\u00FChrer w\u00E4hlt Non Leading',
+      'Andere Einheit \u00FCbernimmt f\u00FChrende Kontrolle',
+    ],
+  },
+  'UN-TR': {
+    description: 'Trip im Modus Unfitted',
+    detailedDescription:
+      'Eine Sicherheitsbedingung verursacht einen Trip im nicht ausger\u00FCsteten Bereich. Das ETCS wendet sofort die Notbremsung an.',
+    conditions: ['Trip-Bedingung in nicht ausger\u00FCstetem Gebiet erkannt'],
+  },
+  'SN-TR': {
+    description: 'Trip im Modus STM National',
+    detailedDescription:
+      'Eine Sicherheitsbedingung verursacht einen Trip unter dem nationalen System \u00FCber STM. Das ETCS wendet sofort die Notbremsung an.',
+    conditions: ['Trip-Bedingung unter nationaler System\u00FCberwachung erkannt'],
+  },
+  'RV-SB': {
+    description: 'Ende des R\u00FCckfahrens zu Stand By',
+    detailedDescription:
+      'Nach Abschluss der genehmigten R\u00FCckfahrbewegung wechselt das System zu Stand By zur erneuten Missionsvorbereitung.',
+    conditions: [
+      'R\u00FCckfahrbewegung abgeschlossen',
+      'Zug steht',
     ],
   },
 };

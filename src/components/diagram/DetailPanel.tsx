@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { X, ArrowRight, CheckCircle, Circle, Zap, User, Radio, AlertTriangle } from 'lucide-react';
+import { X, ArrowRight, CheckCircle, Circle, Zap, User, Users, Radio, AlertTriangle } from 'lucide-react';
 import type { ETCSMode, ModeId, Transition } from '../../data/types';
 import { modeColors, categoryColors } from '../../utils/colors';
 import { useTheme } from '../../hooks/useTheme';
@@ -18,6 +18,7 @@ const triggerIcons = {
   trackside: Radio,
   system: Zap,
   failure: AlertTriangle,
+  both: Users,
 };
 
 const DetailPanel = ({ mode, transition, onClose, onNavigate }: DetailPanelProps) => {
@@ -33,6 +34,7 @@ const DetailPanel = ({ mode, transition, onClose, onNavigate }: DetailPanelProps
     trackside: ui.triggerTrackside,
     system: ui.triggerSystem,
     failure: ui.triggerFailure,
+    both: ui.triggerBoth,
   };
 
   return (
@@ -138,7 +140,9 @@ function TransitionDetail({
       {/* Badges row */}
       <div className="flex flex-wrap gap-1.5 mb-4">
         <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${
-          dk ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-600'
+          t.triggerType === 'both'
+            ? (dk ? 'bg-teal-500/15 text-teal-300' : 'bg-teal-50 text-teal-700')
+            : (dk ? 'bg-slate-800 text-slate-300' : 'bg-slate-100 text-slate-600')
         }`}>
           <TriggerIcon size={10} />
           {triggerLabels[t.triggerType]}

@@ -31,7 +31,7 @@ export const frScenarios: Record<string, ScenarioTranslation> = {
         question:
           'Le RBC a envoy\u00e9 un profil de mode On Sight car la voie \u00e0 venir pourrait \u00eatre occup\u00e9e en raison d\u2019\u00e9quipements de d\u00e9tection en panne. En entrant dans cette zone, vers quel mode le syst\u00e8me transite-t-il ?',
         explanation:
-          'Lorsque le sol envoie un profil de mode On Sight (OS), le syst\u00e8me passe en mode OS \u00e0 l\u2019entr\u00e9e de cette zone. En mode OS, la vitesse est limit\u00e9e \u00e0 30 km/h et vous devez conduire \u00e0 vue \u2014 pr\u00eat \u00e0 vous arr\u00eater dans la distance de visibilit\u00e9. Le MA reste valide ; seul le mode de supervision change pour refl\u00e9ter l\u2019incertitude d\u2019occupation de la voie.',
+          'Lorsque le sol envoie un profil de mode On Sight (OS), le syst\u00e8me passe en mode OS \u00e0 l\u2019entr\u00e9e de cette zone. En mode OS, la vitesse est limit\u00e9e \u00e0 une vitesse d\u00e9termin\u00e9e par les Valeurs Nationales et vous devez conduire \u00e0 vue \u2014 pr\u00eat \u00e0 vous arr\u00eater dans la distance de visibilit\u00e9. Le MA reste valide ; seul le mode de supervision change pour refl\u00e9ter l\u2019incertitude d\u2019occupation de la voie.',
         hint: 'La voie devant pourrait \u00eatre occup\u00e9e. Quel mode exige que le conducteur soit pr\u00eat \u00e0 s\u2019arr\u00eater \u00e0 vue ?',
       },
       {
@@ -76,7 +76,7 @@ export const frScenarios: Record<string, ScenarioTranslation> = {
         question:
           'Le r\u00e9gulateur a confirm\u00e9 que l\u2019itin\u00e9raire est s\u00fbr et vous a autoris\u00e9 \u00e0 continuer. Vous demandez \u00e0 avancer sur le DMI. Dans quel mode le syst\u00e8me entrera-t-il ?',
         explanation:
-          'Apr\u00e8s un Trip, le r\u00e9tablissement standard est de poursuivre en mode Staff Responsible (SR). Le conducteur a re\u00e7u une autorisation verbale du r\u00e9gulateur et demande le mode SR sur le DMI. En mode SR, l\u2019ETCS supervise une vitesse plafond (40 km/h) mais le conducteur assume la responsabilit\u00e9 du mouvement s\u00fbr. La Full Supervision ne peut pas encore \u00eatre activ\u00e9e car aucun MA n\u2019est disponible \u00e0 ce stade.',
+          'Apr\u00e8s un Trip, le r\u00e9tablissement standard est de poursuivre en mode Staff Responsible (SR). Le conducteur a re\u00e7u une autorisation verbale du r\u00e9gulateur et demande le mode SR sur le DMI. En mode SR, l\u2019ETCS supervise une vitesse plafond d\u00e9termin\u00e9e par les Valeurs Nationales mais le conducteur assume la responsabilit\u00e9 du mouvement s\u00fbr. La Full Supervision ne peut pas encore \u00eatre activ\u00e9e car aucun MA n\u2019est disponible \u00e0 ce stade. Notez que Staff Responsible n\u2019est pas la seule option post-trip au Niveau 2.',
         hint: 'Vous avez une autorisation verbale du r\u00e9gulateur mais aucune autorisation de mouvement \u00e9lectronique du RBC. Quel mode permet le mouvement sous responsabilit\u00e9 du conducteur ?',
       },
       {
@@ -112,7 +112,7 @@ export const frScenarios: Record<string, ScenarioTranslation> = {
         question:
           'Vous avez demand\u00e9 le Shunting depuis le mode Stand By. Le syst\u00e8me accepte la demande. Dans quel mode l\u2019ETCS entre-t-il ?',
         explanation:
-          'Lorsqu\u2019une demande de Shunting est faite depuis le mode Stand By, le syst\u00e8me entre en mode Shunting (SH). En mode SH, l\u2019ETCS supervise une vitesse plafond de 30 km/h mais ne fournit aucune autorisation de mouvement ni protection d\u2019itin\u00e9raire. Le conducteur est responsable de l\u2019observation de la voie devant lui et du suivi des instructions du chef de manoeuvre.',
+          'Lorsqu\u2019une demande de Shunting est faite depuis le mode Stand By, le syst\u00e8me entre en mode Shunting (SH). En mode SH, l\u2019ETCS supervise une vitesse plafond d\u00e9termin\u00e9e par les Valeurs Nationales mais ne fournit aucune autorisation de mouvement ni protection d\u2019itin\u00e9raire. Le conducteur est responsable de l\u2019observation de la voie devant lui et du suivi des instructions du chef de manoeuvre.',
         hint: 'Vous devez effectuer des mouvements \u00e0 basse vitesse en faisceau. Quel mode est sp\u00e9cifiquement con\u00e7u pour les op\u00e9rations de triage ?',
       },
       {

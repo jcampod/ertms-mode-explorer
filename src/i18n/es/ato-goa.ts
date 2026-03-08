@@ -57,7 +57,7 @@ export const esGoALevels: Record<number, GoATranslation> = {
     shortName: 'GoA 3 — Sin maquinista',
     description: 'ATO gestiona todas las funciones de conducción. No hay maquinista en la cabina. Un asistente de tren está a bordo para situaciones de emergencia y asistencia a los pasajeros.',
     detailedDescription:
-      'En el Grado de Automatización 3, el sistema ATO controla todas las funciones de conducción incluyendo tracción, frenado, operación de puertas y salida. No hay maquinista presente en la cabina. Un asistente capacitado viaja a bordo para gestionar situaciones de emergencia, asistir a los pasajeros y realizar intervención manual si es necesario. El sistema incluye detección de obstáculos y respuesta automatizada de emergencia, con el asistente como reserva humana de seguridad.',
+      'En el Grado de Automatización 3, el sistema ATO controla todas las funciones de conducción incluyendo tracción, frenado, operación de puertas y salida. No hay maquinista presente en la cabina. Un asistente capacitado viaja a bordo para gestionar situaciones de emergencia, asistir a los pasajeros y realizar intervención manual si es necesario. El sistema incluye detección de obstáculos y respuesta automatizada de emergencia, con el asistente como reserva humana de seguridad. GoA 3 es una definición estándar de la industria IEC 62290, no de la especificación ETCS.',
     driverRole: 'No hay maquinista. Asistente a bordo para emergencias y apoyo a pasajeros.',
     atoRole: 'Control completo de conducción incluyendo puertas y salida. Respuesta automatizada ante obstáculos.',
     taskNames: [
@@ -75,14 +75,14 @@ export const esGoALevels: Record<number, GoATranslation> = {
       'Docklands Light Railway (Londres)',
       'SkyTrain (Vancouver)',
     ],
-    specStatus: 'En desarrollo — informativo en las especificaciones actuales',
+    specStatus: 'Definido por IEC 62290, no cubierto en el ETCS Driver\'s Handbook v2.8.0',
   },
   4: {
     name: 'Operación de tren desatendida',
     shortName: 'GoA 4 — Totalmente automático',
     description: 'Operación completamente automática sin personal a bordo. El sistema gestiona todo, incluyendo situaciones de emergencia y detección de obstáculos.',
     detailedDescription:
-      'En el Grado de Automatización 4, toda la operación del tren está completamente automatizada sin presencia humana a bordo. El sistema ATO gestiona todas las funciones de conducción, operaciones de puertas, salida, detección de obstáculos y respuestas de emergencia. La monitorización remota desde un centro de control de operaciones proporciona supervisión humana. Las puertas de andén y los sistemas avanzados de sensores garantizan la seguridad sin personal a bordo.',
+      'En el Grado de Automatización 4, toda la operación del tren está completamente automatizada sin presencia humana a bordo. El sistema ATO gestiona todas las funciones de conducción, operaciones de puertas, salida, detección de obstáculos y respuestas de emergencia. La monitorización remota desde un centro de control de operaciones proporciona supervisión humana. Las puertas de andén y los sistemas avanzados de sensores garantizan la seguridad sin personal a bordo. GoA 4 es una definición estándar de la industria IEC 62290, no de la especificación ETCS.',
     driverRole: 'Sin personal a bordo. Centro de operaciones remoto proporciona monitorización e intervención.',
     atoRole: 'Control autónomo completo de todas las operaciones del tren y funciones de seguridad.',
     taskNames: [
@@ -102,6 +102,6 @@ export const esGoALevels: Record<number, GoATranslation> = {
       'Metro de Copenhague',
       'U-Bahn de Núremberg (Líneas U2, U3)',
     ],
-    specStatus: 'En desarrollo — informativo en las especificaciones actuales',
+    specStatus: 'Definido por IEC 62290, no cubierto en el ETCS Driver\'s Handbook v2.8.0',
   },
 };

@@ -31,7 +31,7 @@ export const esScenarios: Record<string, ScenarioTranslation> = {
         question:
           '¿El RBC ha enviado un perfil de modo On Sight porque la vía por delante puede estar ocupada debido a un fallo del equipo de detección. Al entrar en esta zona, a qué modo transiciona el sistema?',
         explanation:
-          'Cuando la vía envía un perfil de modo On Sight (OS), el sistema transiciona al modo OS al entrar en esa zona. En modo OS, la velocidad se restringe a 30 km/h y usted debe conducir a la vista, preparado para detenerse dentro de la distancia visible. La MA sigue siendo válida; solo cambia el modo de supervisión para reflejar la ocupación incierta de la vía.',
+          'Cuando la vía envía un perfil de modo On Sight (OS), el sistema transiciona al modo OS al entrar en esa zona. En modo OS, la velocidad se restringe a una velocidad determinada por Valores Nacionales y usted debe conducir a la vista, preparado para detenerse dentro de la distancia visible. La MA sigue siendo válida; solo cambia el modo de supervisión para reflejar la ocupación incierta de la vía.',
         hint: 'La vía por delante podría estar ocupada. ¿Qué modo exige que el maquinista esté preparado para detenerse a la vista?',
       },
       {
@@ -75,7 +75,7 @@ export const esScenarios: Record<string, ScenarioTranslation> = {
         question:
           '¿El responsable de circulación ha confirmado que la ruta es segura y le ha autorizado a proceder. Usted solicita moverse hacia adelante en el DMI. A qué modo entrará el sistema?',
         explanation:
-          'Después de un disparo, la recuperación estándar es proceder en modo Staff Responsible (SR). El maquinista ha recibido autorización verbal del responsable de circulación y solicita el modo SR en el DMI. En modo SR, ETCS supervisa una velocidad máxima (40 km/h) pero el maquinista asume la responsabilidad del movimiento seguro. No se puede entrar en Full Supervision aún porque no hay MA disponible en este punto.',
+          'Después de un disparo, la recuperación estándar es proceder en modo Staff Responsible (SR). El maquinista ha recibido autorización verbal del responsable de circulación y solicita el modo SR en el DMI. En modo SR, ETCS supervisa una velocidad máxima determinada por Valores Nacionales pero el maquinista asume la responsabilidad del movimiento seguro. No se puede entrar en Full Supervision aún porque no hay MA disponible en este punto. Nótese que Staff Responsible no es la única opción post-trip en Nivel 2.',
         hint: 'Tiene una autorización verbal del responsable de circulación pero no una autorización electrónica de movimiento del RBC. ¿Qué modo permite el movimiento bajo responsabilidad del maquinista?',
       },
       {
@@ -110,7 +110,7 @@ export const esScenarios: Record<string, ScenarioTranslation> = {
         question:
           '¿Ha solicitado maniobras desde Stand By. El sistema acepta la solicitud. A qué modo entra ETCS?',
         explanation:
-          'Cuando se realiza una solicitud de maniobras desde Stand By, el sistema entra en modo Shunting (SH). En modo SH, ETCS supervisa una velocidad máxima de 30 km/h pero no proporciona autorización de movimiento ni protección de ruta. El maquinista es responsable de observar la vía por delante y seguir las instrucciones del controlador de patio.',
+          'Cuando se realiza una solicitud de maniobras desde Stand By, el sistema entra en modo Shunting (SH). En modo SH, ETCS supervisa una velocidad máxima determinada por Valores Nacionales pero no proporciona autorización de movimiento ni protección de ruta. El maquinista es responsable de observar la vía por delante y seguir las instrucciones del controlador de patio.',
         hint: 'Necesita realizar movimientos a baja velocidad en el patio. ¿Qué modo está diseñado específicamente para operaciones de clasificación?',
       },
       {

@@ -39,6 +39,9 @@ export const itUI: UITranslations = {
   triggerTrackside: 'Comando da terra',
   triggerSystem: 'Automatico (sistema)',
   triggerFailure: 'Rilevamento guasto',
+  triggerBoth: 'Macchinista / Sistema',
+  // Line style labels
+  lineStyleBoth: 'Macchinista o Sistema',
   // Badges
   badgeAutomatic: 'Automatico',
   badgeManual: 'Manuale',

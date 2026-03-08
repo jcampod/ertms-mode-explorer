@@ -6,7 +6,7 @@ export type ATOStateCategory =
 
 export type ATOStateId = 'NP' | 'CO' | 'NA' | 'AV' | 'RE' | 'EG' | 'DE';
 
-export type ATOTriggerType = 'driver' | 'system' | 'trackside';
+export type ATOTriggerType = 'driver' | 'system' | 'trackside' | 'both';
 
 export interface ATOState {
   id: ATOStateId;

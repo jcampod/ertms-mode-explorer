@@ -39,6 +39,9 @@ export const esUI: UITranslations = {
   triggerTrackside: 'Comando de vía',
   triggerSystem: 'Automático (sistema)',
   triggerFailure: 'Detección de fallo',
+  triggerBoth: 'Maquinista / Sistema',
+  // Line style labels
+  lineStyleBoth: 'Maquinista o Sistema',
   // Badges
   badgeAutomatic: 'Automático',
   badgeManual: 'Manual',
