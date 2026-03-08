@@ -36,7 +36,7 @@ const JourneyProfileView = () => {
   return (
     <div className="h-full overflow-y-auto">
       {/* Graph + controls */}
-      <div className="px-4 pt-3 pb-2">
+      <div className="max-w-4xl mx-auto px-4 pt-3 pb-2">
         {/* Title */}
         <div className="mb-2">
           <h1 className={`text-sm font-semibold ${dk ? 'text-slate-200' : 'text-slate-800'}`}>
@@ -82,7 +82,7 @@ const JourneyProfileView = () => {
 
       {/* Content sections */}
       <div className={`border-t ${dk ? 'border-slate-800' : 'border-slate-200'}`}>
-        <div className="max-w-6xl mx-auto px-4 py-6 space-y-6">
+        <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
           {/* Segment bar */}
           <SegmentBar
             dk={dk}
