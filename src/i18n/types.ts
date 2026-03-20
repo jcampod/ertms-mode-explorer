@@ -25,6 +25,7 @@ export interface UITranslations {
   tabStateDiagram: string;
   tabScenarioSimulator: string;
   tabATOOverview: string;
+  tabLevelTransitions: string;
   // DiagramLegend
   modeCategories: string;
   commonOnly: string;

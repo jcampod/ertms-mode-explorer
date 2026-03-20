@@ -150,6 +150,7 @@ export const itUI: Partial<UITranslations> = {
   tooltipClickForDetails: 'Clicca per i dettagli',
   // Journey Profile tab
   tabJourneyProfile: 'Profilo di viaggio',
+  tabLevelTransitions: 'Transizioni di livello',
   jpTitle: 'Visualizzatore profilo di viaggio ATO',
   jpSubtitle: 'Grafico interattivo velocit\u00E0\u2013distanza che mostra la guida automatica ATO sotto supervisione ETCS',
   jpDistance: 'Distanza (km)',

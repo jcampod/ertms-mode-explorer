@@ -152,6 +152,7 @@ const EN_DEFAULTS: UITranslations = {
   tooltipClickForDetails: 'Click for details',
   // Journey Profile tab
   tabJourneyProfile: 'Journey Profile',
+  tabLevelTransitions: 'Level Transitions',
   jpTitle: 'ATO Journey Profile Visualizer',
   jpSubtitle: 'Interactive speed\u2013distance graph showing ATO automatic driving under ETCS supervision',
   jpDistance: 'Distance (km)',

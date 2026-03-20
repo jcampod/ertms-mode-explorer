@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERTMS Level Transitions</title>
+<style>
+:root{--bg:#020617;--bg2:#0f172a;--bg3:#1e293b;--tx:#e2e8f0;--tx2:#94a3b8;--tx3:#64748b;--tx4:#475569;--bd:#1e293b;--bd2:#334155;--acc:#3b82f6;--accL:#93c5fd;--accBg:#1e3a5f;--grid:#0f172a}
+.light{--bg:#f8fafc;--bg2:#ffffff;--bg3:#f1f5f9;--tx:#1e293b;--tx2:#475569;--tx3:#94a3b8;--tx4:#cbd5e1;--bd:#e2e8f0;--bd2:#cbd5e1;--acc:#2563eb;--accL:#1e40af;--accBg:#dbeafe;--grid:#f1f5f9}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--tx);overflow:hidden;height:100vh;transition:background .3s,color .3s}
+.wrap{display:flex;height:100vh;flex-direction:column}
+.bod{display:flex;flex:1;overflow:hidden}
+.left{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+.vbar{display:flex;gap:6px;padding:8px 16px;border-bottom:1px solid var(--bd);background:var(--bg2)}
+.vb{padding:4px 12px;border-radius:5px;border:1px solid var(--bd2);background:var(--bg);color:var(--tx2);font-size:11px;cursor:pointer;font-family:inherit;transition:all .15s}
+.vb:hover{border-color:var(--tx3)}
+.vb.on{border-color:var(--acc);background:var(--accBg);color:var(--accL)}
+.cvs{flex:1;position:relative;background:var(--bg)}
+.cvs svg{display:block}
+.pnl{width:260px;border-left:1px solid var(--bd);background:var(--bg2);overflow-y:auto;flex-shrink:0;padding:14px;display:none}
+.pnl.open{display:block}
+.pnl h2{font-size:13px;font-weight:600;margin-bottom:2px}
+.pnl .sub{font-size:11px;color:var(--tx3);margin-bottom:12px}
+.pnl .sh{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--tx4);margin-bottom:6px}
+.si{padding:7px 8px;border-radius:5px;margin-bottom:3px;cursor:pointer;border:1px solid transparent;transition:all .12s;display:flex;align-items:center;gap:7px}
+.si:hover{background:var(--bg3)}
+.si.on{background:var(--accBg);border-color:var(--acc)}
+.si .n{font-size:10px;font-weight:700;color:var(--tx4);min-width:14px;text-align:center}
+.si.on .n{color:var(--accL)}
+.si .t{font-size:11.5px;color:var(--tx2)}
+.si.on .t{color:var(--tx);font-weight:500}
+.nr{display:flex;gap:6px;margin-top:8px}
+.nb{flex:1;padding:6px;border-radius:5px;border:1px solid var(--bd2);background:var(--bg);color:var(--tx2);font-size:11px;cursor:pointer;font-family:inherit;text-align:center;transition:all .12s}
+.nb:hover:not(:disabled){background:var(--bg3);color:var(--tx)}
+.nb:disabled{opacity:.2;cursor:default}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="bod">
+<div class="left">
+
+<div class="vbar" id="vbar"></div>
+<div class="cvs"><svg id="svg" width="100%" height="100%"></svg></div>
+</div>
+<div class="pnl" id="pnl">
+<h2 id="pT"></h2>
+<div class="sub" id="pS"></div>
+<div class="sh" id="pSh"></div>
+<div id="pSt"></div>
+<div class="nr">
+<button class="nb" id="prv" onclick="gs(-1)"></button>
+<button class="nb" id="nxt" onclick="gs(1)"></button>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+// ===== I18N =====
+var I={
+en:{title:"ERTMS Level Transitions",light:"Light",dark:"Dark",hint:"Click a level to see its transitions, or click an arrow directly",
+atSig:"At a signal",atLine:"At a line boundary",steps:"Steps",prev:"\u2190 Prev",next:"Next \u2192",
+L2:"Level 2",L1:"Level 1",L0:"Level 0",L2s:"Radio controlled",L1s:"Signal + balise",L0s:"Unfitted",
+"L2-L1":"L2 \u2192 L1","L1-L2":"L1 \u2192 L2","L2-L0":"L2 \u2192 L0","L0-L2":"L0 \u2192 L2","L1-L0":"L1 \u2192 L0","L0-L1":"L0 \u2192 L1",
+"L2-L1d":"Radio-controlled into signal-controlled","L1-L2d":"Signal-controlled into radio-controlled",
+"L2-L0d":"Radio-controlled into unequipped track","L0-L2d":"Unequipped into radio-controlled",
+"L1-L0d":"Signal-controlled into unequipped","L0-L1d":"Unequipped into signal-controlled",
+nodeClick:"Showing transitions for {0}. Click an arrow to explore.",
+S:{"L2-L1-sig":[
+{t:"Running in Level 2",d:"Full radio supervision by the control centre (RBC). Movement authority via GSM-R. Position reported constantly."},
+{t:"Transition order received",d:"Trackside balises deliver an order: \u00ABLevel 1 territory ahead at the boundary \u2014 prepare to switch.\u00BB"},
+{t:"Dual reception active",d:"Onboard activates balise reader while radio stays on. Two sources = no gap in safety."},
+{t:"Signal at boundary visible",d:"Physical signal marks the transition point. Onboard confirms location matches the order."},
+{t:"Crossing the boundary",d:"At the signal, authority switches from radio to trackside signals + balises. Immediate handover."},
+{t:"Radio session closing",d:"Final position report sent. GSM-R session terminates via handshake."},
+{t:"Now in Level 1",d:"No radio. Supervised by trackside signals and Eurobalises."}],
+"L2-L1-line":[
+{t:"Running in Level 2",d:"Full radio supervision via GSM-R."},
+{t:"Transition order received",d:"Order specifies a line boundary. Authority may extend beyond it."},
+{t:"Dual reception active",d:"Radio + balise simultaneously. Existing authority covers transition zone."},
+{t:"Speed supervision adapting",d:"Braking curves recalculated progressively. Smooth changeover."},
+{t:"Crossing the line boundary",d:"Authority transitions to trackside. Balises confirm Level 1 entry."},
+{t:"Radio session closing",d:"Radio was already partially handed over. Session closure is the final step."},
+{t:"Now in Level 1",d:"Full Level 1: trackside signals + balises."}],
+"L1-L2-sig":[
+{t:"Running in Level 1",d:"Supervised by trackside signals and Eurobalises. No radio."},
+{t:"Transition order via balise",d:"Balises announce Level 2 ahead. Radio module powers up."},
+{t:"Radio connecting",d:"GSM-R registration + authentication with the RBC. Trackside still active."},
+{t:"Crossing at signal",d:"RBC assumes authority. Movement authority now via radio. Immediate handover."},
+{t:"Radio fully operational",d:"Continuous radio confirmed. Trackside no longer needed."},
+{t:"Now in Level 2",d:"Full Level 2: continuous radio, highest ETCS protection."}],
+"L1-L2-line":[
+{t:"Running in Level 1",d:"Trackside signals and Eurobalises."},
+{t:"Transition order via balise",d:"Balises announce Level 2. Radio powering up."},
+{t:"Establishing radio link",d:"Radio connects while balises continue. Parallel sources."},
+{t:"Crossing the line boundary",d:"RBC starts providing authority. Gradual handover with overlap."},
+{t:"Radio fully operational",d:"RBC now primary authority source."},
+{t:"Now in Level 2",d:"Continuous radio supervision."}],
+"L2-L0-sig":[
+{t:"Running in Level 2",d:"Full ETCS supervision via radio."},
+{t:"Unequipped track ahead",d:"RBC warns: NO ETCS equipment after boundary. Driver notified."},
+{t:"Driver must acknowledge",d:"Driver actively confirms readiness for national signal observation."},
+{t:"Last ETCS signal",d:"Last signal with ETCS protection. Nothing after this."},
+{t:"Crossing into unfitted",d:"ETCS \u2192 Level 0. No authority from any source. Driver responsible."},
+{t:"Radio terminated",d:"Final position report. GSM-R closed."},
+{t:"Now in Level 0",d:"No ETCS equipment, no radio. Driver follows national signals."}],
+"L2-L0-line":[
+{t:"Running in Level 2",d:"Full radio supervision."},
+{t:"Unequipped track ahead",d:"Level 0 at a line boundary."},
+{t:"Driver must acknowledge",d:"Driver confirms readiness for national signals."},
+{t:"Authority reducing",d:"Authority + speed ceiling decrease progressively."},
+{t:"Crossing the line boundary",d:"ETCS \u2192 Level 0 at boundary."},
+{t:"Radio terminated",d:"GSM-R closed."},
+{t:"Now in Level 0",d:"Unfitted. National signals only."}],
+"L0-L1-sig":[
+{t:"Running in Level 0",d:"Unfitted. Driver follows national signals. ETCS has no track data."},
+{t:"Balises announce Level 1",d:"Track sensors announce Level 1 ahead. Balise reader activates."},
+{t:"First Level 1 signal",d:"First ETCS-equipped signal. Onboard prepares for first authority."},
+{t:"Crossing the boundary",d:"Signal provides first movement authority. Balises confirm Level 1."},
+{t:"Full supervision active",d:"Speed + braking enforced. Lineside signals with ETCS overlay."},
+{t:"Now in Level 1",d:"Supervised by trackside signals and Eurobalises."}],
+"L0-L1-line":[
+{t:"Running in Level 0",d:"No ETCS. National signals only."},
+{t:"Balises announce Level 1",d:"Track sensors announce Level 1 territory."},
+{t:"Parameters loading",d:"Level 1 parameters load progressively from sensors."},
+{t:"Crossing the line boundary",d:"Authority acquisition begins. Balises confirm entry."},
+{t:"Full supervision active",d:"All parameters loaded. Speed + braking enforced."},
+{t:"Now in Level 1",d:"Trackside signals + Eurobalises."}],
+"L0-L2-sig":[
+{t:"Running in Level 0",d:"Unfitted. No ETCS supervision."},
+{t:"Radio network registration",d:"Balises order radio network registration."},
+{t:"Connecting to control centre",d:"GSM-R session with RBC. Authentication handshake."},
+{t:"Authority received",d:"RBC sends authority into onboard transition buffer."},
+{t:"Crossing the boundary",d:"Stored authority activates. RBC supervises."},
+{t:"Now in Level 2",d:"Full Level 2: continuous radio supervision."}],
+"L0-L2-line":[
+{t:"Running in Level 0",d:"No ETCS."},
+{t:"Radio network registration",d:"Balises order registration."},
+{t:"Connecting to control centre",d:"GSM-R session establishment."},
+{t:"Authority buffered",d:"Authority stored in transition buffer."},
+{t:"Crossing the line boundary",d:"Buffered authority activates. RBC supervises."},
+{t:"Now in Level 2",d:"Full radio supervision."}],
+"L1-L0-sig":[
+{t:"Running in Level 1",d:"Supervised by trackside signals and Eurobalises."},
+{t:"Transition order received",d:"Balises announce Level 0 (unfitted) territory ahead."},
+{t:"Driver must acknowledge",d:"Driver confirms readiness to observe national signals."},
+{t:"Last Level 1 signal",d:"Last signal with ETCS Level 1 protection."},
+{t:"Crossing into unfitted",d:"ETCS loses trackside data. Driver fully responsible."},
+{t:"Now in Level 0",d:"No ETCS equipment. Driver follows national signals."}],
+"L1-L0-line":[
+{t:"Running in Level 1",d:"Trackside signals and Eurobalises."},
+{t:"Transition order received",d:"Level 0 ahead at a line boundary."},
+{t:"Driver must acknowledge",d:"Driver confirms readiness."},
+{t:"Supervision reducing",d:"Parameters wind down progressively."},
+{t:"Crossing the line boundary",d:"ETCS enters Level 0 mode."},
+{t:"Now in Level 0",d:"Unfitted territory. National signals."}]
+}}};
+
+// Clone EN as base for other langs, with translated UI strings
+I.es=JSON.parse(JSON.stringify(I.en));
+I.es.title="Transiciones de nivel ERTMS";I.es.light="Claro";I.es.dark="Oscuro";I.es.hint="Haz clic en un nivel para ver sus transiciones, o en una flecha directamente";
+I.es.atSig="En una se\u00f1al";I.es.atLine="En un l\u00edmite de l\u00ednea";I.es.steps="Pasos";I.es.prev="\u2190 Ant";I.es.next="Sig \u2192";
+I.es.L2="Nivel 2";I.es.L1="Nivel 1";I.es.L0="Nivel 0";I.es.L2s="Radio";I.es.L1s="Se\u00f1al + baliza";I.es.L0s="Sin equipar";
+I.es.nodeClick="Mostrando transiciones de {0}. Haz clic en una flecha.";
+I.es["L2-L1d"]="Radio \u2192 se\u00f1ales";I.es["L1-L2d"]="Se\u00f1ales \u2192 radio";I.es["L2-L0d"]="Radio \u2192 sin equipo";I.es["L0-L2d"]="Sin equipo \u2192 radio";I.es["L1-L0d"]="Se\u00f1ales \u2192 sin equipo";I.es["L0-L1d"]="Sin equipo \u2192 se\u00f1ales";
+
+I.de=JSON.parse(JSON.stringify(I.en));
+I.de.title="ERTMS-Level\u00fcberg\u00e4nge";I.de.light="Hell";I.de.dark="Dunkel";I.de.hint="Klicken Sie auf ein Level oder direkt auf einen Pfeil";
+I.de.atSig="Am Signal";I.de.atLine="An der Streckengrenze";I.de.steps="Schritte";I.de.prev="\u2190 Zur\u00fcck";I.de.next="Weiter \u2192";
+I.de.L2="Level 2";I.de.L1="Level 1";I.de.L0="Level 0";I.de.L2s="Funkgesteuert";I.de.L1s="Signal + Balise";I.de.L0s="Unausger\u00fcstet";
+I.de.nodeClick="\u00dcberg\u00e4nge f\u00fcr {0}. Klicken Sie auf einen Pfeil.";
+
+I.fr=JSON.parse(JSON.stringify(I.en));
+I.fr.title="Transitions de niveau ERTMS";I.fr.light="Clair";I.fr.dark="Sombre";I.fr.hint="Cliquez sur un niveau ou directement sur une fl\u00e8che";
+I.fr.atSig="\u00c0 un signal";I.fr.atLine="\u00c0 une limite de ligne";I.fr.steps="\u00c9tapes";I.fr.prev="\u2190 Pr\u00e9c";I.fr.next="Suiv \u2192";
+I.fr.L2="Niveau 2";I.fr.L1="Niveau 1";I.fr.L0="Niveau 0";I.fr.L2s="Radio";I.fr.L1s="Signal + balise";I.fr.L0s="Non \u00e9quip\u00e9";
+I.fr.nodeClick="Transitions pour {0}. Cliquez sur une fl\u00e8che.";
+
+I.it=JSON.parse(JSON.stringify(I.en));
+I.it.title="Transizioni di livello ERTMS";I.it.light="Chiaro";I.it.dark="Scuro";I.it.hint="Clicca su un livello o direttamente su una freccia";
+I.it.atSig="Al segnale";I.it.atLine="Al confine di linea";I.it.steps="Passi";I.it.prev="\u2190 Prec";I.it.next="Succ \u2192";
+I.it.L2="Livello 2";I.it.L1="Livello 1";I.it.L0="Livello 0";I.it.L2s="Radio";I.it.L1s="Segnale + balise";I.it.L0s="Non attrezzato";
+I.it.nodeClick="Transizioni per {0}. Clicca su una freccia.";
+
+var lang="en",T=I.en;
+function setLang(l){lang=l;T=I[l]||I.en;refresh();}
+
+// ===== THEME =====
+var dark=true;
+function toggleTheme(){
+  dark=!dark;
+  document.body.classList.toggle("light",!dark);
+  draw();
+}
+
+// Read from URL params (set by parent app iframe)
+(function(){
+  var p=new URLSearchParams(window.location.search);
+  var pl=p.get('lang');
+  var pt=p.get('theme');
+  if(pl&&I[pl]){lang=pl;T=I[pl];}
+  if(pt==='light'){dark=false;document.body.classList.add('light');}
+  else if(pt==='dark'){dark=true;document.body.classList.remove('light');}
+})();
+
+// ===== LEVEL DATA =====
+var LV=[
+{id:"L2",fl:"#1e3a5f",sk:"#3b82f6",gl:"#3b82f6",tx:"#93c5fd",fll:"#dbeafe",skl:"#2563eb",gll:"#2563eb",txl:"#1e40af"},
+{id:"L1",fl:"#164e63",sk:"#22d3ee",gl:"#22d3ee",tx:"#a5f3fc",fll:"#cffafe",skl:"#0891b2",gll:"#0891b2",txl:"#155e75"},
+{id:"L0",fl:"#292524",sk:"#78716c",gl:"#78716c",tx:"#a8a29e",fll:"#f5f5f4",skl:"#78716c",gll:"#78716c",txl:"#57534e"}
+];
+var TR=[
+{id:"L2-L1",f:"L2",t:"L1",cv:1},{id:"L1-L2",f:"L1",t:"L2",cv:-1},
+{id:"L2-L0",f:"L2",t:"L0",cv:-1},{id:"L0-L2",f:"L0",t:"L2",cv:1},
+{id:"L0-L1",f:"L0",t:"L1",cv:1},{id:"L1-L0",f:"L1",t:"L0",cv:-1}
+];
+
+// ===== STATE =====
+var focusNode=null, sel=null, hov=null, vari="sig", step=0;
+var triCx=0,triCy=0;
+
+function gl(id){return LV.find(function(l){return l.id===id});}
+
+function visibleEdges(){
+  if(focusNode) return TR.filter(function(t){return t.f===focusNode||t.t===focusNode;});
+  return TR;
+}
+
+function arcPath(fr,to,cm){
+  var dx=to.x-fr.x,dy=to.y-fr.y,len=Math.sqrt(dx*dx+dy*dy);
+  var ux=dx/len,uy=dy/len,nx=-uy,ny=ux;
+  var midX=(fr.x+to.x)/2,midY=(fr.y+to.y)/2;
+  var tcX=triCx-midX,tcY=triCy-midY;
+  var dot=tcX*nx+tcY*ny;
+  var out=dot>0?-1:1;
+  var curve=out*cm*50;
+  var R=50;
+  var sx=fr.x+ux*R,sy=fr.y+uy*R,ex=to.x-ux*R,ey=to.y-uy*R;
+  var mx=(sx+ex)/2+nx*curve,my=(sy+ey)/2+ny*curve;
+  return{p:"M"+sx+","+sy+" Q"+mx+","+my+" "+ex+","+ey,sx:sx,sy:sy,ex:ex,ey:ey,mx:mx,my:my};
+}
+
+function bzPt(sx,sy,mx,my,ex,ey,t){
+  return{x:(1-t)*(1-t)*sx+2*(1-t)*t*mx+t*t*ex,y:(1-t)*(1-t)*sy+2*(1-t)*t*my+t*t*ey};
+}
+
+function draw(){
+  var svg=document.getElementById("svg");
+  var W=svg.clientWidth||900,H=svg.clientHeight||550;
+  svg.setAttribute("viewBox","0 0 "+W+" "+H);
+  var cx=W/2,cy=H/2+10;
+  var topY=cy-110,botY=cy+140,spread=200;
+  LV[0].x=cx;LV[0].y=topY;
+  LV[1].x=cx+spread;LV[1].y=botY;
+  LV[2].x=cx-spread;LV[2].y=botY;
+  triCx=cx;triCy=(topY+botY+botY)/3;
+
+  var dk=dark;
+  var gridC=dk?"#0f172a":"#f1f5f9";
+  var idleC=dk?"#475569":"#94a3b8";
+  var dimC=dk?"#1e293b":"#e2e8f0";
+  var accC=dk?"#3b82f6":"#2563eb";
+  var accHL=dk?"#60a5fa":"#3b82f6";
+
+  var o='<defs>';
+  o+='<marker id="ah" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 4L0 8L2 4Z" fill="'+idleC+'"/></marker>';
+  o+='<marker id="ahH" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 4L0 8L2 4Z" fill="'+accHL+'"/></marker>';
+  o+='<marker id="ahS" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L10 4L0 8L2 4Z" fill="'+accC+'"/></marker>';
+  o+='<filter id="gw" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+  o+='<pattern id="gr" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0L0 0 0 30" fill="none" stroke="'+gridC+'" stroke-width="0.5"/></pattern>';
+  o+='</defs>';
+  o+='<rect width="'+W+'" height="'+H+'" fill="url(#gr)" data-bg="1"/>';
+
+  var vis=visibleEdges();
+  var visIds=new Set(vis.map(function(t){return t.id;}));
+
+  // Edges
+  TR.forEach(function(t){
+    var fr=gl(t.f),to=gl(t.t);
+    var isVis=visIds.has(t.id);
+    var isSel=sel===t.id,isHov=hov===t.id;
+    var isDim=!isVis||(sel&&!isSel);
+    var a=arcPath(fr,to,t.cv);
+    var col=isDim?dimC:isSel?accC:isHov?accHL:idleC;
+    var sw=isSel?2.5:isHov?2:1.2;
+    var op=isDim?.08:1;
+    var mk=isSel?"url(#ahS)":isHov?"url(#ahH)":"url(#ah)";
+    if(isVis){
+      o+='<path d="'+a.p+'" fill="none" stroke="transparent" stroke-width="22" style="cursor:pointer" data-edge="'+t.id+'"/>';
+    }
+    o+='<path d="'+a.p+'" fill="none" stroke="'+col+'" stroke-width="'+sw+'" opacity="'+op+'" marker-end="'+mk+'" stroke-linecap="round" style="pointer-events:none"/>';
+    if(isVis&&!isDim&&!isSel){
+      var mid=bzPt(a.sx,a.sy,a.mx,a.my,a.ex,a.ey,0.5);
+      o+='<text x="'+mid.x+'" y="'+mid.y+'" text-anchor="middle" dominant-baseline="central" fill="'+idleC+'" font-size="9" opacity="'+(isHov?.8:.35)+'" style="pointer-events:none">'+t.f.replace("L","")+'\u2192'+t.t.replace("L","")+'</text>';
+    }
+  });
+
+  // Step dots
+  var activeDot=null, activeStepData=null;
+  if(sel){
+    var tr=TR.find(function(x){return x.id===sel;});
+    var steps=(T.S&&T.S[sel+"-"+vari])||[];
+    var fr=gl(tr.f),to=gl(tr.t);
+    var a=arcPath(fr,to,tr.cv);
+    steps.forEach(function(s,i){
+      var frac=(i+1)/(steps.length+1);
+      var p=bzPt(a.sx,a.sy,a.mx,a.my,a.ex,a.ey,frac);
+      var isOn=i===step,isPast=i<step;
+      var r=isOn?12:7;
+      if(isOn){
+        o+='<circle cx="'+p.x+'" cy="'+p.y+'" r="18" fill="none" stroke="'+accC+'" stroke-width="1.5" opacity=".2" filter="url(#gw)"><animate attributeName="opacity" values=".1;.3;.1" dur="2s" repeatCount="indefinite"/></circle>';
+        activeDot=p;
+        activeStepData=s;
+      }
+      var dotFill=isOn?(dk?"#1e3a5f":"#dbeafe"):isPast?(dk?"#1e293b":"#e2e8f0"):(dk?"#0f172a":"#f8fafc");
+      var dotStroke=isOn||isPast?accC:(dk?"#334155":"#cbd5e1");
+      o+='<circle cx="'+p.x+'" cy="'+p.y+'" r="'+r+'" fill="'+dotFill+'" stroke="'+dotStroke+'" stroke-width="'+(isOn?2:1)+'" opacity="'+(isOn?1:isPast?.6:.3)+'" style="cursor:pointer" data-stp="'+i+'"/>';
+      o+='<text x="'+p.x+'" y="'+(p.y+1)+'" text-anchor="middle" dominant-baseline="central" fill="'+(isOn?(dk?"#93c5fd":"#1e40af"):(dk?"#64748b":"#94a3b8"))+'" font-size="'+(isOn?10:8)+'" font-weight="600" style="pointer-events:none">'+(i+1)+'</text>';
+    });
+  }
+
+  // Level nodes
+  LV.forEach(function(l){
+    var connected=focusNode===l.id||sel&&sel.includes(l.id);
+    var isDim=focusNode&&focusNode!==l.id&&!(sel&&sel.includes(l.id));
+    if(!focusNode&&!sel)isDim=false;
+    var op=isDim?.2:1;
+    var fill=dk?l.fl:l.fll;
+    var stroke=dk?l.sk:l.skl;
+    var glow=dk?l.gl:l.gll;
+    var tx=dk?l.tx:l.txl;
+    var isFocus=focusNode===l.id;
+
+    if(connected||isFocus){
+      o+='<circle cx="'+l.x+'" cy="'+l.y+'" r="52" fill="none" stroke="'+glow+'" stroke-width="'+(isFocus?2:1.5)+'" opacity=".2" filter="url(#gw)"/>';
+    }
+    o+='<circle cx="'+l.x+'" cy="'+l.y+'" r="42" fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+(isFocus?2.5:1.5)+'" opacity="'+op+'" style="cursor:pointer" data-node="'+l.id+'"/>';
+    o+='<text x="'+l.x+'" y="'+(l.y-3)+'" text-anchor="middle" dominant-baseline="central" fill="'+tx+'" font-family="ui-monospace,SFMono-Regular,monospace" font-weight="bold" font-size="16" opacity="'+op+'" style="pointer-events:none">'+l.id+'</text>';
+    o+='<text x="'+l.x+'" y="'+(l.y+13)+'" text-anchor="middle" fill="'+tx+'" font-size="9" opacity="'+(op*.6)+'" style="pointer-events:none">'+(T[l.id+"s"]||l.id)+'</text>';
+    o+='<text x="'+l.x+'" y="'+(l.y+60)+'" text-anchor="middle" fill="'+(dk?"#cbd5e1":"#334155")+'" font-weight="600" font-size="11" opacity="'+op+'" style="pointer-events:none">'+(T[l.id]||l.id)+'</text>';
+  });
+
+  // ===== SVG CALLOUT at top of diagram =====
+  if(activeDot && activeStepData){
+    var allSteps=(T.S&&T.S[sel+"-"+vari])||[];
+    var maxLineW=Math.round(W*0.08);if(maxLineW<50)maxLineW=50;if(maxLineW>75)maxLineW=75;
+    var cW=W*0.75; if(cW>600)cW=600; if(cW<300)cW=300;
+
+    // Calculate max lines across ALL steps to fix the box height
+    var maxLines=0;
+    allSteps.forEach(function(s){
+      var wds=s.d.split(' ');var cl='';var nl=0;
+      wds.forEach(function(w){if((cl+' '+w).length>maxLineW&&cl.length>0){nl++;cl=w;}else{cl=cl?cl+' '+w:w;}});
+      if(cl)nl++;
+      if(nl>maxLines)maxLines=nl;
+    });
+    var cH=22+maxLines*16+14;
+
+    // Wrap current step description
+    var fullTxt=activeStepData.d;
+    var titleTxt=(step+1)+'. '+activeStepData.t;
+    var words=fullTxt.split(' ');var dLines=[];var cur='';
+    words.forEach(function(w){
+      if((cur+' '+w).length>maxLineW&&cur.length>0){dLines.push(cur);cur=w;}
+      else{cur=cur?cur+' '+w:w;}
+    });
+    if(cur)dLines.push(cur);
+
+    var bx=(W-cW)/2;
+    var by=LV[0].y - 55 - cH;
+    if(by<8)by=8;
+    var boxFill=dk?"#0f172af0":"#fffffff0";
+    var boxBorder=dk?"#334155":"#cbd5e1";
+    var titleFill=dk?"#93c5fd":"#1e40af";
+    var descFill=dk?"#94a3b8":"#475569";
+
+    // Leader line from box bottom-center down to active dot
+    o+='<line x1="'+(bx+cW/2)+'" y1="'+(by+cH)+'" x2="'+activeDot.x+'" y2="'+activeDot.y+'" stroke="'+(dk?"#334155":"#cbd5e1")+'" stroke-width=".8" stroke-dasharray="3 2" opacity=".4"/>';
+
+    o+='<rect x="'+bx+'" y="'+by+'" width="'+cW+'" height="'+cH+'" rx="10" fill="'+boxFill+'" stroke="'+boxBorder+'" stroke-width="1"/>';
+    o+='<text x="'+(bx+16)+'" y="'+(by+20)+'" fill="'+titleFill+'" font-size="13" font-weight="600" style="pointer-events:none">'+titleTxt+'</text>';
+    dLines.forEach(function(ln,li){
+      o+='<text x="'+(bx+16)+'" y="'+(by+38+li*16)+'" fill="'+descFill+'" font-size="12" style="pointer-events:none">'+ln+'</text>';
+    });
+  }
+
+  svg.innerHTML=o;
+}
+
+function rPanel(){
+  var pn=document.getElementById("pnl");
+  if(!sel){pn.classList.remove("open");return;}
+  pn.classList.add("open");
+  var tr=TR.find(function(x){return x.id===sel;});
+  document.getElementById("pT").textContent=T[sel]||sel;
+  document.getElementById("pS").textContent=T[sel+"d"]||"";
+  document.getElementById("pSh").textContent=T.steps;
+  var steps=(T.S&&T.S[sel+"-"+vari])||[];
+  var el=document.getElementById("pSt");el.innerHTML="";
+  steps.forEach(function(s,i){
+    var d=document.createElement("div");
+    d.className="si"+(i===step?" on":"");
+    d.setAttribute("data-pstep",i);
+    d.innerHTML='<span class="n">'+(i+1)+'</span><span class="t">'+s.t+'</span>';
+    el.appendChild(d);
+  });
+  setTimeout(function(){var a=el.querySelector(".si.on");if(a)a.scrollIntoView({behavior:"smooth",block:"nearest"});},50);
+  document.getElementById("prv").disabled=step===0;
+  document.getElementById("nxt").disabled=step>=steps.length-1;
+  document.getElementById("prv").textContent=T.prev;
+  document.getElementById("nxt").textContent=T.next;
+}
+
+function rVar(){
+  var el=document.getElementById("vbar");el.innerHTML="";
+  [{id:"sig",k:"atSig"},{id:"line",k:"atLine"}].forEach(function(v){
+    var b=document.createElement("button");
+    b.className="vb"+(vari===v.id?" on":"");
+    b.textContent=T[v.k];
+    b.setAttribute("data-var",v.id);
+    el.appendChild(b);
+  });
+}
+
+function gs(d){
+  var steps=(T.S&&T.S[sel+"-"+vari])||[];
+  var n=step+d;if(n<0||n>=steps.length)return;
+  step=n;draw();rPanel();
+}
+
+function refresh(){
+  draw();rPanel();rVar();
+}
+
+// ===== EVENTS =====
+document.getElementById("svg").addEventListener("click",function(e){
+  var t=e.target;
+  var edge=t.getAttribute("data-edge");
+  if(edge){sel=edge;step=0;refresh();return;}
+  var stp=t.getAttribute("data-stp");
+  if(stp!==null&&stp!==""){step=parseInt(stp);draw();rPanel();return;}
+  var node=t.getAttribute("data-node");
+  if(node){
+    if(focusNode===node){focusNode=null;} else {focusNode=node;sel=null;step=0;}
+    refresh();return;
+  }
+  if(t.getAttribute("data-bg")||t.tagName==="svg"){focusNode=null;sel=null;step=0;refresh();}
+});
+document.getElementById("svg").addEventListener("mouseover",function(e){
+  var edge=e.target.getAttribute("data-edge");
+  if(edge&&edge!==hov){hov=edge;draw();}
+});
+document.getElementById("svg").addEventListener("mouseout",function(e){
+  if(e.target.getAttribute("data-edge")){hov=null;draw();}
+});
+document.getElementById("vbar").addEventListener("click",function(e){
+  var v=e.target.getAttribute("data-var");
+  if(v){vari=v;step=0;refresh();}
+});
+document.getElementById("pSt").addEventListener("click",function(e){
+  var t=e.target.closest("[data-pstep]");
+  if(t){step=parseInt(t.getAttribute("data-pstep"));draw();rPanel();}
+});
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"){focusNode=null;sel=null;step=0;refresh();}
+  if(e.key==="ArrowRight")gs(1);
+  if(e.key==="ArrowLeft")gs(-1);
+});
+window.addEventListener("resize",function(){draw();});
+
+refresh();
+</script>
+</body>
+</html>
