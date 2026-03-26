@@ -7,6 +7,7 @@ const allCategories: ATOStateCategory[] = [
   'standby',
   'operational',
   'transition',
+  'failure',
 ];
 
 export function useATODiagramState() {

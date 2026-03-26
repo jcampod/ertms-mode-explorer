@@ -27,7 +27,7 @@ export const atoStates: ATOState[] = [
     category: 'inactive',
     description: 'The ATO system is initialising: loading configuration, performing self-tests, and establishing communication interfaces.',
     detailedDescription:
-      'During Configuration, the ATO on-board performs start-up procedures including hardware self-checks, loading of configuration data (vehicle parameters, braking models), and establishing the interface with the ETCS on-board unit via the Subset-130 interface. The system also attempts to connect to the ATO trackside via GSM-R or FRMCS. If configuration fails, the system returns to NP.',
+      'During Configuration, the ATO on-board performs start-up procedures including hardware self-checks, loading of configuration data (vehicle parameters, braking models), and establishing the interface with the ETCS on-board unit via the Subset-130 interface. The system also attempts to connect to the ATO trackside via GSM-R or FRMCS. If configuration fails, the system transitions to ATO Failure (FA).',
     keyCharacteristics: [
       'Hardware and software self-test in progress',
       'Vehicle configuration data loaded',
@@ -132,6 +132,25 @@ export const atoStates: ATOState[] = [
     ],
     goaRelevance: 'GoA 2: driver-initiated; GoA 3–4: may be triggered by system conditions',
     etcsRequirement: 'ETCS transitions from AD back to FS mode',
-    subsetReference: 'Subset-125, Section 5.7',
+    subsetReference: 'Subset-125, Section 9.8',
+  },
+  {
+    id: 'FA',
+    name: 'ATO Failure',
+    abbreviation: 'FA',
+    category: 'failure',
+    description: 'An internal ATO fault has been detected. ATO functionality is suspended until the fault is cleared.',
+    detailedDescription:
+      'ATO Failure is entered when the ATO on-board detects an internal fault that prevents safe automatic operation. This includes self-test failures during configuration, hardware malfunctions, or software errors detected during any operational state. While in Failure, ATO continues to send Status Reports (STRs) to ATO-TS to inform the control centre, but cannot control traction or braking. The driver must drive manually under ETCS supervision. Recovery requires a system reset (power cycle), which transitions the system back to No Power (NP).',
+    keyCharacteristics: [
+      'ATO internal fault detected',
+      'No ATO traction or braking control possible',
+      'Driver must drive manually under ETCS supervision',
+      'ATO-OB continues sending STRs to ATO-TS',
+      'Recovery requires ATO system reset (power cycle to NP)',
+    ],
+    goaRelevance: 'Applicable to all GoA levels (GoA 1–4) — reverts to manual operation regardless of GoA',
+    etcsRequirement: 'ETCS continues independent safety supervision; exits AD mode if it was active',
+    subsetReference: 'Subset-125, Section 9.9',
   },
 ];

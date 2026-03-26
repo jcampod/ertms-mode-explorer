@@ -9,6 +9,7 @@ const allCategories: ATOStateCategory[] = [
   'standby',
   'operational',
   'transition',
+  'failure',
 ];
 
 interface ATODiagramLegendProps {

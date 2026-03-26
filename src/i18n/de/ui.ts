@@ -34,6 +34,7 @@ export const deUI: Partial<UITranslations> = {
   atoCatStandby: 'Bereitschaft',
   atoCatOperational: 'Betriebsf\u00E4hig',
   atoCatTransition: '\u00DCbergang',
+  atoCatFailure: 'St\u00f6rung',
   // Trigger labels
   triggerDriver: 'Triebfahrzeugf\u00FChrer-initiiert',
   triggerTrackside: 'Streckenseitiger Befehl',

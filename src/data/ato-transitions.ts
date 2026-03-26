@@ -1,7 +1,7 @@
 import type { ATOTransition } from './ato-types';
 
 export const atoTransitions: ATOTransition[] = [
-  // NP <-> CO
+  // ── NP → CO ──────────────────────────────────────────────
   {
     id: 'NP-CO',
     from: 'NP',
@@ -16,22 +16,41 @@ export const atoTransitions: ATOTransition[] = [
     isCommon: true,
     triggerType: 'system',
   },
+
+  // ── CO → NP (power loss during configuration) ────────────
   {
     id: 'CO-NP',
     from: 'CO',
     to: 'NP',
     conditions: [
-      { text: 'Configuration failure or power removed', isRequired: true },
+      { text: 'Power removed during configuration', isRequired: true },
     ],
-    description: 'Configuration failure returns to No Power',
+    description: 'Power loss during configuration returns to No Power',
     detailedDescription:
-      'If the ATO system fails its self-test, encounters incompatible configuration data, or loses power during initialisation, it returns to the No Power state.',
+      'If the ATO system loses power during initialisation, it returns to the No Power state. Note: configuration or self-test failures result in a transition to ATO Failure (FA), not No Power.',
     isAutomatic: true,
     isCommon: false,
     triggerType: 'system',
   },
 
-  // CO -> NA
+  // ── CO → FA (self-test or configuration failure) ─────────
+  {
+    id: 'CO-FA',
+    from: 'CO',
+    to: 'FA',
+    conditions: [
+      { text: 'Self-test failure detected, or', isRequired: false },
+      { text: 'Incompatible configuration data', isRequired: false },
+    ],
+    description: 'Configuration or self-test failure leads to ATO Failure',
+    detailedDescription:
+      'If the ATO system fails its self-test (§7.12) or encounters incompatible configuration data during initialisation, it transitions to the ATO Failure state. The driver is informed via the DMI. Recovery requires a system reset (power cycle) back to NP.',
+    isAutomatic: true,
+    isCommon: false,
+    triggerType: 'system',
+  },
+
+  // ── CO → NA ──────────────────────────────────────────────
   {
     id: 'CO-NA',
     from: 'CO',
@@ -48,7 +67,7 @@ export const atoTransitions: ATOTransition[] = [
     triggerType: 'system',
   },
 
-  // NA <-> AV
+  // ── NA ↔ AV ──────────────────────────────────────────────
   {
     id: 'NA-AV',
     from: 'NA',
@@ -82,7 +101,7 @@ export const atoTransitions: ATOTransition[] = [
     triggerType: 'system',
   },
 
-  // AV <-> RE
+  // ── AV ↔ RE ──────────────────────────────────────────────
   {
     id: 'AV-RE',
     from: 'AV',
@@ -114,42 +133,60 @@ export const atoTransitions: ATOTransition[] = [
     triggerType: 'system',
   },
 
-  // RE -> EG
+  // ── RE → EG ──────────────────────────────────────────────
   {
     id: 'RE-EG',
     from: 'RE',
     to: 'EG',
     conditions: [
-      { text: 'Driver confirms ATO engagement via DMI', isRequired: true },
+      { text: 'Driver confirms ATO engagement via DMI (GoA 2), or automatic engagement (GoA 3–4)', isRequired: true },
       { text: 'ETCS transitions to AD (Automatic Driving) mode', isRequired: true },
     ],
-    description: 'Driver engages ATO — automatic driving begins',
+    description: 'ATO engaged — automatic driving begins',
     detailedDescription:
-      'The driver presses the ATO engagement button on the DMI. The ETCS on-board transitions to Automatic Driving (AD) mode under Full Supervision, and the ATO begins controlling traction and braking according to the Journey Profile. In GoA 3–4, engagement may occur automatically.',
+      'In GoA 2, the driver presses the ATO engagement button on the DMI. In GoA 3–4, engagement may occur automatically when all conditions are met. The ETCS on-board transitions to Automatic Driving (AD) mode under Full Supervision, and the ATO begins controlling traction and braking according to the Journey Profile.',
     isAutomatic: false,
     isCommon: true,
-    triggerType: 'driver',
+    triggerType: 'both',
   },
 
-  // EG -> DE
+  // ── EG → AV (nominal station-stop cycle — §9.10.2) ──────
+  {
+    id: 'EG-AV',
+    from: 'EG',
+    to: 'AV',
+    conditions: [
+      { text: 'Train stops at a Stopping Point considered as reached', isRequired: true },
+      { text: 'Holding brake applied', isRequired: true },
+    ],
+    description: 'Train stops at station — ATO disengages to Available (nominal cycle)',
+    detailedDescription:
+      'This is the nominal operational cycle described in Subset-125 §9.10.2. When the ATO-OB stops the train at a Stopping Point, it requests the Train Holding Brake, disengages automatic driving, and transitions to Available. The "ATO Selected" indication is displayed. Doors may open (if configured). After dwell time and door closure, the system cycles AV → RE → EG for the next segment. This is the most frequent transition during normal service.',
+    isAutomatic: true,
+    isCommon: true,
+    triggerType: 'system',
+  },
+
+  // ── EG → DE (controlled disengagement) ───────────────────
   {
     id: 'EG-DE',
     from: 'EG',
     to: 'DE',
     conditions: [
-      { text: 'Driver requests disengagement, or', isRequired: false },
+      { text: 'Driver activates manual brake while ATO is driving (§9.10.5), or', isRequired: false },
+      { text: 'Driver requests disengagement via DMI, or', isRequired: false },
       { text: 'End of Journey Profile reached, or', isRequired: false },
       { text: 'Planned handover point reached', isRequired: false },
     ],
     description: 'ATO begins controlled disengagement',
     detailedDescription:
-      'Disengagement is initiated when the driver presses the disengage button, when the Journey Profile terminates, or when a planned transition point is reached. The ATO brings the train to a safe state and prepares to hand control to the driver.',
+      'Disengagement is initiated when the driver manually brakes (§9.10.5), presses the disengage button, when the Journey Profile terminates, or when a planned transition point is reached. The ATO brings the train to a safe state and prepares to hand control to the driver. This is distinct from the nominal station-stop cycle (EG → AV), which occurs automatically at stopping points.',
     isAutomatic: false,
     isCommon: true,
-    triggerType: 'driver',
+    triggerType: 'both',
   },
 
-  // EG -> NA (emergency disengage)
+  // ── EG → NA (emergency disengage) ────────────────────────
   {
     id: 'EG-NA',
     from: 'EG',
@@ -167,41 +204,41 @@ export const atoTransitions: ATOTransition[] = [
     triggerType: 'system',
   },
 
-  // DE -> NA
+  // ── DE → NA ──────────────────────────────────────────────
   {
     id: 'DE-NA',
     from: 'DE',
     to: 'NA',
     conditions: [
       { text: 'Disengagement complete', isRequired: true },
-      { text: 'ATO conditions no longer met', isRequired: true },
+      { text: 'ATO Operational Conditions no longer met', isRequired: true },
     ],
     description: 'Disengagement complete — conditions not met for re-engagement',
     detailedDescription:
-      'After the controlled handover to the driver is finished and the engagement conditions are no longer satisfied (e.g., ETCS left FS mode, journey ended), the ATO returns to Not Available.',
+      'After the controlled handover to the driver is finished and the Operational Conditions are no longer satisfied (e.g., ETCS left FS mode, journey ended), the ATO returns to Not Available.',
     isAutomatic: true,
     isCommon: true,
     triggerType: 'system',
   },
 
-  // DE -> AV
+  // ── DE → AV ──────────────────────────────────────────────
   {
     id: 'DE-AV',
     from: 'DE',
     to: 'AV',
     conditions: [
       { text: 'Disengagement complete', isRequired: true },
-      { text: 'ATO conditions still met', isRequired: true },
+      { text: 'ATO Operational Conditions still met', isRequired: true },
     ],
     description: 'Disengagement complete — ATO remains available for re-engagement',
     detailedDescription:
-      'After the controlled handover completes, if all ATO conditions are still met (ETCS in FS, valid Journey Profile), the system returns to Available, allowing the driver to re-engage ATO if desired.',
+      'After the controlled handover completes, if all ATO Operational Conditions are still met (ETCS in FS, valid Journey Profile), the system returns to Available, allowing the driver to re-engage ATO if desired.',
     isAutomatic: true,
     isCommon: true,
     triggerType: 'system',
   },
 
-  // DE -> RE (direct re-engagement)
+  // ── DE → RE (direct re-engagement) ───────────────────────
   {
     id: 'DE-RE',
     from: 'DE',
@@ -221,7 +258,23 @@ export const atoTransitions: ATOTransition[] = [
     triggerType: 'system',
   },
 
-  // Universal: ANY -> NP (power loss)
+  // ── FA → NP (recovery via reset) ─────────────────────────
+  {
+    id: 'FA-NP',
+    from: 'FA',
+    to: 'NP',
+    conditions: [
+      { text: 'ATO system reset (power cycle)', isRequired: true },
+    ],
+    description: 'ATO reset clears fault — returns to No Power for re-initialisation',
+    detailedDescription:
+      'Recovery from ATO Failure requires a system reset, which powers down and re-energises the ATO equipment. This returns the system to No Power (NP), from which the normal configuration sequence (NP → CO → NA) can restart. There is no direct path from FA to any operational state.',
+    isAutomatic: true,
+    isCommon: false,
+    triggerType: 'system',
+  },
+
+  // ── Universal: ANY → NP (power loss) ─────────────────────
   {
     id: 'ANY-NP',
     from: 'NP',
@@ -232,6 +285,23 @@ export const atoTransitions: ATOTransition[] = [
     description: 'Power loss returns to No Power from any state',
     detailedDescription:
       'If the ATO on-board system loses power at any point during operation, it immediately enters the No Power state. This is a universal transition that can occur from any ATO state. ETCS continues to operate independently.',
+    isAutomatic: true,
+    isCommon: false,
+    triggerType: 'system',
+    isUniversal: true,
+  },
+
+  // ── Universal: ANY → FA (internal fault) ─────────────────
+  {
+    id: 'ANY-FA',
+    from: 'FA',
+    to: 'FA',
+    conditions: [
+      { text: 'Internal ATO fault detected', isRequired: true },
+    ],
+    description: 'Internal fault sends ATO to Failure from any operational state',
+    detailedDescription:
+      'If the ATO on-board detects an internal fault at any point — hardware malfunction, software error, or failed runtime check — it immediately transitions to the ATO Failure state. This is a universal transition (§9.10.4). The driver must take over manual control. ETCS exits AD mode if it was active. The ATO-OB continues to send Status Reports (STRs) to inform ATO-TS of the failure.',
     isAutomatic: true,
     isCommon: false,
     triggerType: 'system',

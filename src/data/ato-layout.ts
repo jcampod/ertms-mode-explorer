@@ -12,4 +12,6 @@ export const atoNodePositions: ATONodePosition[] = [
   { stateId: 'EG', x: 960, y: 160, group: 'operational' },
   // Transition zone (bottom-right)
   { stateId: 'DE', x: 960, y: 400, group: 'transition' },
+  // Failure zone (bottom-center)
+  { stateId: 'FA', x: 500, y: 450, group: 'failure' },
 ];

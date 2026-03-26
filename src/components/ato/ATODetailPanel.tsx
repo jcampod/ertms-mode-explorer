@@ -145,14 +145,14 @@ function ATOTransitionDetail({
           <TriggerIcon size={10} />
           {triggerLabels[t.triggerType]}
         </span>
-        {t.isAutomatic && (
+        {t.triggerType !== 'both' && t.triggerType !== 'driver' && (
           <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
             dk ? 'bg-blue-500/15 text-blue-300' : 'bg-blue-50 text-blue-600'
           }`}>
             {ui.badgeAutomatic}
           </span>
         )}
-        {!t.isAutomatic && (
+        {t.triggerType === 'driver' && (
           <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${
             dk ? 'bg-amber-500/15 text-amber-300' : 'bg-amber-50 text-amber-700'
           }`}>

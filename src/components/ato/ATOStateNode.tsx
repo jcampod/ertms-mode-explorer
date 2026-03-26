@@ -15,6 +15,7 @@ const etcsContext: Record<ATOStateId, { label: string; color: string; bgColor: s
   RE: { label: 'FS → AD', color: modeColors.AD.text, bgColor: modeColors.AD.fill },
   EG: { label: 'ETCS: AD', color: modeColors.AD.text, bgColor: modeColors.AD.fill },
   DE: { label: 'AD → FS', color: modeColors.FS.text, bgColor: modeColors.FS.fill },
+  FA: { label: 'ETCS: ≠ AD', color: modeColors.TR.text, bgColor: modeColors.TR.fill },
 };
 
 interface ATOStateNodeProps {

@@ -50,6 +50,7 @@ export interface UITranslations {
   atoCatStandby: string;
   atoCatOperational: string;
   atoCatTransition: string;
+  atoCatFailure: string;
   // Trigger labels
   triggerDriver: string;
   triggerTrackside: string;

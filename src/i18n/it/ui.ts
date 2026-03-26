@@ -34,6 +34,7 @@ export const itUI: Partial<UITranslations> = {
   atoCatStandby: 'In attesa',
   atoCatOperational: 'Operativo',
   atoCatTransition: 'Transizione',
+  atoCatFailure: 'Guasto',
   // Trigger labels
   triggerDriver: 'Avviato dal macchinista',
   triggerTrackside: 'Comando da terra',

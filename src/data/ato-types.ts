@@ -2,9 +2,10 @@ export type ATOStateCategory =
   | 'inactive'
   | 'standby'
   | 'operational'
-  | 'transition';
+  | 'transition'
+  | 'failure';
 
-export type ATOStateId = 'NP' | 'CO' | 'NA' | 'AV' | 'RE' | 'EG' | 'DE';
+export type ATOStateId = 'NP' | 'CO' | 'NA' | 'AV' | 'RE' | 'EG' | 'DE' | 'FA';
 
 export type ATOTriggerType = 'driver' | 'system' | 'trackside' | 'both';
 

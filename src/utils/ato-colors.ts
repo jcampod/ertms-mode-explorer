@@ -12,6 +12,8 @@ export const atoStateColors: Record<ATOStateId, { fill: string; stroke: string; 
   EG: { fill: '#1e3a5f', stroke: '#3b82f6', glow: '#3b82f6', text: '#93c5fd' },
   // Transition (purple)
   DE: { fill: '#2e1065', stroke: '#a78bfa', glow: '#a78bfa', text: '#ddd6fe' },
+  // Failure (red)
+  FA: { fill: '#450a0a', stroke: '#ef4444', glow: '#ef4444', text: '#fca5a5' },
 };
 
 export const atoCategoryColors: Record<ATOStateCategory, string> = {
@@ -19,6 +21,7 @@ export const atoCategoryColors: Record<ATOStateCategory, string> = {
   standby: '#f59e0b',
   operational: '#3b82f6',
   transition: '#a78bfa',
+  failure: '#ef4444',
 };
 
 export const atoCategoryLabels: Record<ATOStateCategory, string> = {
@@ -26,4 +29,5 @@ export const atoCategoryLabels: Record<ATOStateCategory, string> = {
   standby: 'Standby',
   operational: 'Operational',
   transition: 'Transition',
+  failure: 'Failure',
 };

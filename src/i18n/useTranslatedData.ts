@@ -204,7 +204,8 @@ export function useATOCategoryLabels(): Record<string, string> {
       standby: ui.atoCatStandby,
       operational: ui.atoCatOperational,
       transition: ui.atoCatTransition,
+    failure: ui.atoCatFailure,
     }),
-    [ui.atoCatInactive, ui.atoCatStandby, ui.atoCatOperational, ui.atoCatTransition],
+    [ui.atoCatInactive, ui.atoCatStandby, ui.atoCatOperational, ui.atoCatTransition, ui.atoCatFailure],
   );
 }

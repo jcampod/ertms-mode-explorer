@@ -34,6 +34,7 @@ export const frUI: Partial<UITranslations> = {
   atoCatStandby: 'Veille',
   atoCatOperational: 'Op\u00e9rationnel',
   atoCatTransition: 'Transition',
+  atoCatFailure: 'D\u00e9faillance',
   // Trigger labels
   triggerDriver: 'Initi\u00e9 par le conducteur',
   triggerTrackside: 'Commande sol',

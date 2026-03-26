@@ -36,6 +36,7 @@ const EN_DEFAULTS: UITranslations = {
   atoCatStandby: 'Standby',
   atoCatOperational: 'Operational',
   atoCatTransition: 'Transition',
+  atoCatFailure: 'Failure',
   // Trigger labels
   triggerDriver: 'Driver-initiated',
   triggerTrackside: 'Trackside command',
