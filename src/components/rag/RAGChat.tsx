@@ -112,7 +112,7 @@ export default function RAGChat() {
             disabled={loading || !input.trim()}
             className={`px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-2 transition-colors shrink-0 ${
               loading || !input.trim()
-                ? dark ? 'bg-slate-600 text-slate-400 cursor-not-allowed' : 'bg-slate-400 text-slate-200 cursor-not-allowed'
+                ? dark ? 'bg-slate-600 text-slate-200 cursor-not-allowed' : 'bg-slate-400 text-slate-100 cursor-not-allowed'
                 : 'bg-blue-700 text-white hover:bg-blue-800 cursor-pointer shadow-sm'
             }`}
           >
