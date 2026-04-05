@@ -203,6 +203,22 @@ const EN_DEFAULTS: UITranslations = {
   atoLimitedAtLevel1: 'At Level 1, ATO receives spot data via Eurobalises. Operation is possible but more constrained than Level 2.',
   jpNoEtcsAtLevel: 'At Level 0, there is no ETCS supervision. Only basic national speed limits apply.',
   jpLimitedAtoAtLevel: 'At Level 1, ETCS provides spot data via Eurobalises. The ceiling updates at discrete points.',
+  // RAG Chat tab
+  tabSpecChat: 'Spec Chat',
+  ragTitle: 'ETCS Specification Chat',
+  ragSubtitle: 'Ask questions about ETCS/ERTMS specifications — answers sourced from official UNISIG SUBSET documents.',
+  ragPlaceholder: 'Ask about ETCS specifications...',
+  ragSend: 'Send',
+  ragSources: 'Sources',
+  ragPage: 'p.',
+  ragRelevance: 'relevance',
+  ragNoAnswer: 'No relevant information found in the ETCS specification documents.',
+  ragError: 'Something went wrong. Please try again.',
+  ragThinking: 'Searching specifications...',
+  ragDisclaimer: 'Answers are AI-generated from ETCS SUBSET documents. Always verify against official specifications.',
+  ragSuggestion1: 'What are the ETCS operating modes?',
+  ragSuggestion2: 'How does RBC handover work?',
+  ragSuggestion3: 'What triggers an emergency brake?',
 };
 
 /**

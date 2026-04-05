@@ -216,6 +216,22 @@ export interface UITranslations {
   atoLimitedAtLevel1: string;
   jpNoEtcsAtLevel: string;
   jpLimitedAtoAtLevel: string;
+  // RAG Chat tab
+  tabSpecChat: string;
+  ragTitle: string;
+  ragSubtitle: string;
+  ragPlaceholder: string;
+  ragSend: string;
+  ragSources: string;
+  ragPage: string;
+  ragRelevance: string;
+  ragNoAnswer: string;
+  ragError: string;
+  ragThinking: string;
+  ragDisclaimer: string;
+  ragSuggestion1: string;
+  ragSuggestion2: string;
+  ragSuggestion3: string;
 }
 
 // Data translation interfaces - keyed by stable IDs

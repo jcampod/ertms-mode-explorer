@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { GitBranch, Gamepad2, Bot, Route, ArrowLeftRight } from 'lucide-react';
+import { GitBranch, Gamepad2, Bot, Route, ArrowLeftRight, MessageSquare } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import { useUI } from '../../i18n/useUI';
 
 interface TabBarProps {
-  activeTab: 'diagram' | 'simulator' | 'ato' | 'journey' | 'levels';
-  onTabChange: (tab: 'diagram' | 'simulator' | 'ato' | 'journey' | 'levels') => void;
+  activeTab: 'diagram' | 'simulator' | 'ato' | 'journey' | 'levels' | 'chat';
+  onTabChange: (tab: 'diagram' | 'simulator' | 'ato' | 'journey' | 'levels' | 'chat') => void;
 }
 
 export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
@@ -18,6 +18,7 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
     { id: 'levels' as const, label: ui.tabLevelTransitions, icon: ArrowLeftRight },
     { id: 'ato' as const, label: ui.tabATOOverview, icon: Bot },
     { id: 'journey' as const, label: ui.tabJourneyProfile, icon: Route },
+    { id: 'chat' as const, label: ui.tabSpecChat, icon: MessageSquare },
   ], [ui]);
 
   return (

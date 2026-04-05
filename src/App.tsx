@@ -6,11 +6,12 @@ import ScenarioSimulator from './components/simulator/ScenarioSimulator';
 import LevelTransitions from './components/levels/LevelTransitions';
 import ATOOverview from './components/ato/ATOOverview';
 import JourneyProfileView from './components/journey/JourneyProfileView';
+import RAGChat from './components/rag/RAGChat';
 import { ThemeContext, useThemeProvider } from './hooks/useTheme';
 import { LanguageContext, useLanguageProvider } from './i18n/index';
 import { ErtmsLevelContext, useErtmsLevelProvider } from './hooks/useErtmsLevel';
 
-type TabId = 'diagram' | 'simulator' | 'ato' | 'journey' | 'levels';
+type TabId = 'diagram' | 'simulator' | 'ato' | 'journey' | 'levels' | 'chat';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('diagram');
@@ -33,6 +34,7 @@ export default function App() {
             {activeTab === 'levels' && <LevelTransitions />}
             {activeTab === 'ato' && <ATOOverview />}
             {activeTab === 'journey' && <JourneyProfileView />}
+            {activeTab === 'chat' && <RAGChat />}
           </main>
         </div>
       </ErtmsLevelContext.Provider>
