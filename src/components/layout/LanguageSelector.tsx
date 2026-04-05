@@ -32,7 +32,7 @@ export default function LanguageSelector() {
         className={`flex h-8 items-center gap-1 rounded-lg px-2 text-xs font-semibold transition-colors ${
           dk
             ? 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
-            : 'text-slate-500 hover:bg-slate-200 hover:text-slate-700'
+            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
         }`}
         title="Language"
       >

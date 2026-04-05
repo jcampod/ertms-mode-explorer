@@ -24,8 +24,8 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
   return (
     <nav className={`flex border-b shrink-0 ${
       theme === 'dark'
-        ? 'bg-slate-900/50 border-slate-800'
-        : 'bg-slate-50/50 border-slate-200'
+        ? 'bg-slate-900 border-slate-700'
+        : 'bg-white border-slate-300'
     }`}>
       {tabs.map(({ id, label, icon: Icon }) => {
         const isActive = activeTab === id;
@@ -38,7 +38,7 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
               transition-colors duration-150 cursor-pointer
               ${isActive
                 ? theme === 'dark' ? 'text-slate-100' : 'text-slate-900'
-                : theme === 'dark' ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'
+                : theme === 'dark' ? 'text-slate-500 hover:text-slate-300' : 'text-slate-500 hover:text-slate-800'
               }
             `}
           >
