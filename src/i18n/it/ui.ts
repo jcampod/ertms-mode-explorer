@@ -216,4 +216,5 @@ export const itUI: Partial<UITranslations> = {
   ragSuggestion1: 'Quali sono i modi operativi ETCS?',
   ragSuggestion2: 'Come funziona il passaggio RBC?',
   ragSuggestion3: 'Cosa attiva una frenata di emergenza?',
+  ragTrySuggestions: 'Prova una di queste domande:',
 };

@@ -216,4 +216,5 @@ export const frUI: Partial<UITranslations> = {
   ragSuggestion1: 'Quels sont les modes de fonctionnement ETCS ?',
   ragSuggestion2: 'Comment fonctionne le transfert RBC ?',
   ragSuggestion3: 'Qu\u2019est-ce qui d\u00e9clenche un freinage d\u2019urgence ?',
+  ragTrySuggestions: 'Essayez une de ces questions :',
 };

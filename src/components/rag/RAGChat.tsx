@@ -111,6 +111,7 @@ export default function RAGChat() {
             <EmptyState
               dark={dark}
               suggestions={suggestions}
+              trySuggestions={ui.ragTrySuggestions}
               onSuggestion={sendQuestion}
             />
           )}
@@ -177,9 +178,10 @@ export default function RAGChat() {
   );
 }
 
-function EmptyState({ dark, suggestions, onSuggestion }: {
+function EmptyState({ dark, suggestions, trySuggestions, onSuggestion }: {
   dark: boolean;
   suggestions: string[];
+  trySuggestions: string;
   onSuggestion: (q: string) => void;
 }) {
   return (
@@ -191,7 +193,7 @@ function EmptyState({ dark, suggestions, onSuggestion }: {
       </div>
       <div className="text-center">
         <p className={`text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-          Try one of these questions:
+          {trySuggestions}
         </p>
       </div>
       <div className="flex flex-col gap-2 w-full max-w-md">

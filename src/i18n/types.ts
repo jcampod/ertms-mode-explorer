@@ -232,6 +232,7 @@ export interface UITranslations {
   ragSuggestion1: string;
   ragSuggestion2: string;
   ragSuggestion3: string;
+  ragTrySuggestions: string;
 }
 
 // Data translation interfaces - keyed by stable IDs

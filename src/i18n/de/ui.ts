@@ -216,4 +216,5 @@ export const deUI: Partial<UITranslations> = {
   ragSuggestion1: 'Was sind die ETCS-Betriebsmodi?',
   ragSuggestion2: 'Wie funktioniert die RBC-\u00dcbergabe?',
   ragSuggestion3: 'Was l\u00f6st eine Zwangsbremsung aus?',
+  ragTrySuggestions: 'Probieren Sie eine dieser Fragen:',
 };

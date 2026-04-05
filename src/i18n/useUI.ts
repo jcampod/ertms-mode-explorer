@@ -219,6 +219,7 @@ const EN_DEFAULTS: UITranslations = {
   ragSuggestion1: 'What are the ETCS operating modes?',
   ragSuggestion2: 'How does RBC handover work?',
   ragSuggestion3: 'What triggers an emergency brake?',
+  ragTrySuggestions: 'Try one of these questions:',
 };
 
 /**
