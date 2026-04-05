@@ -14,7 +14,7 @@ import { ErtmsLevelContext, useErtmsLevelProvider } from './hooks/useErtmsLevel'
 type TabId = 'diagram' | 'simulator' | 'ato' | 'journey' | 'levels' | 'chat';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabId>('diagram');
+  const [activeTab, setActiveTab] = useState<TabId>('chat');
   const themeValue = useThemeProvider();
   const langValue = useLanguageProvider();
   const levelValue = useErtmsLevelProvider();
