@@ -4,7 +4,7 @@ import type { UITranslations } from './types';
 
 const EN_DEFAULTS: UITranslations = {
   // TopNav
-  appTitle: 'ERTMS Mode Explorer',
+  appTitle: 'ETCS Reference',
   appSubtitle: 'ETCS Operating Modes \u2014 Subset-026',
   switchToLight: 'Switch to light mode',
   switchToDark: 'Switch to dark mode',
@@ -204,7 +204,7 @@ const EN_DEFAULTS: UITranslations = {
   jpNoEtcsAtLevel: 'At Level 0, there is no ETCS supervision. Only basic national speed limits apply.',
   jpLimitedAtoAtLevel: 'At Level 1, ETCS provides spot data via Eurobalises. The ceiling updates at discrete points.',
   // RAG Chat tab
-  tabSpecChat: 'Spec Chat',
+  tabSpecChat: 'Encyclopedia',
   ragTitle: 'ETCS Specification Chat',
   ragSubtitle: 'Ask questions about ETCS/ERTMS specifications — answers sourced from official UNISIG SUBSET documents.',
   ragPlaceholder: 'Ask about ETCS specifications...',

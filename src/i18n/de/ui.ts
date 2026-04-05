@@ -2,7 +2,7 @@ import type { UITranslations } from '../types';
 
 export const deUI: Partial<UITranslations> = {
   // TopNav
-  appTitle: 'ERTMS Mode Explorer',
+  appTitle: 'ETCS-Referenz',
   appSubtitle: 'ETCS-Betriebsarten \u2014 Subset-026',
   switchToLight: 'Zum hellen Modus wechseln',
   switchToDark: 'Zum dunklen Modus wechseln',
@@ -201,7 +201,7 @@ export const deUI: Partial<UITranslations> = {
   atoLimitedAtLevel1: 'Auf Level 1 arbeitet ATO mit punktuellen Balisendaten. Eingeschränkte Funktionalität gegenüber Level 2.',
   jpNoEtcsAtLevel: 'Level 0: Keine ETCS-Überwachung. ETCS-Obergrenze und ATO-Kurven sind nicht verfügbar.',
   jpLimitedAtoAtLevel: 'Level 1: Gestufte ETCS-Obergrenze per Balisen. ATO arbeitet mit punktuellen Daten.',
-  tabSpecChat: 'Spec-Chat',
+  tabSpecChat: 'Enzyklop\u00e4die',
   ragTitle: 'ETCS-Spezifikations-Chat',
   ragSubtitle: 'Stellen Sie Fragen zu ETCS/ERTMS-Spezifikationen \u2014 Antworten aus offiziellen UNISIG-SUBSET-Dokumenten.',
   ragPlaceholder: 'Frage zu ETCS-Spezifikationen...',

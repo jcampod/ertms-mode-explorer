@@ -2,7 +2,7 @@ import type { UITranslations } from '../types';
 
 export const itUI: Partial<UITranslations> = {
   // TopNav
-  appTitle: 'Esploratore Modi ERTMS',
+  appTitle: 'Riferimento ETCS',
   appSubtitle: 'Modi operativi ETCS — Subset-026',
   switchToLight: 'Passa al tema chiaro',
   switchToDark: 'Passa al tema scuro',
@@ -201,7 +201,7 @@ export const itUI: Partial<UITranslations> = {
   atoLimitedAtLevel1: 'Al Livello 1, l\u2019ATO opera con dati puntuali delle boe. Funzionalità limitata rispetto al Livello 2.',
   jpNoEtcsAtLevel: 'Livello 0: Nessuna supervisione ETCS. Il limite ETCS e le curve ATO non sono disponibili.',
   jpLimitedAtoAtLevel: 'Livello 1: Limite ETCS a gradini tramite boe. L\u2019ATO opera con dati puntuali.',
-  tabSpecChat: 'Chat Spec',
+  tabSpecChat: 'Enciclopedia',
   ragTitle: 'Chat Specifiche ETCS',
   ragSubtitle: 'Fai domande sulle specifiche ETCS/ERTMS \u2014 risposte dai documenti UNISIG SUBSET ufficiali.',
   ragPlaceholder: 'Domanda sulle specifiche ETCS...',

@@ -13,12 +13,12 @@ export default function TabBar({ activeTab, onTabChange }: TabBarProps) {
   const ui = useUI();
 
   const tabs = useMemo(() => [
+    { id: 'chat' as const, label: ui.tabSpecChat, icon: MessageSquare },
     { id: 'diagram' as const, label: ui.tabStateDiagram, icon: GitBranch },
     { id: 'simulator' as const, label: ui.tabScenarioSimulator, icon: Gamepad2 },
     { id: 'levels' as const, label: ui.tabLevelTransitions, icon: ArrowLeftRight },
     { id: 'ato' as const, label: ui.tabATOOverview, icon: Bot },
     { id: 'journey' as const, label: ui.tabJourneyProfile, icon: Route },
-    { id: 'chat' as const, label: ui.tabSpecChat, icon: MessageSquare },
   ], [ui]);
 
   return (

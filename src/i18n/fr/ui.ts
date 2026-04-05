@@ -2,7 +2,7 @@ import type { UITranslations } from '../types';
 
 export const frUI: Partial<UITranslations> = {
   // TopNav
-  appTitle: 'ERTMS Mode Explorer',
+  appTitle: 'R\u00e9f\u00e9rence ETCS',
   appSubtitle: 'Modes de fonctionnement ETCS \u2014 Subset-026',
   switchToLight: 'Passer en mode clair',
   switchToDark: 'Passer en mode sombre',
@@ -201,7 +201,7 @@ export const frUI: Partial<UITranslations> = {
   atoLimitedAtLevel1: 'Au Niveau 1, l\u2019ATO fonctionne avec des données ponctuelles de balises. Fonctionnalité limitée par rapport au Niveau 2.',
   jpNoEtcsAtLevel: 'Niveau 0 : Pas de supervision ETCS. Le plafond ETCS et les courbes ATO ne sont pas disponibles.',
   jpLimitedAtoAtLevel: 'Niveau 1 : Plafond ETCS \u00e9chelonn\u00e9 par balises. L\u2019ATO fonctionne avec des donn\u00e9es ponctuelles.',
-  tabSpecChat: 'Chat Specs',
+  tabSpecChat: 'Encyclop\u00e9die',
   ragTitle: 'Chat Sp\u00e9cifications ETCS',
   ragSubtitle: 'Posez des questions sur les sp\u00e9cifications ETCS/ERTMS \u2014 r\u00e9ponses issues des documents UNISIG SUBSET officiels.',
   ragPlaceholder: 'Question sur les sp\u00e9cifications ETCS...',
