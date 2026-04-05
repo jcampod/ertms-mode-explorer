@@ -110,10 +110,10 @@ export default function RAGChat() {
           <button
             type="submit"
             disabled={loading || !input.trim()}
-            className={`px-4 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors cursor-pointer shrink-0 ${
+            className={`px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-2 transition-colors shrink-0 ${
               loading || !input.trim()
-                ? dark ? 'bg-slate-700 text-slate-500' : 'bg-slate-200 text-slate-400'
-                : 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm'
+                ? dark ? 'bg-slate-600 text-slate-400 cursor-not-allowed' : 'bg-slate-400 text-slate-200 cursor-not-allowed'
+                : 'bg-blue-700 text-white hover:bg-blue-800 cursor-pointer shadow-sm'
             }`}
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
