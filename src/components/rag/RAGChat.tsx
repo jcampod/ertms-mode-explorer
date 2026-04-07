@@ -55,9 +55,12 @@ export default function RAGChat() {
   const inputRef = useRef<HTMLInputElement>(null);
   const processedRef = useRef<string | null>(null);
 
-  // Auto-scroll
+  // Auto-scroll — use a short delay so DOM has time to render thumbs/sources after streaming ends
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const timer = setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
+    return () => clearTimeout(timer);
   }, [messages]);
 
   // Focus input
