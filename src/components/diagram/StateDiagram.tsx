@@ -4,6 +4,7 @@ import { usePanZoom } from '../../hooks/usePanZoom';
 import { useTheme } from '../../hooks/useTheme';
 import { useTranslatedModes, useTranslatedTransitions } from '../../i18n/useTranslatedData';
 import { useErtmsLevel } from '../../hooks/useErtmsLevel';
+import { useAppContext } from '../../hooks/useAppContext';
 import { nodePositions } from '../../data/layout';
 import { modeColors } from '../../utils/colors';
 import { needsBidirectionalOffset } from '../../utils/edge-routing';
@@ -108,6 +109,23 @@ const StateDiagram = () => {
     return transitions.find((t) => t.id === selectedEdge) ?? null;
   }, [selectedEdge, transitions]);
 
+  // Sync selection to AppContext (for RAG chat context injection)
+  const { setSelectedModeInfo, setSelectedTransitionInfo } = useAppContext();
+  useEffect(() => {
+    if (selectedMode) {
+      setSelectedModeInfo(selectedMode.id, selectedMode.name);
+    } else {
+      setSelectedModeInfo(null, null);
+    }
+  }, [selectedMode, setSelectedModeInfo]);
+
+  useEffect(() => {
+    if (selectedTransition) {
+      setSelectedTransitionInfo(selectedTransition.id, selectedTransition.from, selectedTransition.to);
+    } else {
+      setSelectedTransitionInfo(null, null, null);
+    }
+  }, [selectedTransition, setSelectedTransitionInfo]);
 
   // Determine node state
   const getNodeState = useCallback(

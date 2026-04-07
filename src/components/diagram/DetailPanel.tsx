@@ -1,10 +1,12 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { X, ArrowRight, CheckCircle, Circle, Zap, User, Users, Radio, AlertTriangle } from 'lucide-react';
+import { X, ArrowRight, CheckCircle, Circle, Zap, User, Users, Radio, AlertTriangle, MessageCircle } from 'lucide-react';
 import type { ETCSMode, ModeId, Transition } from '../../data/types';
 import { modeColors, categoryColors } from '../../utils/colors';
 import { useTheme } from '../../hooks/useTheme';
 import { useUI } from '../../i18n/useUI';
 import { useTranslatedModes, useTranslatedTransitions, useCategoryLabels } from '../../i18n/useTranslatedData';
+import { useChatTrigger } from '../../hooks/useChatTrigger';
+import { useAppContext } from '../../hooks/useAppContext';
 
 interface DetailPanelProps {
   mode: ETCSMode | null;
@@ -221,6 +223,12 @@ function TransitionDetail({
           ))}
         </ul>
       </div>
+
+      {/* Ask about this transition */}
+      <AskAboutButton
+        question={`Explain the ${t.from} → ${t.to} transition in ETCS. What are all the conditions and when does it happen?`}
+        label={`Ask about ${t.from} → ${t.to}`}
+      />
     </>
   );
 }
@@ -425,13 +433,48 @@ function ModeDetail({
       )}
 
       {/* Subset-026 reference */}
-      <div className="mb-2">
+      <div className="mb-4">
         <h3 className={sectionLabel}>{ui.specificationReference}</h3>
         <p className={`text-sm font-mono ${dk ? 'text-slate-500' : 'text-slate-400'}`}>
           {mode.subsetReference}
         </p>
       </div>
+
+      {/* Ask about this mode */}
+      <AskAboutButton
+        question={`Explain the conditions for entering ${mode.name} (${mode.abbreviation}) mode according to ETCS specifications.`}
+        label={`Ask about ${mode.abbreviation} mode`}
+      />
     </>
+  );
+}
+
+/* ============================================ */
+/* Ask About This Button                        */
+/* ============================================ */
+function AskAboutButton({ question, label }: { question: string; label: string }) {
+  const { theme } = useTheme();
+  const dk = theme === 'dark';
+  const { triggerChat } = useChatTrigger();
+  const { setActiveTab } = useAppContext();
+
+  const handleClick = () => {
+    triggerChat(question);
+    setActiveTab('chat');
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className={`w-full flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+        dk
+          ? 'bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 border border-blue-500/20'
+          : 'bg-blue-50 text-blue-600 hover:bg-blue-100 border border-blue-200'
+      }`}
+    >
+      <MessageCircle size={12} />
+      {label}
+    </button>
   );
 }
 
